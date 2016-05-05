@@ -1,3 +1,1 @@
-/**
- * Created by jane on 16/4/7.
- */
+import './index.scss'

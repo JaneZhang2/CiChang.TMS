@@ -2,6 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const TARGET = process.env.npm_lifecycle_event;
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const common = {
   entry: {
@@ -10,7 +11,25 @@ const common = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js'
-  }
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel'],
+        include: path.join(__dirname, 'app')
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass']
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    })
+  ]
 };
 
 // Default configuration
