@@ -1,0 +1,29 @@
+{
+  "name": "CiChang.TMS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --watch-poll --inline --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaneZhang2/CiChang.TMS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JaneZhang2/CiChang.TMS/issues"
+  },
+  "homepage": "https://github.com/JaneZhang2/CiChang.TMS#readme",
+  "devDependencies": {
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.8.4"
+  }
+}
