@@ -18,6 +18,10 @@ const common = {
   module: {
     loaders: [
       {
+        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+        loader: 'file-loader?name=core/fonts/[name]-[hash].[ext]'
+      },
+      {
         test: /\.scss$/,
         loader: 'style!css!px2rem?remUnit=75&remPrecision=8!sass'
       },

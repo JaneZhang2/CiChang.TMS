@@ -4,6 +4,7 @@ import {render} from 'react-dom'
 import Root from './containers/Root'
 import store from './store'
 import {hashHistory} from 'react-router'
+import './index.scss'
 
 // const store = createStore();
 

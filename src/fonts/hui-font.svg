@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2016 by original authors @ fontello.com</metadata>
+<defs>
+<font id="hui-font" horiz-adv-x="1000" >
+<font-face font-family="hui-font" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="carat-l" unicode="&#xe800;" d="m319 350l444 444c12 12 12 31 0 44-13 12-32 12-44 0l-463-463c-6-6-12-19-12-25 0-6 0-19 6-25l463-463c12-12 31-12 43 0 13 13 13 32 0 44l-437 444z" horiz-adv-x="1000" />
+<glyph glyph-name="user-solid" unicode="&#xe801;" d="m988-101c-1-23-30-49-49-49-191 0-775 0-878 0-25 0-49 22-49 49 0 17 1 9 3 26 18 180 135 331 296 399-66 54-108 137-108 229 0 164 133 297 297 297 164 0 297-133 297-297 0-92-42-175-108-229 161-68 279-220 296-402 2-16 3-7 3-23z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>
