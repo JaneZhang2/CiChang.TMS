@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.scss'
 
 class Layout extends React.Component {
 
@@ -8,9 +9,11 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <div>
-        TODO:Layout
-        {this.props.children}
+      <div className="layout">
+        <header>排名一人</header>
+        <section>
+          {this.props.children}
+        </section>
       </div>
     )
   }

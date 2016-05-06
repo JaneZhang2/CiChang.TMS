@@ -19,7 +19,7 @@ const common = {
     loaders: [
       {
         test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        loader: 'style!css!px2rem?remUnit=75&remPrecision=8!sass'
       },
       {
         test: /\.jsx?$/,
