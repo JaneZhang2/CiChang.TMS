@@ -1,21 +1,20 @@
 @font-face {
   font-family: 'hui-font';
-  src: url('./fonts/hui-font.eot?7780639');
-  src: url('./fonts/hui-font.eot?7780639#iefix') format('embedded-opentype'),
-  url('./fonts/hui-font.woff?7780639') format('woff'),
-  url('./fonts/hui-font.ttf?7780639') format('truetype'),
-  url('./fonts/hui-font.svg?7780639#hui-font') format('svg');
+  src: url('./fonts/hui-font.eot?2584386');
+  src: url('./fonts/hui-font.eot?2584386#iefix') format('embedded-opentype'),
+  url('./fonts/hui-font.woff?2584386') format('woff'),
+  url('./fonts/hui-font.ttf?2584386') format('truetype'),
+  url('./fonts/hui-font.svg?2584386#hui-font') format('svg');
   font-weight: normal;
   font-style: normal;
 }
-
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 /*
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'hui-font';
-    src: url('../font/hui-font.svg?7780639#hui-font') format('svg');
+    src: url('../font/hui-font.svg?2584386#hui-font') format('svg');
   }
 }
 */
@@ -55,13 +54,8 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.hui-icon-carat-l:before {
-  content: '\e800';
-}
-
-/* '' */
-.hui-icon-user-solid:before {
-  content: '\e801';
-}
-
-/* '' */
+.hui-icon-carat-d-small:before { content: '\e800'; } /* '' */
+.hui-icon-carat-u-small:before { content: '\e801'; } /* '' */
+.hui-icon-checked-small:before { content: '\e802'; } /* '' */
+.hui-icon-carat-l:before { content: '\e803'; } /* '' */
+.hui-icon-user-solid:before { content: '\e804'; } /* '' */

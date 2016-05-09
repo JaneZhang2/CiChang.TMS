@@ -1,0 +1,18 @@
+.ranking {
+  ul {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #FFF;
+    margin: auto;
+    width: 496px;
+    //color: #25B6ED;
+    color: #656565;
+
+    li {
+      line-height: 76px;
+      padding-left: 171px;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.scss'
+import Ranking from '../../components/Ranking'
 
 class Layout extends React.Component {
 
@@ -12,7 +13,6 @@ class Layout extends React.Component {
       <div className="layout">
         <header>
           <i className="hui-icon-carat-l"></i>
-          排名一人
           <i className="hui-icon-user-solid"></i>
         </header>
         <section>

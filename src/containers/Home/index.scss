@@ -1,0 +1,29 @@
+.homepage {
+
+  .filter {
+    display: flex; //TODO:兼容性
+    color: #656565;
+
+    i {
+      margin-left: 15px;
+    }
+
+    > li {
+      flex: 1; //TODO:兼容性
+      line-height: 80px;
+      font-size: 32px;
+      text-align: center;
+      border: 1px solid #eee; //TODO:边框合并
+    }
+
+    li > ul {
+      //display: flex;
+      position: absolute;
+      left: 0;
+      right: 0;
+      //width: 100%;
+      //background: black;
+    }
+  }
+
+}
