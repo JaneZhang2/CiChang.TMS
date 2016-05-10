@@ -1,0 +1,45 @@
+.range-picker-container {
+  display: flex;
+  flex-flow: column;
+
+  button {
+    border: none;
+    background: #FFF;
+  }
+
+  .hui-icon-clock-1:last-of-type {
+    color: #FFF;
+  }
+
+  .range-picker {
+    display: flex;
+    align-items: center;
+    height: 120px;
+    padding: 0 40px;
+
+    > .date-picker-trigger {
+      flex: 1;
+    }
+  }
+
+  .range-picker-separator {
+    width: 60px;
+    height: 60px;
+    border: {
+      style: solid;
+      color: #EEE;
+      width: 1px 1px 0 0;
+    }
+    transform: rotate(45deg) skew(20deg, 20deg);
+  }
+
+  .range-picker-confirm {
+    color: #25B6ED;
+    border-top: 1px solid #EEE;
+  }
+
+  .range-picker {
+    border-top: 1px solid #EEE;
+    background: #FFF;
+  }
+}

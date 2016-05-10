@@ -26,6 +26,10 @@ const common = {
         loader: 'style!css!px2rem?remUnit=75&remPrecision=8!sass'
       },
       {
+        test: /\.css$/,
+        loader: 'style!css!px2rem?remUnit=75&remPrecision=8'
+      },
+      {
         test: /\.jsx?$/,
         loaders: ['babel'],
         include: path.join(__dirname, 'src')

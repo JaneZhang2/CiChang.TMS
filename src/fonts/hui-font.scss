@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'hui-font';
-  src: url('./fonts/hui-font.eot?2584386');
-  src: url('./fonts/hui-font.eot?2584386#iefix') format('embedded-opentype'),
-  url('./fonts/hui-font.woff?2584386') format('woff'),
-  url('./fonts/hui-font.ttf?2584386') format('truetype'),
-  url('./fonts/hui-font.svg?2584386#hui-font') format('svg');
+  src: url('./fonts/hui-font.eot?78414729');
+  src: url('./fonts/hui-font.eot?78414729#iefix') format('embedded-opentype'),
+  url('./fonts/hui-font.woff?78414729') format('woff'),
+  url('./fonts/hui-font.ttf?78414729') format('truetype'),
+  url('./fonts/hui-font.svg?78414729#hui-font') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'hui-font';
-    src: url('../font/hui-font.svg?2584386#hui-font') format('svg');
+    src: url('../font/hui-font.svg?78414729#hui-font') format('svg');
   }
 }
 */
@@ -55,7 +55,8 @@
 }
 
 .hui-icon-carat-d-small:before { content: '\e800'; } /* '' */
-.hui-icon-carat-u-small:before { content: '\e801'; } /* '' */
-.hui-icon-checked-small:before { content: '\e802'; } /* '' */
-.hui-icon-carat-l:before { content: '\e803'; } /* '' */
-.hui-icon-user-solid:before { content: '\e804'; } /* '' */
+.hui-icon-clock-1:before { content: '\e803'; } /* '' */
+.hui-icon-carat-u-small:before { content: '\e804'; } /* '' */
+.hui-icon-carat-l:before { content: '\e805'; } /* '' */
+.hui-icon-user-solid:before { content: '\e806'; } /* '' */
+.hui-icon-checked-small:before { content: '\e807'; } /* '' */

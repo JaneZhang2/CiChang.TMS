@@ -11,7 +11,7 @@ class Ranking extends React.Component {
     return (
       <div className="ranking">
         <div>排名-人</div>
-        <ul>
+        <ul style={{display:'none'}}>
           <li>排名-人</li>
           <li>排名-班级</li>
         </ul>

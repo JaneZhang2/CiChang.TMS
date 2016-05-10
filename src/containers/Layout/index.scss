@@ -1,5 +1,9 @@
 .layout {
-  header {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+
+  > header {
     display: flex;
     justify-content: space-between;
     background: #25B6ED;
@@ -8,5 +12,10 @@
     line-height: 96px;
     font-size: 36px;
     color: #FFF;
+  }
+
+  > section {
+    flex: 1;
+    position: relative;
   }
 }

@@ -13,6 +13,7 @@ class Layout extends React.Component {
       <div className="layout">
         <header>
           <i className="hui-icon-carat-l"></i>
+          <Ranking />
           <i className="hui-icon-user-solid"></i>
         </header>
         <section>

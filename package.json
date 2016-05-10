@@ -45,6 +45,9 @@
     "isomorphic-fetch": "^2.2.1",
     "lib-flexible": "^0.3.2",
     "normalizr": "^2.0.1",
+    "rc-dropdown": "^1.4.8",
+    "rc-menu": "^4.12.1",
+    "rc-select": "^6.3.1",
     "react": "^15.0.2",
     "react-custom-scrollbars": "^4.0.0-beta.1",
     "react-dom": "^15.0.2",
@@ -57,6 +60,7 @@
     "redux-router": "^1.0.0-beta8",
     "redux-rx": "^0.5.0",
     "redux-thunk": "^2.0.1",
+    "rmc-date-picker": "^2.2.0",
     "rx": "^4.1.0"
   }
 }
