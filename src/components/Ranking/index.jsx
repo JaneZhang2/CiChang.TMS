@@ -10,7 +10,7 @@ class Ranking extends React.Component {
   render() {
     return (
       <div className="ranking">
-        <div>排名-人</div>
+        <div>排名-人<i className="hui-icon-carat-d-small"></i></div>
         <ul style={{display:'none'}}>
           <li>排名-人</li>
           <li>排名-班级</li>

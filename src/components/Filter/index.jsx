@@ -21,29 +21,30 @@ class Filter extends React.Component {
         <span onClick={()=>trigger()}>
           {defaultValue}<i className="hui-icon-carat-d-small"/>
         </span>
-        <div className="xxx">
-          <ul className={active?'active':''}>
-            <li>昨日</li>
-            <li>今日</li>
-            <li>
-              自选
-              <div className="range-picker-container">
-                <div className="range-picker">
-                  <i className="hui-icon-clock-1"></i>
-                  <DatePicker/>
-                  <i className="range-picker-separator"></i>
-                  <DatePicker/>
-                  <i className="hui-icon-clock-1"></i>
-                </div>
-                <button className="range-picker-confirm" href="">确定</button>
-              </div>
-            </li>
-          </ul>
-        </div>
       </div>
     )
   }
 }
+
+// <div className="xxx">
+//   <ul className={active?'active':''}>
+//     <li>昨日</li>
+//     <li>今日</li>
+//     <li>
+//       自选
+//       <div className="range-picker-container">
+//         <div className="range-picker">
+//           <i className="hui-icon-clock-1"></i>
+//           <DatePicker/>
+//           <i className="range-picker-separator"></i>
+//           <DatePicker/>
+//           <i className="hui-icon-clock-1"></i>
+//         </div>
+//         <button className="range-picker-confirm" href="">确定</button>
+//       </div>
+//     </li>
+//   </ul>
+// </div>
 
 // <i className="hui-icon-clock-1"></i>
 // <DatePicker></DatePicker>
