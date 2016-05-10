@@ -9,12 +9,17 @@ class Ranking extends React.Component {
 
   render() {
     return (
-      <div className="ranking">
+      <div className="ranking-container">
         <div>排名-人<i className="hui-icon-carat-d-small"></i></div>
-        <ul style={{display:'none'}}>
-          <li>排名-人</li>
-          <li>排名-班级</li>
-        </ul>
+        <div className="ranking-modal">
+          <div className="arrow"></div>
+          <ul>
+            <li className="active">
+              排名-人<i className="hui-icon-checked-small"></i>
+            </li>
+            <li>排名-班级</li>
+          </ul>
+        </div>
       </div>
     )
   }
