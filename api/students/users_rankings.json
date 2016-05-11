@@ -1,0 +1,27 @@
+{
+  "message": "OK",
+  "status": 0,
+  "data": {
+    "items": [
+      {
+        "userId": 20586603,
+        "studentName": "卢凯",
+        "words": 100,
+        "days": 15
+      },
+      {
+        "userId": 2494376,
+        "studentName": "王孝远",
+        "words": 50,
+        "days": 10
+      },
+      {
+        "userId": 25865154,
+        "studentName": "裴燏",
+        "words": 10,
+        "days": 5
+      }
+    ],
+    "totalCount": 3
+  }
+}

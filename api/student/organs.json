@@ -1,0 +1,40 @@
+//{
+//  "message": "Authorization Failed",
+//  "status": -8193
+//}
+
+{
+  "message": "OK",
+  "status": 0,
+  "data": {
+    "orgName": "武宁",
+    "orgId": 1,
+    "orgType": 1,
+    //组织机构类型 1学校 2年级 3班级
+    "orgItems": [
+      {
+        "orgName": "一年级",
+        "orgId": 1,
+        "orgType": 2,
+        "orgItems": [
+          {
+            "orgName": "（一）班",
+            "orgId": 2,
+            "orgType": 3
+          },
+          {
+            "orgName": "（二）班",
+            "orgId": 3,
+            "orgType": 3
+          }
+        ]
+      },
+      {
+        "orgName": "二年级",
+        "orgId": 4,
+        "orgType": 2,
+        "orgItems": []
+      }
+    ]
+  }
+}
