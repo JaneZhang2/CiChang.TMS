@@ -1,8 +1,11 @@
-export default {
-  API_ROOT: '/api/',
-  //'http://dev.cichang.hjapi.com/teacher/v1/',
-  HJPASSPORT_ROOT: '//qapass.hujiang.com'
-}
+// export default {
+//   API_ROOT: '/api/',
+//   //'http://dev.cichang.hjapi.com/teacher/v1/',
+//   HJPASSPORT_PATH: '//qapass.hujiang.com/m'
+// }
+
+export const API_ROOT = '/api/';
+export const HJPASSPORT_PATH = '//qapass.hujiang.com/m';
 
 
 // 开发环境：http://dev.cichang. hujiang.com/teacher /v2/
