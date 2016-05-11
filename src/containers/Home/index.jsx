@@ -31,6 +31,7 @@ class Home extends React.Component {
           />
         </header>
         <table>
+          <tbody>
           <tr>
             <td><small>01</small> 张小北</td>
             <td>10 <small>词</small></td>
@@ -101,6 +102,7 @@ class Home extends React.Component {
             <td>10 <small>词</small></td>
             <td>1 <small>天</small></td>
           </tr>
+          </tbody>
         </table>
       </div>
     )
