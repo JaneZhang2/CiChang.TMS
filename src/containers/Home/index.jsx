@@ -1,6 +1,17 @@
 import React from 'react';
+import Rx from 'rx'
+import _ from 'lodash'
+import {bindActionCreators} from 'redux-rx';
+import {createConnector} from 'redux-rx/react';
+import Swiper from 'swiper'
 import './index.scss';
+import {fetchOrgans, fetchUserRankings} from '../../actions'
 import Filter from '../../components/Filter'
+import 'swiper/dist/css/swiper.min.css'
+
+const {combineLatest} = Rx.Observable;
+
+// alert(Swiper)
 
 class Home extends React.Component {
 
@@ -11,105 +22,113 @@ class Home extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    this.swiper.update();
+  }
+
+  componentDidMount() {
+    let self = this;
+
+    this.swiper = new Swiper('.swiper-container', {
+      direction: 'vertical',
+      scrollbar: '.swiper-scrollbar',
+      scrollbarHide: true,
+      slidesPerView: 14,
+      observer: true,//修改swiper自己或子元素时，自动初始化swiper
+      observeParents: true,//修改swiper的父元素时，自动初始化swiper
+      onReachEnd: (swiper)=> {
+        let {fetchUserRankings} = self.props;
+        if (fetchUserRankings) {
+          swiper.appendSlide('<div className="swiper-slide">loading</div>')
+          fetchUserRankings();
+        }
+      }
+    });
+  }
+
   render() {
+    let {rankings} = this.props;
+
+    console.log(this.props)
+
+
     return (
       <div className="homepage">
-        <header>
-          <Filter defaultValue="全校"
-                  options={['全校','一年级','二年级','三年级','四年级','五年级']}
-                  active={this.state.current=='1'}
-                  trigger={()=>this.setState({current:'1'})}
-          />
-          <Filter defaultValue="单词最多"
-                  options={['单词最多','单词最少']}
-                  active={this.state.current=='2'}
-                  trigger={()=>this.setState({current:'2'})}
-          />
-          <Filter defaultValue="昨日" options={['昨日','今日','自选']}
-                  active={this.state.current=='3'}
-                  trigger={()=>this.setState({current:'3'})}
-          />
-        </header>
-        <table>
-          <tbody>
-          <tr>
-            <td><small>01</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>02</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>03</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>04</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>05</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>06</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>07</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>08</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>09</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>10</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>11</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>12</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>13</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          <tr>
-            <td><small>14</small> 张小北</td>
-            <td>10 <small>词</small></td>
-            <td>1 <small>天</small></td>
-          </tr>
-          </tbody>
-        </table>
+        {/*
+         <header>
+         <Filter defaultValue="全校"
+         options={['全校','一年级','二年级','三年级','四年级','五年级']}
+         active={this.state.current=='1'}
+         trigger={()=>this.setState({current:'1'})}
+         />
+         <Filter defaultValue="单词最多"
+         options={['单词最多','单词最少']}
+         active={this.state.current=='2'}
+         trigger={()=>this.setState({current:'2'})}
+         />
+         <Filter defaultValue="昨日" options={['昨日','今日','自选']}
+         active={this.state.current=='3'}
+         trigger={()=>this.setState({current:'3'})}
+         />
+         </header>
+         */}
+        <div className="swiper-container">
+          <div className="swiper-wrapper">
+            {
+              _.map(_.get(rankings, 'items'), (item, index)=> {
+
+                let {userId, studentName, words, days} = item;
+
+                return (
+                  <div key={index} className="swiper-slide">
+                    <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
+                      {studentName}</span>
+                    <span>{words}
+                      <small>词</small></span>
+                    <span>{days}
+                      <small>天</small></span>
+                  </div>
+                )
+              })
+            }
+          </div>
+          <div className="swiper-scrollbar"></div>
+        </div>
       </div>
     )
   }
 }
 
-export default Home;
+export default createConnector((props$, state$, dispatch$) => {
+  const actionCreators$ = bindActionCreators({
+    fetchUserRankings
+  }, dispatch$);
+
+  let fetch$ = dispatch$.flatMap(dispatch=>
+    dispatch(fetchOrgans())
+      .flatMap(organs=>dispatch(
+        fetchUserRankings({
+          schoolId: organs.orgId,
+          gradeId: 0,
+          classId: 0,
+          sortType: 'wordsDesc',
+          startDate: '',//昨天
+          endDate: ''//昨天
+        }))
+      )
+  );
+
+  return combineLatest(
+    props$, state$, actionCreators$, fetch$,
+    (props, state, ac, fetch)=> ({
+      fetch,
+      ...props,
+      organs: state.organs,
+      rankings: state.rankings,
+      fetchUserRankings: ac.fetchUserRankings
+    })
+  )
+}, Home);
 
 // <header>
 //   <Filter defaultValue="全校"
