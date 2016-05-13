@@ -1,33 +1,52 @@
 .filter {
-  line-height: 80px;
-  height: 80px;
-  box-sizing: border-box;
-  border-bottom: 3px solid #EEE;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow: visible;
 
-  & + .filter {
-    border-left: 3px solid #EEE;
+  li {
+    line-height: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    text-align: center;
+
+    &.selected {
+      background: #FFF;
+    }
   }
 
-  .xxx{
-    background: #FFF;
-  }
+  > ul {
+    border-bottom: 3px solid #EEE;
+    width: 100%;
 
-  > .items-contaniner {
-    display: flex;
-    position: absolute;
-    left: 0;
-    right: 0;
-    background: #FFF;
+    &:first-of-type {
+      display: flex;
 
-    > ul {
-      flex: 1;
-      background: #F5F5F5;
+      > li {
+        flex: 1;
 
-      &:last-of-type {
-        flex: 2;
-        background: #fff;
+        & + li {
+          border-left: 3px solid #EEE;
+        }
       }
+    }
+
+    & + ul {
+      width: calc(100% / 3);
+      background: #F5F5F5;
+    }
+
+    &:last-of-type {
+      width: 100%;
+      background: #FFF;
+
+      > li.selected {
+        color: #25B6ED;
+      }
+    }
+
+    &:nth-of-type(3) {
+      flex: 1;
     }
   }
 }

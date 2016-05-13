@@ -1,4 +1,5 @@
 const path = require('path');
+const rucksack = require('rucksack-css')
 const merge = require('webpack-merge');
 const TARGET = process.env.npm_lifecycle_event;
 const webpack = require('webpack');
@@ -23,11 +24,11 @@ const common = {
       },
       {
         test: /\.scss$/,
-        loader: 'style!css!px2rem?remUnit=75&remPrecision=8!sass'
+        loader: 'style!css!postcss!px2rem?remUnit=75&remPrecision=8!sass'
       },
       {
         test: /\.css$/,
-        loader: 'style!css!px2rem?remUnit=75&remPrecision=8'
+        loader: 'style!css!postcss!px2rem?remUnit=75&remPrecision=8'
       },
       {
         test: /\.jsx?$/,
@@ -36,6 +37,11 @@ const common = {
       }
     ]
   },
+  postcss: [
+    rucksack({
+      autoprefixer: true
+    })
+  ],
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'

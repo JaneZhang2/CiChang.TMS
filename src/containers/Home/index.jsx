@@ -55,11 +55,7 @@ class Home extends React.Component {
     return (
       <div className="homepage">
         <header>
-          <Filter defaultValue="全校"
-                  options={organs}
-                  active={this.state.current=='1'}
-                  trigger={()=>this.setState({current:'1'})}
-          />
+          <Filter options={organs}/>
 
         </header>
         <div className="swiper-container">

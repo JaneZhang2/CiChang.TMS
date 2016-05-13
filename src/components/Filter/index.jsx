@@ -1,7 +1,6 @@
 import React from 'react';
 import {createRxComponent, funcSubject} from 'react-rx-component';
 import Rx from 'rx'
-import {normalize, Schema, arrayOf} from 'normalizr';
 import _ from 'lodash';
 import './index.scss';
 import DatePicker from '../DatePicker.jsx'
@@ -22,48 +21,54 @@ class Filter extends React.Component {
   }
 
   onClick(index, id) {
+    let {current} = this.state;
+
     this.setState({
-      current: _.setWith(this.state.current, index, id)
+      current: _.set(current.slice(0, index), index, id)
     })
   }
 
   render() {
-    let {defaultValue, options, trigger} = this.props;
-
-    const filters = [{
-      id: '',
-      items: ''
-    }];
-
-    console.log(this.state)
-
-    let organs = _.get(options, 'entities.organs');
+    let {current} = this.state;
+    let {options} = this.props;
+    let filters = _.get(options, 'entities.filters');
 
     return (
       <div className="filter">
-        <div onClick={this.onClick.bind(this,0,1)}>
-          {defaultValue}<i className="hui-icon-carat-d-small"/>
-        </div>
-        <div className="items-contaniner">
+        <ul>
           {
-            _.map(this.state.current, (item, index)=> {
-              let list = _.pick(organs, _.get(organs, `${item}.orgItems`));
-
-              return _.isEmpty(list) ? '' :
-                <ul>
-                  {
-                    _.map(list, item=>(
-                        <li
-                          className={this.state.current[index+1]==item.orgId?'xxx':''}
-                          onClick={this.onClick.bind(this,index+1,item.orgId)}
-                          key={item.orgId}>{item.orgName}</li>
-                      )
-                    )
-                  }
-                </ul>
-            })
+            _.map(
+              _.get(options, 'result'),
+              item => (
+                <li key={item} onClick={this.onClick.bind(this,0,item)}>
+                  {_.get(filters, `${_.get(filters, `${item}.items[0]`)}.name`)}
+                  <i className="hui-icon-carat-d-small"/>
+                </li>
+              )
+            )
           }
-        </div>
+        </ul>
+        {
+          _.map(current, (id, index)=>
+            ((items)=> _.isEmpty(items) ? '' :
+              <ul key={id}>
+                {
+                  _.map(items, item =>
+                    (
+                      <li
+                        className={item==_.get(current,index+1)?'selected':''}
+                        key={item}
+                        onClick={this.onClick.bind(this,index+1,item)}
+                      >
+                        {_.get(filters, `${item}.name`)}
+                      </li>
+                    )
+                  )
+                }
+              </ul>)
+            (_.get(filters, `${id}.items`))
+          )
+        }
       </div>
     )
   }
@@ -89,26 +94,6 @@ class Filter extends React.Component {
 //   </ul>
 // </div>
 
-// <i className="hui-icon-clock-1"></i>
-// <DatePicker></DatePicker>
-// <i className="divider"></i>
-//   <DatePicker></DatePicker>
-
-// <div>
-//   <ul className={active?'active':''}>
-//     <li>全校</li>
-//     <li>一年级</li>
-//   </ul>
-//   <ul>
-//     <li>全部</li>
-//     <li>1班</li>
-//     <li>2班</li>
-//     <li>3班</li>
-//     <li>4班</li>
-//     <li>5班</li>
-//   </ul>
-// </div>
-
 export default createRxComponent(props$ => {
   return combineLatest(
     props$,
@@ -117,5 +102,3 @@ export default createRxComponent(props$ => {
     })
   )
 }, Filter);
-
-// export default Filter;
