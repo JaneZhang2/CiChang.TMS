@@ -1,26 +1,69 @@
 import React from 'react';
+import {createRxComponent, funcSubject} from 'react-rx-component';
+import Rx from 'rx'
+import {normalize, Schema, arrayOf} from 'normalizr';
 import _ from 'lodash';
 import './index.scss';
 import DatePicker from '../DatePicker.jsx'
+
+const {combineLatest} = Rx.Observable;
 
 class Filter extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      current: []
+    }
   }
 
   trigger() {
     let self = this;
   }
 
+  onClick(index, id) {
+    this.setState({
+      current: _.setWith(this.state.current, index, id)
+    })
+  }
+
   render() {
-    let {active, defaultValue, options, trigger} = this.props;
+    let {defaultValue, options, trigger} = this.props;
+
+    const filters = [{
+      id: '',
+      items: ''
+    }];
+
+    console.log(this.state)
+
+    let organs = _.get(options, 'entities.organs');
 
     return (
       <div className="filter">
-        <span onClick={()=>trigger()}>
+        <div onClick={this.onClick.bind(this,0,1)}>
           {defaultValue}<i className="hui-icon-carat-d-small"/>
-        </span>
+        </div>
+        <div className="items-contaniner">
+          {
+            _.map(this.state.current, (item, index)=> {
+              let list = _.pick(organs, _.get(organs, `${item}.orgItems`));
+
+              return _.isEmpty(list) ? '' :
+                <ul>
+                  {
+                    _.map(list, item=>(
+                        <li
+                          className={this.state.current[index+1]==item.orgId?'xxx':''}
+                          onClick={this.onClick.bind(this,index+1,item.orgId)}
+                          key={item.orgId}>{item.orgName}</li>
+                      )
+                    )
+                  }
+                </ul>
+            })
+          }
+        </div>
       </div>
     )
   }
@@ -66,4 +109,13 @@ class Filter extends React.Component {
 //   </ul>
 // </div>
 
-export default Filter;
+export default createRxComponent(props$ => {
+  return combineLatest(
+    props$,
+    (props)=> ({
+      ...props
+    })
+  )
+}, Filter);
+
+// export default Filter;

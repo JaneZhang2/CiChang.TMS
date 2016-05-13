@@ -1,5 +1,35 @@
-.filter + .filter {
-  border-left: 1px solid #EEE;
+.filter {
+  line-height: 80px;
+  height: 80px;
+  box-sizing: border-box;
+  border-bottom: 3px solid #EEE;
+  text-align: center;
+
+  & + .filter {
+    border-left: 3px solid #EEE;
+  }
+
+  .xxx{
+    background: #FFF;
+  }
+
+  > .items-contaniner {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #FFF;
+
+    > ul {
+      flex: 1;
+      background: #F5F5F5;
+
+      &:last-of-type {
+        flex: 2;
+        background: #fff;
+      }
+    }
+  }
 }
 
 .range-picker-container {

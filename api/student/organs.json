@@ -8,24 +8,24 @@
     "orgItems": [
       {
         "orgName": "一年级",
-        "orgId": 1,
+        "orgId": 2,
         "orgType": 2,
         "orgItems": [
           {
             "orgName": "（一）班",
-            "orgId": 2,
+            "orgId": 3,
             "orgType": 3
           },
           {
             "orgName": "（二）班",
-            "orgId": 3,
+            "orgId": 4,
             "orgType": 3
           }
         ]
       },
       {
         "orgName": "二年级",
-        "orgId": 4,
+        "orgId": 5,
         "orgType": 2,
         "orgItems": []
       }
