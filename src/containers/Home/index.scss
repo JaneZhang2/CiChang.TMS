@@ -2,27 +2,9 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  color: #656565;
-  //text-align: center;
-  //background: rgba(#333, .3);
-  overflow-y: auto;
-
-  //line-height: 80px;
   font-size: 32px;
-
-  > header {
-    display: flex;
-    position: fixed;
-    top: 96px;
-    right: 0;
-    left: 0;
-    z-index: 1000;
-    background: #FFF;
-
-    > .filter {
-      flex: 1;
-    }
-  }
+  color: #656565;
+  overflow-y: auto;
 
   .swiper-container {
     padding-top: 80px;
@@ -68,35 +50,4 @@
       }
     }
   }
-
-  //
-  //    > .xxx {
-  //      top: 81px;
-  //      display: flex;
-  //
-  //      > ul {
-  //        flex: 1;
-  //        background: #F5F5F5
-  //      }
-  //
-  //      > ul + ul {
-  //        background: #fff;
-  //        flex: 2;
-  //      }
-  //    }
-  //
-  //    //> ul {
-  //    //  top: 81px;
-  //    //  display: none;
-  //    //
-  //    //  &.active {
-  //    //    display: block;
-  //    //  }
-  //    //}
-  //  }
-  //
-  //  i {
-  //    margin-left: 15px;
-  //  }
-  //}
 }

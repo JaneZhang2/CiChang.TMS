@@ -11,8 +11,6 @@ import 'swiper/dist/css/swiper.min.css'
 
 const {combineLatest} = Rx.Observable;
 
-// alert(Swiper)
-
 class Home extends React.Component {
 
   constructor(props) {
@@ -54,10 +52,7 @@ class Home extends React.Component {
 
     return (
       <div className="homepage">
-        <header>
-          <Filter options={organs}/>
-
-        </header>
+        <Filter options={organs}/>
         <div className="swiper-container">
           <div className="swiper-wrapper">
             {
@@ -115,31 +110,3 @@ export default createConnector((props$, state$, dispatch$) => {
     })
   )
 }, Home);
-
-// <Filter defaultValue="单词最多"
-//         options={['单词最多','单词最少']}
-//         active={this.state.current=='2'}
-//         trigger={()=>this.setState({current:'2'})}
-// />
-// <Filter defaultValue="昨日" options={['昨日','今日','自选']}
-// active={this.state.current=='3'}
-// trigger={()=>this.setState({current:'3'})}
-// />
-
-
-// <header>
-//   <Filter defaultValue="全校"
-//           options={['全校','一年级','二年级','三年级','四年级','五年级']}
-//           active={this.state.current=='1'}
-//           trigger={()=>this.setState({current:'1'})}
-//   />
-//   <Filter defaultValue="单词最多"
-//           options={['单词最多','单词最少']}
-//           active={this.state.current=='2'}
-//           trigger={()=>this.setState({current:'2'})}
-//   />
-//   <Filter defaultValue="昨日" options={['昨日','今日','自选']}
-//           active={this.state.current=='3'}
-//           trigger={()=>this.setState({current:'3'})}
-//   />
-// </header>
