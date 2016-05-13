@@ -69,30 +69,23 @@ class Filter extends React.Component {
             (_.get(filters, `${id}.items`))
           )
         }
+        {
+          _.last(current) == 14 ?
+            <div className="range-picker-container">
+              <i className="hui-icon-clock-1"></i>
+              <DatePicker/>
+              <i className="range-picker-separator"></i>
+              <DatePicker/>
+              <i className="hui-icon-clock-1"></i>
+              <button className="range-picker-confirm">
+                确定
+              </button>
+            </div> : ''
+        }
       </div>
     )
   }
 }
-
-// <div className="xxx">
-//   <ul className={active?'active':''}>
-//     <li>昨日</li>
-//     <li>今日</li>
-//     <li>
-//       自选
-//       <div className="range-picker-container">
-//         <div className="range-picker">
-//           <i className="hui-icon-clock-1"></i>
-//           <DatePicker/>
-//           <i className="range-picker-separator"></i>
-//           <DatePicker/>
-//           <i className="hui-icon-clock-1"></i>
-//         </div>
-//         <button className="range-picker-confirm" href="">确定</button>
-//       </div>
-//     </li>
-//   </ul>
-// </div>
 
 export default createRxComponent(props$ => {
   return combineLatest(
