@@ -107,12 +107,18 @@ class Filter extends React.Component {
             {
               _.map(
                 _.get(options, 'result'),
-                item => (
-                  <li key={item} onClick={this.onClick.bind(this,0,item)}>
-                    {_.get(filters, `${_.get(filters, `${item}.items[0]`)}.name`)}
-                    <i className="hui-icon-carat-d-small"/>
-                  </li>
-                )
+                item => {
+                  let selected = item == _.get(current, 0);
+
+                  return (
+                    <li className={selected?'selected':''}
+                        key={item} onClick={this.onClick.bind(this,0,item)}>
+                      {_.get(filters, `${_.get(filters, `${item}.items[0]`)}.name`)}
+                      <i
+                        className={`hui-icon-carat-${selected?'u':'d'}-small`}/>
+                    </li>
+                  )
+                }
               )
             }
           </ul>

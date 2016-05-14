@@ -43,6 +43,10 @@
         & + li {
           border-left: 3px solid #EEE;
         }
+
+        &.selected {
+          color: #25B6ED;
+        }
       }
     }
 
