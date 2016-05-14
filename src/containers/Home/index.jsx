@@ -45,14 +45,14 @@ class Home extends React.Component {
   }
 
   render() {
-    let {organs, rankings} = this.props;
+    let {organs, location, rankings} = this.props;
 
     console.log(this.props)
 
 
     return (
       <div className="homepage">
-        <Filter options={organs}/>
+        <Filter options={organs} query={_.get(location,'query')}/>
         <div className="swiper-container">
           <div className="swiper-wrapper">
             {
