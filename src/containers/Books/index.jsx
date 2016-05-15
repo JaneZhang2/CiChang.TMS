@@ -1,5 +1,9 @@
-import React from 'react';
+import React from 'react'
+import {createConnector} from 'redux-rx/react'
 import './index.scss'
+import {fetchOrgans,fetchBooks,fetchUserRankings} from '../../actions'
+
+const {combineLatest} = Rx.Observable;
 
 class Books extends React.Component {
 
@@ -8,6 +12,8 @@ class Books extends React.Component {
   }
 
   render() {
+    console.log(this.props)
+
     return (
       <div className="books">
         <header>
@@ -71,4 +77,16 @@ class Books extends React.Component {
   }
 }
 
-export default Books;
+export default createConnector((props$, state$, dispatch$) => {
+
+  let fetch$ = dispatch$.flatMap(dispatch=> dispatch(fetchBooks()));
+
+  return combineLatest(
+    props$, state$, fetch$,
+    (props, state, fetch)=> ({
+      fetch,
+      ...props,
+      books: state.books
+    })
+  )
+}, Books);
