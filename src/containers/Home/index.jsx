@@ -4,6 +4,7 @@ import _ from 'lodash'
 import {bindActionCreators} from 'redux-rx';
 import {createConnector} from 'redux-rx/react';
 import Swiper from 'swiper'
+import {hashHistory} from 'react-router'
 import './index.scss';
 import {fetchOrgans, fetchUserRankings} from '../../actions'
 import Filter from '../../components/Filter'
@@ -61,7 +62,7 @@ class Home extends React.Component {
                 let {userId, studentName, words, days} = item;
 
                 return (
-                  <div key={index} className="swiper-slide">
+                  <div key={index} onClick={()=>hashHistory.push(`students/${userId}`)} className="swiper-slide">
                     <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                       {studentName}</span>
                     <span>{words}

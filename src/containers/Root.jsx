@@ -19,10 +19,10 @@ const Root = (props) => {
           <Route components={Layout}>
             <IndexRoute components={Home}/>
             <Route path='students' components={Students}/>
-            <Route path='students/:id' components={Student}/>
             <Route path='books' components={Books}/>
           </Route>
         </Route>
+        <Route path='students/:id' components={Student}/>
       </Router>
     </Provider>
   );

@@ -101,7 +101,7 @@ class Filter extends React.Component {
     console.log(this.state);
 
     return (
-      <div className={`filter-container ${current.length>0?'selecting':''}`}>
+      <div className={current.length>0?'filter-container':''}>
         <div className="filter">
           <ul>
             {
