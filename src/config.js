@@ -7,6 +7,8 @@
 export const API_ROOT = '/api/';
 export const HJPASSPORT_PATH = '//qapass.hujiang.com/m';
 
+//http://dev.cichang.hjapi.com/teacher/v1/students/{userid:int}/home/?bookid=0
+
 
 // 开发环境：http://dev.cichang. hujiang.com/teacher /v2/
 //   测试环境：http://qa.cichang.hujiang.com/teacher/v2/

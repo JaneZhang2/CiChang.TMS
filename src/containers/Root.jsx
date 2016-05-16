@@ -21,8 +21,8 @@ const Root = (props) => {
             <Route path='students' components={Students}/>
           </Route>
         </Route>
-        <Route path='books' components={Books}/>
-        <Route path='students/:id' components={Student}/>
+        <Route path='books/:id' components={Books}/>
+        <Route path='students/:studentId/:bookId' components={Student}/>
       </Router>
     </Provider>
   );

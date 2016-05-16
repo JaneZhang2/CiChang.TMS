@@ -45,6 +45,7 @@
     "humps": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
     "lib-flexible": "^0.3.2",
+    "moment": "^2.13.0",
     "normalizr": "^2.0.2",
     "postcss-loader": "^0.9.1",
     "rc-dropdown": "^1.4.8",
