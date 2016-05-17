@@ -5,10 +5,12 @@ import {bindActionCreators} from 'redux-rx';
 import {createConnector} from 'redux-rx/react';
 import Swiper from 'swiper'
 import {hashHistory} from 'react-router'
-import './index.scss';
 import {fetchOrgans, fetchUserRankings} from '../../actions'
 import Filter from '../../components/Filter'
 import 'swiper/dist/css/swiper.min.css'
+import 'spinkit/scss/spinkit.scss'
+import './index.scss';
+import moment from 'moment'
 
 const {combineLatest} = Rx.Observable;
 
@@ -35,12 +37,33 @@ class Home extends React.Component {
       slidesPerView: 14,
       observer: true,//修改swiper自己或子元素时，自动初始化swiper
       observeParents: true,//修改swiper的父元素时，自动初始化swiper
-      onReachEnd: (swiper)=> {
-        let {fetchUserRankings} = self.props;
-        if (fetchUserRankings) {
-          swiper.appendSlide('<div className="swiper-slide">loading</div>');
-          fetchUserRankings();
-        }
+      onInit: (swiper)=> {
+
+        swiper.on('touchEnd', (swiper, event)=> {
+          if (!swiper.isEnd) {
+            return;
+          }
+
+          swiper.lockSwipes();
+          swiper.appendSlide(
+            `<div class="swiper-slide">
+              <div class="sk-wave">
+                <div class="sk-rect sk-rect1"></div>
+                <div class="sk-rect sk-rect2"></div>
+                <div class="sk-rect sk-rect3"></div>
+                <div class="sk-rect sk-rect4"></div>
+                <div class="sk-rect sk-rect5"></div>
+              </div>
+            </div>`
+          );
+
+          self.props.fetchUserRankings()
+            .subscribe(()=> {
+                swiper.unlockSwipes();
+                swiper.removeSlide(swiper.slides.length - 1);
+              }
+            );
+        });
       }
     });
   }
@@ -86,22 +109,27 @@ class Home extends React.Component {
 
 export default createConnector((props$, state$, dispatch$) => {
   const actionCreators$ = bindActionCreators({
+    fetchOrgans,
     fetchUserRankings
   }, dispatch$);
 
-  let fetch$ = dispatch$.flatMap(dispatch=>
-    dispatch(fetchOrgans())
-      .flatMap(organs=>dispatch(
-        fetchUserRankings({
-          schoolId: organs.orgId,
-          gradeId: 0,
-          classId: 0,
-          sortType: 'wordsDesc',
-          startDate: '',//昨天
-          endDate: ''//昨天
-        }))
-      )
-  );
+  const fetch$ = props$.withLatestFrom(
+    actionCreators$,
+    (props, ac)=>
+      ac.fetchOrgans()
+        .flatMap(organs=> {
+          let query = _.get(props, 'location.query');
+
+          return ac.fetchUserRankings({
+            schoolId: organs.orgId,
+            gradeId: _.get(query, 'gradeId', 0),
+            classId: _.get(query, 'classId', 0),
+            sortType: _.get(query, 'sortType', 'wordsDesc'),
+            startDate: _.get(query, 'startDate', moment().format('YYYY-MM-DD')),
+            endDate: _.get(query, 'endDate', moment().format('YYYY-MM-DD'))
+          })
+        })
+  ).flatMap(obs => obs);
 
   return combineLatest(
     props$, state$, actionCreators$, fetch$,

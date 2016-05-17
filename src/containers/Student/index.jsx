@@ -72,8 +72,19 @@ class Student extends React.Component {
       onInit: (swiper)=> {
 
         swiper.on('slideChangeEnd', (swiper)=> {
-          swiper.removeAllSlides(0);
-          swiper.appendSlide(`<div class="swiper-slide">loading</div>`);
+          swiper.removeAllSlides();
+          swiper.appendSlide(
+            `<div class="swiper-slide">
+              <div class="sk-wave">
+                <div class="sk-rect sk-rect1"></div>
+                <div class="sk-rect sk-rect2"></div>
+                <div class="sk-rect sk-rect3"></div>
+                <div class="sk-rect sk-rect4"></div>
+                <div class="sk-rect sk-rect5"></div>
+              </div>
+            </div>`
+          );
+          swiper.lockSwipes();
 
           self.props.fetchStudent(
             {
