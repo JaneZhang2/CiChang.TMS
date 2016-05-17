@@ -6,13 +6,88 @@ import './index.scss'
 import {fetchStudent, fetchBooks} from '../../actions'
 import {bindActionCreators} from 'redux-rx'
 import moment from 'moment'
+import echarts from 'echarts'
+import Swiper from 'swiper'
+import 'isomorphic-fetch'
 
 const {combineLatest} = Rx.Observable;
+
+const option = {
+  tooltip: {
+    trigger: 'axis'
+  },
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    data: [],
+    splitLine: {
+      show: false
+    }
+  },
+  yAxis: {
+    type: 'value',
+    splitLine: {
+      show: false
+    }
+  },
+  series: [
+    {
+      name: '最高气温',
+      type: 'line',
+      data: []
+    }
+  ]
+};
 
 class Student extends React.Component {
 
   constructor(props) {
     super(props)
+  }
+
+  componentWillReceiveProps(props) {
+    if (!_.eq(props.student, this.props.student)) {
+      console.log(props.student);
+
+      let items = _.get(props, 'student.studyDays', []),
+        config = _.assign({}, option);
+
+      _.set(config, 'xAxis.data', _.map(items, item=>_.get(item, 'studyDate')));
+      _.set(config, 'series.0.data', _.map(items, item=>_.get(item, 'studyCount')));
+
+
+      echarts.init(this.swiper.slides[this.swiper.activeIndex])
+        .setOption(config);
+    }
+  }
+
+  componentDidMount() {
+    let self = this;
+
+
+    this.swiper = new Swiper('.swiper-container', {
+      loop: true,
+      loopedSlides: 1,
+      observer: true,//修改swiper自己或子元素时，自动初始化swiper
+      observeParents: true,//修改swiper的父元素时，自动初始化swiper
+      onInit: (swiper)=> {
+
+        swiper.on('slideChangeEnd', (swiper)=> {
+          swiper.removeAllSlides(0);
+          swiper.appendSlide(`<div class="swiper-slide">loading</div>`);
+
+          self.props.fetchStudent(
+            {
+              ...self.props.params,
+              currentDate: moment().format('YYYY-MM-DD')
+            }
+          ).subscribe(()=> {
+              swiper.unlockSwipes();
+            }
+          );
+        });
+      }
+    });
   }
 
   render() {
@@ -57,8 +132,10 @@ class Student extends React.Component {
             {_.get(current, 'bookName')}
             <i className="hui-icon-carat-l"/></a>
         </section>
-        <section className="chart">
-          xxx
+        <section className="swiper-container">
+          <div className="swiper-wrapper">
+            <div className="swiper-slide">xxx</div>
+          </div>
         </section>
       </div>
     )
@@ -84,12 +161,14 @@ export default createConnector((props$, state$, dispatch$) => {
   ).flatMap(obs => obs);
 
   return combineLatest(
-    props$, state$, fetch$,
-    (props, state, fetch)=> ({
+    props$, state$, fetch$, actionCreators$,
+    (props, state, fetch, ac)=> ({
       fetch,
       ...props,
       student: state.student,
-      books: state.books
+      books: state.books,
+      fetchBooks: ac.fetchBooks,
+      fetchStudent: ac.fetchStudent
     })
   )
 }, Student);

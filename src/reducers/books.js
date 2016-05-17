@@ -4,11 +4,11 @@ import {FETCH_BOOKS} from '../actions'
 
 export default handleActions({
   [FETCH_BOOKS]: (state, action)=>
-    _.concat(
+    _.clone(_.concat(
       [{
-        "bookId": 0,
+        "bookId": String(new Date()),
         "bookName": "全部词书"
       }],
       action.payload
-    )
+    ))
 }, {});

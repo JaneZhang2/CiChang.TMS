@@ -13,16 +13,24 @@
     },
     "studyDays": [
       {
-        "studyDate": "2016-05-07",
+        "studyDate": "05.07",
         "studyCount": 10
       },
       {
-        "studyDate": "2016-05-08",
-        "studyCount": 20
+        "studyDate": "05.08",
+        "studyCount": 1
       },
       {
-        "studyDate": "2016-05-09",
-        "studyCount": 30
+        "studyDate": "05.09",
+        "studyCount": 11
+      },
+      {
+        "studyDate": "05.09",
+        "studyCount": 3
+      },
+      {
+        "studyDate": "05.09",
+        "studyCount": 20
       }
     ]
   }

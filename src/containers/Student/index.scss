@@ -74,6 +74,7 @@
   }
 
   .book {
+    box-sizing: border-box;
     padding: 0 40px;
     height: 100px;
     line-height: 100px;
@@ -104,7 +105,10 @@
     }
   }
 
-  .chart {
+  .swiper-container {
     flex: 1;
+    width: 100%;
+    height: calc(100% - 445px - 40px - 100px);
+    box-sizing: border-box;
   }
 }
