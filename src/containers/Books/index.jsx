@@ -10,9 +10,6 @@ class Books extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      current: 0
-    }
   }
 
   onClick(id) {
@@ -22,13 +19,16 @@ class Books extends React.Component {
   }
 
   render() {
-    let {current} = this.state;
-    let {books} = this.props;
+    let {books, params, location} = this.props;
+    let last = _.get(location, 'query.current');
+    let current = _.get(this.state, 'current', last);
+    let studentId = _.get(params, 'studentId');
 
     return (
       <div className="books">
         <header>
-          <i className="hui-icon-carat-l"/>
+          <i className="hui-icon-carat-l"
+             onClick={()=>hashHistory.push(`students/${studentId}/${last}`)}/>
           <span>选择词书</span>
           <i className="hui-icon-user-solid"/>
         </header>
@@ -52,7 +52,7 @@ class Books extends React.Component {
             }
           </ul>
           <button className="btn-primary"
-                  onClick={()=>hashHistory.push(`students/111/${current}`)}>
+                  onClick={()=>hashHistory.push(`students/${studentId}/${current}`)}>
             完成
           </button>
         </section>

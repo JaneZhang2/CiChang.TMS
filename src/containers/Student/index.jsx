@@ -9,12 +9,14 @@ import moment from 'moment'
 import echarts from 'echarts'
 import Swiper from 'swiper'
 import 'isomorphic-fetch'
+import URI from 'urijs'
 
 const {combineLatest} = Rx.Observable;
 
 const option = {
   tooltip: {
-    trigger: 'axis'
+    trigger: 'axis',
+    formatter: params=>`${_.get(params, '0.value', 0)}词`
   },
   xAxis: {
     type: 'category',
@@ -32,7 +34,6 @@ const option = {
   },
   series: [
     {
-      name: '最高气温',
       type: 'line',
       data: []
     }
@@ -47,8 +48,6 @@ class Student extends React.Component {
 
   componentWillReceiveProps(props) {
     if (!_.eq(props.student, this.props.student)) {
-      console.log(props.student);
-
       let items = _.get(props, 'student.studyDays', []),
         config = _.assign({}, option);
 
@@ -94,11 +93,16 @@ class Student extends React.Component {
     let {student, books, params} = this.props;
 
     let current = _.find(books, {bookId: Number(_.get(params, 'bookId', 0))});
+    let bookId = _.get(current, 'bookId'),
+      bookName = _.get(current, 'bookName');
 
     return (
       <div className="student">
         <header>
-          <i className="hui-icon-carat-l"></i>
+          <i
+            className="hui-icon-carat-l"
+            onClick={()=>hashHistory.push('/')}
+          />
         </header>
         <section className="userinfo">
           <figure>
@@ -128,13 +132,16 @@ class Student extends React.Component {
         <section className="book">
           <h2 className="title">选择词书</h2>
           <a
-            onClick={()=>{hashHistory.push(`books/${_.get(student,'studentInfo.userId')}`)}}>
-            {_.get(current, 'bookName')}
-            <i className="hui-icon-carat-l"/></a>
+            onClick={()=>{hashHistory.push(String(
+              new URI(`books/${_.get(student,'studentInfo.userId')}`)
+              .query({current:bookId})
+            ))}}>
+            {bookName}
+            <i className="hui-icon-carat-r"/></a>
         </section>
         <section className="swiper-container">
           <div className="swiper-wrapper">
-            <div className="swiper-slide">xxx</div>
+            <div className="swiper-slide"/>
           </div>
         </section>
       </div>
