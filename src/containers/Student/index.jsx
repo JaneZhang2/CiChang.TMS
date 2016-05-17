@@ -89,6 +89,10 @@ class Student extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    this.swiper.destroy();
+  }
+
   render() {
     let {student, books, params} = this.props;
 

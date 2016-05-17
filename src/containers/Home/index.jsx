@@ -15,7 +15,7 @@ const {combineLatest} = Rx.Observable;
 class Home extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       current: ''
     }
@@ -38,18 +38,19 @@ class Home extends React.Component {
       onReachEnd: (swiper)=> {
         let {fetchUserRankings} = self.props;
         if (fetchUserRankings) {
-          swiper.appendSlide('<div className="swiper-slide">loading</div>')
+          swiper.appendSlide('<div className="swiper-slide">loading</div>');
           fetchUserRankings();
         }
       }
     });
   }
 
+  componentWillUnmount() {
+    this.swiper.destroy();
+  }
+
   render() {
     let {organs, location, rankings} = this.props;
-
-    console.log(this.props)
-
 
     return (
       <div className="homepage">
@@ -62,7 +63,9 @@ class Home extends React.Component {
                 let {userId, studentName, words, days} = item;
 
                 return (
-                  <div key={index} onClick={()=>hashHistory.push(`students/${userId}`)} className="swiper-slide">
+                  <div key={index}
+                       onClick={()=>hashHistory.push(`students/${userId}`)}
+                       className="swiper-slide">
                     <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                       {studentName}</span>
                     <span>{words}

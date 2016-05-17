@@ -15,6 +15,3 @@ export const FETCH_STUDENT = Symbol('FETCH');
 export const fetchStudent = (params)=>createAction(FETCH_STUDENT)(
   String(new URI(`${API_ROOT}student.json`).query(params))
 );
-
-export const SELECT_BOOK = 'SELECT_BOOK';
-export const selectBook = id=>createAction(SELECT_BOOK)(id);

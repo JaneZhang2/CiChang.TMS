@@ -31,17 +31,6 @@ class Filter extends React.Component {
 
     current = _.set(current.slice(0, index), index, id);
 
-    console.log('lll');
-    console.log(query);
-
-    // let uri = String(new URI('/')
-    //   .query({
-    //     schoolId: '',
-    //     pageIndex: '',
-    //     pageSize: ''
-    //   }));
-    //
-
     let data = _.get(filters, id);
 
     switch (_.get(data, 'type')) {
@@ -97,8 +86,6 @@ class Filter extends React.Component {
     let {current} = this.state;
     let {options} = this.props;
     let filters = _.get(options, 'entities.filters');
-
-    console.log(this.state);
 
     return (
       <div className={current.length>0?'filter-container':''}>
