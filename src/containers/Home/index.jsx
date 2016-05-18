@@ -122,11 +122,12 @@ export default createConnector((props$, state$, dispatch$) => {
 
           return ac.fetchUserRankings({
             schoolId: organs.orgId,
-            gradeId: _.get(query, 'gradeId', 0),
-            classId: _.get(query, 'classId', 0),
+            selectedOrganId: _.get(query, 'selectedOrganId', organs.orgId),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
-            startDate: _.get(query, 'startDate', moment().format('YYYY-MM-DD')),
-            endDate: _.get(query, 'endDate', moment().format('YYYY-MM-DD'))
+            startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
+            endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD')),
+            pageIndex: 0,
+            pageSize: 50
           })
         })
   ).flatMap(obs => obs);

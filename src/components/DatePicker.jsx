@@ -1,20 +1,19 @@
-/* eslint no-console:0 */
-
 import 'rmc-picker/assets/index.css';
 import 'rmc-date-picker/assets/index.css';
 import 'rmc-picker/assets/popup.css';
 import GregorianCalendarFormat from 'gregorian-calendar-format';
 import GregorianCalendar from 'gregorian-calendar';
-import zhCn from 'gregorian-calendar-format/lib/locale/zh_CN';
-import zhCnPicker from 'rmc-date-picker/lib/locale/zh_CN';
+import zhCn from 'gregorian-calendar-format/lib/locale/en_US';
+import zhCnPicker from 'rmc-date-picker/lib/locale/en_US';
 // const zhCnCalendar = null;
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import PopPicker from 'rmc-date-picker/lib/Popup';
 
-const formatter = GregorianCalendarFormat.getDateTimeInstance(GregorianCalendarFormat.Style.FULL,
-  GregorianCalendarFormat.Style.FULL, zhCn);
+const formatter = new GregorianCalendarFormat('yyyy-MM-dd');
+// GregorianCalendarFormat.getDateTimeInstance(GregorianCalendarFormat.Style.FULL,
+// GregorianCalendarFormat.Style.FULL, zhCn);
 
 function format(v) {
   return formatter.format(v);
@@ -25,40 +24,28 @@ now.setTime(Date.now());
 
 const getGregorianCalendar = () => new GregorianCalendar(zhCnPicker.calendar);
 const minDate = getGregorianCalendar();
-minDate.set(2015, 8, 1, 0, 0, 0);
+minDate.set(2015, 0, 1, 0, 0, 0);
 const maxDate = getGregorianCalendar();
 maxDate.set(2018, 0, 1, 0, 0, 0);
 
-const Demo = React.createClass({
+const DatePicker = React.createClass({
   propTypes: {
-    mode: React.PropTypes.string,
+    mode: React.PropTypes.string
   },
   getDefaultProps() {
     return {
       mode: 'datetime',
-      locale: zhCnPicker,
-      // locale: require('../src/locale/zh_CN'),
+      locale: zhCnPicker
     };
   },
   getInitialState() {
     return {
-      date: null,
+      date: null
     };
   },
   onChange(date) {
-    console.log('onChange', format(date));
-    this.setState({
-      date,
-    });
-  },
-  onDismiss() {
-    console.log('onDismiss');
-  },
-  onPickerChange(date) {
-    console.log('onPickerChange', format(date));
-  },
-  show() {
-    console.log('my click');
+    this.props.onChange(format(date));
+    this.setState({date});
   },
   render() {
     const props = this.props;
@@ -72,15 +59,17 @@ const Demo = React.createClass({
         maxDate={maxDate}
         mode='date'
         locale={props.locale}
-        onPickerChange={this.onPickerChange}
-        onDismiss={this.onDismiss}
         onChange={this.onChange}
+        dismissText="取消"
+        okText="确定"
       >
-        <button className="date-picker-trigger"
-                onClick={this.show}>{date && format(date) || '2016.03.12'}</button>
+        <button className="date-picker-trigger">
+          {date && new GregorianCalendarFormat('yyyy.MM.dd').format(date) || this.props.defaultDate
+          }
+        </button>
       </PopPicker>
     );
   }
 });
 
-export default Demo
+export default DatePicker

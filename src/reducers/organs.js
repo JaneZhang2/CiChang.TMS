@@ -24,80 +24,103 @@ const filters = [
       {
         id: shortid.generate(),
         name: '全校',
-        value: {gradeId: 0}
+        value: {organId: 0}
       },
       {
         id: shortid.generate(),
         name: '一年级',
-        value: {gradeId: 2},
+        value: {organId: 2},
         items: [
           {
             id: shortid.generate(),
             name: '全部',
-            value: {classId: 0}
+            value: {
+              organId: 0,
+              parentOrgId: 2
+            }
           },
           {
             id: shortid.generate(),
             name: '1班',
-            value: {classId: 16}
+            value: {
+              organId: 16,
+              parentOrgId: 2
+            }
           },
           {
             id: shortid.generate(),
             name: '2班',
-            value: {classId: 17}
+            value: {
+              organId: 17,
+              parentOrgId: 2
+            }
           },
           {
             id: shortid.generate(),
             name: '3班',
-            key: 'classId',
-            value: 18
+            value: {
+              organId: 18,
+              parentOrgId: 2
+            }
           },
           {
             id: shortid.generate(),
             name: '4班',
-            value: {classId: 18}
+            value: {
+              organId: 19,
+              parentOrgId: 2
+            }
           },
           {
             id: shortid.generate(),
             name: '5班',
-            value: {classId: 19}
+            value: {
+              organId: 20,
+              parentOrgId: 2
+            }
           },
           {
             id: shortid.generate(),
             name: '6班',
-            value: {classId: 20}
+            value: {
+              organId: 21,
+              parentOrgId: 2
+            }
           },
           {
             id: shortid.generate(),
             name: '7班',
-            value: {classId: 21}
+            value: {
+              organId: 22,
+              parentOrgId: 2
+            }
           }
         ]
       },
       {
         id: shortid.generate(),
         name: '二年级',
-        value: {gradeId: 3}
+        value: {organId: 3}
       },
       {
         id: shortid.generate(),
         name: '三年级',
-        value: {gradeId: 4}
+        value: {organId: 4}
       },
       {
         id: shortid.generate(),
         name: '四年级',
-        value: {gradeId: 5}
+        value: {organId: 5}
       },
       {
         id: shortid.generate(),
         name: '五年级',
-        value: {gradeId: 6}
+        value: {organId: 6}
       },
       {
         id: shortid.generate(),
         name: '六年级',
-        value: {gradeId: 7}
+        value: {organId: 7}
       }
     ]
   },
@@ -143,8 +166,7 @@ const filters = [
         name: '自选',
         items: [
           {
-            id: shortid.generate(),
-            value: {startDate: 'xxx', endDate: 'xxx'}
+            id: shortid.generate()
           }
         ]
       }

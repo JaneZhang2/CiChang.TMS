@@ -5,6 +5,7 @@
 // }
 
 export const API_ROOT = '/api/';
+//http://local.mci.hujiang.com/teacher/v1/
 export const HJPASSPORT_PATH = '//qapass.hujiang.com/m';
 
 //http://dev.cichang.hjapi.com/teacher/v1/students/{userid:int}/home/?bookid=0

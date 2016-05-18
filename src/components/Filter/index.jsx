@@ -1,5 +1,5 @@
 import React from 'react';
-import {createRxComponent, funcSubject} from 'react-rx-component';
+import {createRxComponent} from 'react-rx-component';
 import Rx from 'rx'
 import _ from 'lodash';
 import './index.scss';
@@ -32,55 +32,63 @@ class Filter extends React.Component {
 
     current = _.set(current.slice(0, index), index, id);
 
-    let data = _.get(filters, id);
+    let metadata = _.get(filters, id);
 
-    switch (_.get(data, 'type')) {
+    let getId = id=> {
+      let result = _.find(filters, {value: {organId: id}});
+      let name = _.get(result, 'id', '');
+      let parentOrgId = Number(_.get(result, 'value.parentOrgId'));
+
+      return parentOrgId
+        ? `${getId(parentOrgId)},${name}`
+        : name;
+    };
+
+    switch (_.get(metadata, 'type')) {
       case FILTER_ORGANS_TYPE:
-        current.push(
-          _.get(_.find(filters, {
-            value: {
-              gradeId: Number(_.get(query, 'gradeId')),
-              classId: 0
-            }
-          }), 'id'),
-          _.get(_.find(filters, {
-            value: {
-              classId: Number(_.get(query, 'classId'))
-            }
-          }), 'id')
+        _.map(
+          getId(Number(_.get(query, 'organId'))).split(','),
+          item=>current.push(item)
         );
         break;
       case FILTER_SORT_TYPE:
         current.push(
           _.get(_.find(filters, {
-            value: {
-              sortType: _.get(query, 'sortType')
-            }
+            value: {sortType: _.get(query, 'sortType', 'wordsDesc')}
           }), 'id')
         );
         break;
       case FILTER_DATE_TYPE:
         current.push(
           _.get(_.find(filters, {
-            value: {
-              startDate: 'xxx',
-              endDate: 'xxx'
-            }
-          }), 'id')
+              value: {
+                startDate: _.get(query, 'startDate'),
+                endDate: _.get(query, 'endDate')
+              }
+            }),
+            'id',
+            _.get(_.find(filters, {type: FILTER_DATE_PICKER_TYPE}), 'id')
+          )
         );
         break;
     }
 
     this.setState({current});
 
-    if (_.isEmpty(_.get(data, 'items'))) {
+    if (_.isEmpty(_.get(metadata, 'items'))) {
       _.map(current, id=>
         _.assign(query, _.get(filters, `${id}.value`))
       );
 
       this.setState({current: []});
 
-      hashHistory.push(String(new URI('/').query(query)));
+      hashHistory.push(
+        String(new URI('/').query({
+          ...query,
+          startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.state.endDate).format('YYYY-MM-DD')
+        }))
+      );
     }
   }
 
@@ -88,27 +96,30 @@ class Filter extends React.Component {
     let {current} = this.state;
     let {options, query} = this.props;
     let filters = _.get(options, 'entities.filters');
+    let getOrganName = id=> {
+      let result = _.find(filters, {value: {organId: id}});
+      let name = _.get(result, 'name', '');
+      let parentOrgId = Number(_.get(result, 'value.parentOrgId'));
+
+      return parentOrgId
+        ? `${getOrganName(parentOrgId)} ${name}`
+        : name;
+    };
 
     return (
-      <div className={current.length>0?'filter-container':''}>
+      <div className={current.length > 0?'filter-container':''}>
         <div className="filter">
           <ul>
             {
-              _.map(
-                _.get(options, 'result'),
-                item => {
-                  let selected = item == _.get(current, 0),
-                    metadata = _.get(filters, item),
-                    name = '';
+              _.map(_.get(options, 'result'),
+                id => {
+                  let selected = id == _.get(current, 0),
+                    filter = _.get(filters, id),
+                    name;
 
-                  switch (_.get(metadata, 'type')) {
+                  switch (_.get(filter, 'type')) {
                     case FILTER_ORGANS_TYPE:
-                      name = `${_.get(_.find(filters, {
-                        value: {gradeId: Number(_.get(query, 'gradeId', 0))}
-                      }), 'name', '')}
-                      ${_.get(_.find(filters, {
-                        value: {classId: Number(_.get(query, 'classId'))}
-                      }), 'name', '')}`;
+                      name = getOrganName(Number(_.get(query, 'organId', 0)));
                       break;
                     case FILTER_SORT_TYPE:
                       name = `${_.get(_.find(filters, {
@@ -116,25 +127,26 @@ class Filter extends React.Component {
                       }), 'name', '')}`;
                       break;
                     case FILTER_DATE_TYPE:
-                      name = `${_.get(_.find(filters, {
-                        value: {
-                          startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
-                          endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD'))
-                        }
-                      }), 'name', '')}`;
+                      let startDate = _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
+                        endDate = _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD')),
+                        result = _.find(filters, {value: {startDate, endDate}});
+
+                      name = _.get(result, 'name',
+                        `${startDate.replace(/\d{4}-(\d{2})-(\d{2})/, '$1.$2')}-
+                         ${endDate.replace(/\d{4}-(\d{2})-(\d{2})/, '$1.$2')}`
+                      );
                       break;
                   }
 
                   return (
                     <li className={selected?'selected':''}
-                        key={item} onClick={this.onClick.bind(this,0,item)}>
+                        key={id} onClick={this.onClick.bind(this,0,id)}>
                       {name}
                       <i
                         className={`hui-icon-carat-${selected?'u':'d'}-small`}/>
                     </li>
                   )
-                }
-              )
+                })
             }
           </ul>
           {
@@ -151,9 +163,15 @@ class Filter extends React.Component {
                   return (
                     <div className="range-picker-container">
                       <i className="hui-icon-clock-1"/>
-                      <DatePicker/>
+                      <DatePicker
+                        defaultDate={moment(_.get(query, 'startDate')).format('YYYY.MM.DD')}
+                        onChange={startDate=>this.setState({startDate})}
+                      />
                       <i className="range-picker-separator"/>
-                      <DatePicker/>
+                      <DatePicker
+                        defaultDate={moment(_.get(query, 'endDate')).format('YYYY.MM.DD')}
+                        onChange={endDate=>this.setState({endDate})}
+                      />
                       <i className="hui-icon-clock-1"/>
                       {
                         _.map(items, item =>
