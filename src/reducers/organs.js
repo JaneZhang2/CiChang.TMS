@@ -2,6 +2,7 @@ import {handleActions} from 'redux-actions'
 import {normalize, Schema, arrayOf} from 'normalizr'
 import shortid from 'shortid'
 import {FETCH_ORGANS} from '../actions'
+import moment from 'moment'
 
 export const FILTER_ORGANS_TYPE = Symbol();
 export const FILTER_SORT_TYPE = Symbol();
@@ -32,8 +33,8 @@ const filters = [
         items: [
           {
             id: shortid.generate(),
-            name: '全校',
-            value: {classId: 15}
+            name: '全部',
+            value: {classId: 0}
           },
           {
             id: shortid.generate(),
@@ -123,12 +124,18 @@ const filters = [
       {
         id: shortid.generate(),
         name: '昨日',
-        value: {startDate: '', endDate: ''}
+        value: {
+          startDate: moment().day(-1).format('YYYY-MM-DD'),
+          endDate: moment().day(-1).format('YYYY-MM-DD')
+        }
       },
       {
         id: shortid.generate(),
         name: '今日',
-        value: {startDate: '', endDate: ''}
+        value: {
+          startDate: moment().format('YYYY-MM-DD'),
+          endDate: moment().format('YYYY-MM-DD')
+        }
       },
       {
         id: shortid.generate(),

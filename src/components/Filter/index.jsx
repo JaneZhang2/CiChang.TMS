@@ -12,6 +12,7 @@ import {
   FILTER_DATE_TYPE,
   FILTER_DATE_PICKER_TYPE
 } from '../../reducers/organs'
+import moment from 'moment'
 
 const {combineLatest} = Rx.Observable;
 
@@ -38,7 +39,8 @@ class Filter extends React.Component {
         current.push(
           _.get(_.find(filters, {
             value: {
-              gradeId: Number(_.get(query, 'gradeId'))
+              gradeId: Number(_.get(query, 'gradeId')),
+              classId: 0
             }
           }), 'id'),
           _.get(_.find(filters, {
@@ -84,7 +86,7 @@ class Filter extends React.Component {
 
   render() {
     let {current} = this.state;
-    let {options} = this.props;
+    let {options, query} = this.props;
     let filters = _.get(options, 'entities.filters');
 
     return (
@@ -95,12 +97,38 @@ class Filter extends React.Component {
               _.map(
                 _.get(options, 'result'),
                 item => {
-                  let selected = item == _.get(current, 0);
+                  let selected = item == _.get(current, 0),
+                    metadata = _.get(filters, item),
+                    name = '';
+
+                  switch (_.get(metadata, 'type')) {
+                    case FILTER_ORGANS_TYPE:
+                      name = `${_.get(_.find(filters, {
+                        value: {gradeId: Number(_.get(query, 'gradeId', 0))}
+                      }), 'name', '')}
+                      ${_.get(_.find(filters, {
+                        value: {classId: Number(_.get(query, 'classId'))}
+                      }), 'name', '')}`;
+                      break;
+                    case FILTER_SORT_TYPE:
+                      name = `${_.get(_.find(filters, {
+                        value: {sortType: _.get(query, 'sortType', 'wordsDesc')}
+                      }), 'name', '')}`;
+                      break;
+                    case FILTER_DATE_TYPE:
+                      name = `${_.get(_.find(filters, {
+                        value: {
+                          startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
+                          endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD'))
+                        }
+                      }), 'name', '')}`;
+                      break;
+                  }
 
                   return (
                     <li className={selected?'selected':''}
                         key={item} onClick={this.onClick.bind(this,0,item)}>
-                      {_.get(filters, `${_.get(filters, `${item}.items[0]`)}.name`)}
+                      {name}
                       <i
                         className={`hui-icon-carat-${selected?'u':'d'}-small`}/>
                     </li>

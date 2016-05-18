@@ -100,7 +100,7 @@ class Home extends React.Component {
               })
             }
           </div>
-          <div className="swiper-scrollbar"></div>
+          <div className="swiper-scrollbar"/>
         </div>
       </div>
     )
