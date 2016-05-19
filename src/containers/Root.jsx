@@ -4,7 +4,6 @@ import {Provider} from 'react-redux'
 
 import App from './App.jsx'
 import Layout from './Layout'
-import Home from './Home'
 import Students from './Students'
 import Student from './Student'
 import Books from './Books'
@@ -17,7 +16,7 @@ const Root = (props) => {
       <Router history={history}>
         <Route path="/" components={App}>
           <Route components={Layout}>
-            <IndexRoute components={Home}/>
+            <IndexRoute components={Students}/>
             <Route path='students' components={Students}/>
           </Route>
         </Route>
