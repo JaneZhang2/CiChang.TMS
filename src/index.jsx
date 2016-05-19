@@ -6,8 +6,6 @@ import store from './store'
 import {hashHistory} from 'react-router'
 import './index.scss'
 
-// const store = createStore();
-
 render(
   <Root store={store} history={hashHistory}/>,
   document.getElementById('root')

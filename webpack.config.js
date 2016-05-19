@@ -87,7 +87,8 @@ if (TARGET === 'start' || !TARGET) {
 if (TARGET === 'build') {
   module.exports = merge(common, {
     entry: {
-      vendor: Object.keys(package.dependencies)
+      vendor: Object.keys(package.dependencies),
+      vendor2: path.join(__dirname, 'src/vendor.js')
       // .filter(function (v) {
       //   // Exclude alt-utils as it won't work with this setup
       //   // due to the way the package has been designed

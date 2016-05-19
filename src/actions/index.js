@@ -3,7 +3,7 @@ import {API_ROOT} from '../config'
 import URI from 'urijs'
 
 export const FETCH_ORGANS = Symbol('FETCH');
-export const fetchOrgans = ()=>createAction(FETCH_ORGANS)(`${API_ROOT}organs.json`);
+export const fetchOrgans = ()=>createAction(FETCH_ORGANS)(`${API_ROOT}organs/30`);
 
 export const FETCH_USER_RANKINGS = Symbol('FETCH');
 export const fetchUserRankings = params=>createAction(FETCH_USER_RANKINGS)(
