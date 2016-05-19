@@ -4,6 +4,8 @@
 //   HJPASSPORT_PATH: '//qapass.hujiang.com/m'
 // }
 
+//http://dev.mci.hujiang.com/teacher/v1/organs/{schoolId:int}
+
 export const API_ROOT = '/api/';
 //http://local.mci.hujiang.com/teacher/v1/
 export const HJPASSPORT_PATH = '//qapass.hujiang.com/m';
