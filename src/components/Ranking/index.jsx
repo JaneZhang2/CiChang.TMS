@@ -14,6 +14,7 @@ class Ranking extends React.Component {
 
   render() {
     let {toggle, active} = this.props;
+    let type = _.get(this.props, 'params.type');
 
     return (
       <div className="ranking-container">
@@ -23,10 +24,22 @@ class Ranking extends React.Component {
           active ? <div className="ranking-modal">
             <div className="arrow"></div>
             <ul>
-              <li className="active" onClick={()=>hashHistory.push('/')}>
-                排名-人<i className="hui-icon-checked-small"></i>
+              <li className={type=='users'?'active':''}
+                  onClick={()=>toggle(hashHistory.push('/rankings/users'))}>
+                排名-人
+                {
+                  type == 'users' ?
+                    <i className="hui-icon-checked-small"></i> : ''
+                }
               </li>
-              <li onClick={()=>hashHistory.push('/')}>排名-班级</li>
+              <li className={type=='class'?'active':''}
+                  onClick={()=>toggle(hashHistory.push('/rankings/class'))}>
+                排名-班级
+                {
+                  type == 'class' ?
+                    <i className="hui-icon-checked-small"></i> : ''
+                }
+              </li>
             </ul>
           </div> : ''
         }

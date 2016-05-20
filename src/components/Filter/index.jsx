@@ -102,7 +102,7 @@ class Filter extends React.Component {
       let parentOrgId = Number(_.get(result, 'parentOrgId'));
 
       return parentOrgId
-        ? `${getOrganName(parentOrgId)} ${name}`
+        ? `${getOrganName(parentOrgId)}${name}`
         : name;
     };
 

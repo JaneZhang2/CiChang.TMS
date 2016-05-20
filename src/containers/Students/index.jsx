@@ -11,6 +11,8 @@ import 'swiper/dist/css/swiper.min.css'
 import 'spinkit/scss/spinkit.scss'
 import './index.scss';
 import moment from 'moment'
+import Ranking from '../../components/Ranking'
+import Message from '../../components/Message'
 
 const {combineLatest} = Rx.Observable;
 
@@ -73,6 +75,7 @@ class Students extends React.Component {
           self.setState({pageIndex});
 
           self.props.fetchUserRankings({
+              // type
               ...self.state,
               pageIndex: pageIndex
             })
@@ -93,33 +96,48 @@ class Students extends React.Component {
   render() {
     let {organs, location, rankings} = this.props;
 
+    console.log(this.props);
+
     return (
-      <div className="homepage">
-        <Filter options={organs} query={_.get(location,'query')}/>
-        <div className="swiper-container">
-          <div className="swiper-wrapper">
-            {
-              _.map(_.get(rankings, 'items'), (item, index)=> {
+      <div className="layout">
+        <header>
+          <i className="hui-icon-carat-l"></i>
+          <Ranking params={this.props.params}/>
+          <i className="hui-icon-user-solid"></i>
+        </header>
+        <section>
+          {
+            (fetch instanceof Error)
+              ? <Message title='对不起' content={fetch.message}/>
+              : <div className="homepage">
+              <Filter options={organs} query={_.get(location,'query')}/>
+              <div className="swiper-container">
+                <div className="swiper-wrapper">
+                  {
+                    _.map(_.get(rankings, 'items'), (item, index)=> {
 
-                let {userId, studentName, words, days} = item;
+                      let {userId, studentName, words, days} = item;
 
-                return (
-                  <div key={index}
-                       onClick={()=>hashHistory.push(`students/${userId}`)}
-                       className="swiper-slide">
+                      return (
+                        <div key={index}
+                             onClick={()=>hashHistory.push(`students/${userId}`)}
+                             className="swiper-slide">
                     <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                       {studentName}</span>
                     <span>{words}
                       <small>词</small></span>
                     <span>{days}
                       <small>天</small></span>
-                  </div>
-                )
-              })
-            }
-          </div>
-          <div className="swiper-scrollbar"/>
-        </div>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+                <div className="swiper-scrollbar"/>
+              </div>
+            </div>
+          }
+        </section>
       </div>
     )
   }
@@ -140,6 +158,7 @@ export default createConnector((props$, state$, dispatch$) => {
           let orgId = _.get(organs, 'payload.orgId');
 
           return ac.fetchUserRankings({
+            type: _.get(props, 'params.type'),
             schoolId: orgId,
             selectedOrganId: _.get(query, 'selectedOrganId', orgId),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
