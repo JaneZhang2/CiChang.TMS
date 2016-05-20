@@ -1,5 +1,6 @@
 import React from 'react'
 import {createConnector} from 'redux-rx/react'
+import {bindActionCreators} from 'redux-rx';
 import {hashHistory} from 'react-router'
 import './index.scss'
 import {fetchBooks} from '../../actions'
@@ -62,8 +63,21 @@ class Books extends React.Component {
 }
 
 export default createConnector((props$, state$, dispatch$) => {
+  const actionCreators$ = bindActionCreators({
+    fetchBooks
+  }, dispatch$);
 
-  let fetch$ = dispatch$.flatMap(dispatch=> dispatch(fetchBooks()));
+
+  const fetch$ = props$.withLatestFrom(
+    actionCreators$,
+    (props, ac)=>
+      ac.fetchBooks(_.get(props, 'params.studentId'))
+  ).flatMap(obs => obs);
+
+
+  // let fetch$ = dispatch$.flatMap(dispatch=> dispatch(fetchBooks()));
+
+  //http://dev.mci.hujiang.com/teacher/v1/students/{userId:int}/mybooks/
 
   return combineLatest(
     props$, state$, fetch$,

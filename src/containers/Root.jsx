@@ -15,7 +15,7 @@ const Root = (props) => {
       <Router history={history}>
         <Route path="/" components={App}>
           <IndexRedirect to="rankings/users"/>
-          <Route path='rankings/:type' components={Students}/>
+          <Route path='rankings/:category' components={Students}/>
           <Route path='books/:studentId' components={Books}/>
           <Route path='students/:studentId' components={Student}/>
           <Route path='students/:studentId/:bookId' components={Student}/>

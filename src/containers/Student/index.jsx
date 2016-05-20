@@ -89,7 +89,7 @@ class Student extends React.Component {
           self.props.fetchStudent(
             {
               ...self.props.params,
-              currentDate: moment().format('YYYY-MM-DD')
+              currentWeek: moment().format('YYYY-MM-DD')
             }
           ).subscribe(()=> {
               swiper.unlockSwipes();
@@ -176,7 +176,8 @@ export default createConnector((props$, state$, dispatch$) => {
       Rx.Observable.when(
         ac.fetchStudent({
           ...props.params,
-          currentDate: moment().format('YYYY-MM-DD')
+          bookId: 0,
+          currentWeek: moment().format('YYYY-MM-DD')
         }).thenDo(student=>student),
         ac.fetchBooks().thenDo(books=>books)
       )

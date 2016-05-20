@@ -158,7 +158,7 @@ export default createConnector((props$, state$, dispatch$) => {
           let orgId = _.get(organs, 'payload.orgId');
 
           return ac.fetchUserRankings({
-            type: _.get(props, 'params.type'),
+            category: _.get(props, 'params.category'),
             schoolId: orgId,
             selectedOrganId: _.get(query, 'selectedOrganId', orgId),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
