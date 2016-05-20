@@ -61,8 +61,8 @@ export const organs = handleActions({
             id: shortid.generate(),
             name: '昨日',
             value: {
-              startDate: moment().day(-1).format('YYYY-MM-DD'),
-              endDate: moment().day(-1).format('YYYY-MM-DD')
+              startDate: moment().hours(-24).format('YYYY-MM-DD'),
+              endDate: moment().hours(-24).format('YYYY-MM-DD')
             }
           },
           {

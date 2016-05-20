@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route, IndexRoute, Redirect, IndexRedirect} from 'react-router'
+import {Router, Route, IndexRedirect} from 'react-router'
 import {Provider} from 'react-redux'
 
 import App from './App.jsx'

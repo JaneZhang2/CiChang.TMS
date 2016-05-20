@@ -3,8 +3,10 @@ const merge = require('webpack-merge');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const pkg = require('./package.json');
-const rucksack = require('rucksack-css')
+const package = require('./package.json');
+const rucksack = require('rucksack-css');
+
+const TARGET = process.env.npm_lifecycle_event;
 
 const CleanPlugin = require('clean-webpack-plugin');
 
@@ -13,40 +15,22 @@ const PATHS = {
   build: path.join(__dirname, 'dist')
 };
 
-
-var config = {
+var common = {
   entry: {
-    vendor: Object.keys(pkg.dependencies),
-    bundle: ['./src/index.jsx']
+    app: PATHS.app
   },
   output: {
-    filename: '[name].js',
-    path: path.join(__dirname, 'dist'),
-    chunkFilename: '[id].bundle.js'
+    path: PATHS.build,
+    filename: 'bundle.js'
   },
-  plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: process.env.APP_MODEL === 'BUILD' ? '"production"' : '"development"'
-      },
-      __DEV__: process.env.APP_ENV === 'DEV',
-      __QA__: process.env.APP_ENV === 'QA',
-      __YZ__: process.env.APP_ENV === 'YZ',
-      __PROD__: process.env.APP_ENV === 'PROD',
-      __BUILD__: process.env.APP_MODEL === 'BUILD'
-    })
-  ],
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      loaders: ['babel'],
-      include: path.join(__dirname, 'src')
+      loaders: ['babel?cacheDirectory'],
+      include: PATHS.app
     }, {
       test: /\.(png|jpg|gif)$/,
       loader: "url-loader?limit=16384&name=images/[name]-[hash].[ext]"
@@ -59,27 +43,51 @@ var config = {
     rucksack({
       autoprefixer: true
     })
+  ],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    })
   ]
 };
 
-if (process.env.APP_MODEL === 'DEBUG') {
-  module.exports = merge(config, {
-    devtool: 'eval',
-    entry: {
-      vendor: ['webpack-hot-middleware/client']
-    },
+if (TARGET === 'start' || !TARGET) {
+  module.exports = merge(common, {
+    devtool: 'eval-source-map',
     output: {
-      publicPath: '/static/'
+      filename: '[name].js'
+    },
+    devServer: {
+      // contentBase: PATHS.build,
+      // Enable history API fallback so HTML5 History API based
+      // routing works. This is a good default that will come
+      // in handy in more complicated setups.
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      progress: true,
+      // Display only errors to reduce the amount of output.
+      stats: 'errors-only',
+      // Parse host and port from env so this is easy to customize.
+      //
+      // If you use Vagrant or Cloud9, set
+      // host: process.env.HOST || '0.0.0.0';
+      //
+      // 0.0.0.0 is available to all network devices unlike default
+      // localhost
+      host: '0.0.0.0',
+      //process.env.HOST,
+      port: process.env.PORT
     },
     module: {
       loaders: [
         {
           test: /\.css$/,
-          loaders: ['style', 'css']
+          loader: 'style!css!postcss!px2rem?remUnit=75&remPrecision=8'
         },
         {
           test: /\.scss$/,
-          loaders: ['style', 'css', 'sass']
+          loader: 'style!css!postcss!px2rem?remUnit=75&remPrecision=8!sass'
         }
       ]
     },
@@ -87,10 +95,16 @@ if (process.env.APP_MODEL === 'DEBUG') {
       new webpack.HotModuleReplacementPlugin()
     ]
   });
-} else if (process.env.APP_MODEL === 'BUILD') {
-  module.exports = merge(config, {
+}
+
+if (TARGET === 'build') {
+  module.exports = merge(common, {
+    entry: {
+      vendor: Object.keys(package.dependencies)
+    },
     output: {
-      filename: '[name]-[hash].js'
+      filename: '[name].[chunkhash].js',
+      chunkFilename: '[chunkhash].js'
     },
     module: {
       loaders: [
@@ -106,16 +120,17 @@ if (process.env.APP_MODEL === 'DEBUG') {
     },
     plugins: [
       new CleanPlugin([PATHS.build]),
-      new webpack.optimize.OccurenceOrderPlugin(),
-      // new webpack.optimize.UglifyJsPlugin({
-      //   sourceMap: false,
-      //   compressor: {
-      //     warnings: false
-      //   }
-      // }),
-      new HtmlWebpackPlugin({
-        template: './src/index.html'
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': 'production'
       }),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      }),
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
       new ExtractTextPlugin('bundle-[hash].css', {allChunks: true})
     ]
   });

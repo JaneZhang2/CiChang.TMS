@@ -7,17 +7,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "start": "npm run debug:dev",
-    "debug": "npm run debug:dev",
-    "build": "npm run build:prod",
-    "debug:dev": "APP_MODEL=DEBUG APP_ENV=DEV  node server.js",
-    "debug:qa": "APP_MODEL=DEBUG APP_ENV=QA   node server.js",
-    "debug:yz": "APP_MODEL=DEBUG APP_ENV=YZ   node server.js",
-    "debug:prod": "APP_MODEL=DEBUG APP_ENV=PROD node server.js",
-    "build:dev": "APP_MODEL=BUILD APP_ENV=DEV  webpack --config webpack.config.js",
-    "build:qa": "APP_MODEL=BUILD APP_ENV=QA   webpack --config webpack.config.js",
-    "build:yz": "APP_MODEL=BUILD APP_ENV=YZ   webpack --config webpack.config.js",
-    "build:prod": "APP_MODEL=BUILD APP_ENV=PROD webpack --config webpack.config.js"
+    "start": "webpack-dev-server --watch-poll --inline --hot",
+    "build": "APP_MODEL=BUILD APP_ENV=PROD webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -41,17 +32,18 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.16.1",
     "node-sass": "^3.7.0",
+    "npm-install-webpack-plugin": "^3.1.3",
     "postcss-loader": "^0.9.1",
     "px2rem-loader": "^0.1.6",
     "redux-devtools": "^3.2.0",
     "rucksack-css": "^0.8.6",
     "sass-loader": "^3.2.0",
+    "spinkit": "^1.2.5",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.12.0",
-    "spinkit": "^1.2.5"
+    "webpack-merge": "^0.12.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.8.0",

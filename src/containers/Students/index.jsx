@@ -35,8 +35,8 @@ class Students extends React.Component {
       schoolId: 30,
       selectedOrganId: _.get(query, 'selectedOrganId', 30),
       sortType: _.get(query, 'sortType', 'wordsDesc'),
-      startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
-      endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD')),
+      startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+      endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
       pageIndex: 0,
       pageSize: 50
     });
@@ -154,16 +154,16 @@ export default createConnector((props$, state$, dispatch$) => {
     (props, ac)=>
       ac.fetchOrgans()
         .flatMap(organs=> {
-          let query = _.get(props, 'location.query');
-          let orgId = _.get(organs, 'payload.orgId');
+          let query = _.get(props, 'location.query'),
+            orgId = _.get(organs, 'payload.orgId');
 
           return ac.fetchUserRankings({
             category: _.get(props, 'params.category'),
             schoolId: orgId,
             selectedOrganId: _.get(query, 'selectedOrganId', orgId),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
-            startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
-            endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD')),
+            startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+            endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
             pageIndex: 0,
             pageSize: 50
           })
