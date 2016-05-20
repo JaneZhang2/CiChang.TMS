@@ -10,27 +10,34 @@ export default store => next => ({type, payload}) => {
   let action = createAction(type);
 
   return String(type) === String(Symbol('FETCH')) ?
-    fromPromise(fetch(payload))
+    fromPromise(fetch(payload,
+      {
+        credentials: 'same-origin'
+      }
+    ))
       .flatMap(response=>response.json())
       .map(result=> {
-        let {status, message, data} = result;
+        let {Status, Message, Data} = result;
 
-        switch (status) {
+        switch (Status) {
           case -8193:
-            return next(action(
-              URI(HJPASSPORT_PATH)
-                .query({
-                  url: location.href,
-                  source: 'cichang',
-                  skips: ['category-select', 'interest-select', 'register-success'],
-                  plain_login: true,
-                  plain_register: true
-                })
-            ));
+            // console.log(payload);
+            // console.log(result)
+
+            location.href = URI(HJPASSPORT_PATH)
+              .query({
+                url: location.href,
+                source: 'cichang',
+                skips: ['category-select', 'interest-select', 'register-success'],
+                plain_login: true,
+                plain_register: true
+              })
+              .toString();
+            break;
           case 0:
-            return next(action(data));
+            return next(action(Data));
           default:
-            throw new Error(message);
+            throw new Error(Message);
         }
       })
       .catch(error=> next(action(Rx.Observable.return(error)))) :

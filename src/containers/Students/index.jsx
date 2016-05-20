@@ -18,9 +18,7 @@ class Students extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      current: ''
-    }
+    this.state = {}
   }
 
   componentDidUpdate() {
@@ -29,6 +27,17 @@ class Students extends React.Component {
 
   componentDidMount() {
     let self = this;
+    let {query} = this.props;
+
+    this.setState({
+      schoolId: 30,
+      selectedOrganId: _.get(query, 'selectedOrganId', 30),
+      sortType: _.get(query, 'sortType', 'wordsDesc'),
+      startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
+      endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD')),
+      pageIndex: 0,
+      pageSize: 50
+    });
 
     this.swiper = new Swiper('.swiper-container', {
       direction: 'vertical',
@@ -57,13 +66,23 @@ class Students extends React.Component {
             </div>`
           );
 
-          self.props.fetchUserRankings()
+          let {pageIndex} = self.state;
+
+          pageIndex += 1;
+
+          self.setState({pageIndex});
+
+          self.props.fetchUserRankings({
+              ...self.state,
+              pageIndex: pageIndex
+            })
             .subscribe(()=> {
                 swiper.unlockSwipes();
                 swiper.removeSlide(swiper.slides.length - 1);
               }
             );
         });
+        0
       }
     });
   }
@@ -119,10 +138,11 @@ export default createConnector((props$, state$, dispatch$) => {
       ac.fetchOrgans()
         .flatMap(organs=> {
           let query = _.get(props, 'location.query');
+          let orgId = _.get(organs, 'payload.orgId');
 
           return ac.fetchUserRankings({
-            schoolId: organs.orgId,
-            selectedOrganId: _.get(query, 'selectedOrganId', organs.orgId),
+            schoolId: orgId,
+            selectedOrganId: _.get(query, 'selectedOrganId', orgId),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
             startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
             endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD')),

@@ -7,8 +7,17 @@
     "doc": "doc"
   },
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server --watch-poll --inline --hot"
+    "start": "npm run debug:dev",
+    "debug": "npm run debug:dev",
+    "build": "npm run build:prod",
+    "debug:dev": "APP_MODEL=DEBUG APP_ENV=DEV  node server.js",
+    "debug:qa": "APP_MODEL=DEBUG APP_ENV=QA   node server.js",
+    "debug:yz": "APP_MODEL=DEBUG APP_ENV=YZ   node server.js",
+    "debug:prod": "APP_MODEL=DEBUG APP_ENV=PROD node server.js",
+    "build:dev": "APP_MODEL=BUILD APP_ENV=DEV  webpack --config webpack.config.js",
+    "build:qa": "APP_MODEL=BUILD APP_ENV=QA   webpack --config webpack.config.js",
+    "build:yz": "APP_MODEL=BUILD APP_ENV=YZ   webpack --config webpack.config.js",
+    "build:prod": "APP_MODEL=BUILD APP_ENV=PROD webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -41,7 +50,8 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.12.0"
+    "webpack-merge": "^0.12.0",
+    "spinkit": "^1.2.5"
   },
   "dependencies": {
     "babel-polyfill": "^6.8.0",
@@ -50,7 +60,6 @@
     "isomorphic-fetch": "^2.2.1",
     "lib-flexible": "^0.3.2",
     "moment": "^2.13.0",
-    "normalize.css": "^4.1.1",
     "normalizr": "^2.0.2",
     "rc-dropdown": "^1.4.8",
     "rc-menu": "^4.12.1",

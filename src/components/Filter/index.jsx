@@ -35,9 +35,9 @@ class Filter extends React.Component {
     let metadata = _.get(filters, id);
 
     let getId = id=> {
-      let result = _.find(filters, {value: {organId: id}});
+      let result = _.find(filters, {value: {orgId: id}});
       let name = _.get(result, 'id', '');
-      let parentOrgId = Number(_.get(result, 'value.parentOrgId'));
+      let parentOrgId = Number(_.get(result, 'parentOrgId'));
 
       return parentOrgId
         ? `${getId(parentOrgId)},${name}`
@@ -47,7 +47,7 @@ class Filter extends React.Component {
     switch (_.get(metadata, 'type')) {
       case FILTER_ORGANS_TYPE:
         _.map(
-          getId(Number(_.get(query, 'organId'))).split(','),
+          getId(Number(_.get(query, 'orgId'))).split(','),
           item=>current.push(item)
         );
         break;
@@ -97,9 +97,9 @@ class Filter extends React.Component {
     let {options, query} = this.props;
     let filters = _.get(options, 'entities.filters');
     let getOrganName = id=> {
-      let result = _.find(filters, {value: {organId: id}});
+      let result = _.find(filters, {value: {orgId: id}});
       let name = _.get(result, 'name', '');
-      let parentOrgId = Number(_.get(result, 'value.parentOrgId'));
+      let parentOrgId = Number(_.get(result, 'parentOrgId'));
 
       return parentOrgId
         ? `${getOrganName(parentOrgId)} ${name}`
@@ -119,7 +119,7 @@ class Filter extends React.Component {
 
                   switch (_.get(filter, 'type')) {
                     case FILTER_ORGANS_TYPE:
-                      name = getOrganName(Number(_.get(query, 'organId', 0)));
+                      name = getOrganName(Number(_.get(query, 'orgId', 0)));
                       break;
                     case FILTER_SORT_TYPE:
                       name = `${_.get(_.find(filters, {

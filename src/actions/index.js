@@ -7,7 +7,7 @@ export const fetchOrgans = ()=>createAction(FETCH_ORGANS)(`${API_ROOT}organs/30`
 
 export const FETCH_USER_RANKINGS = Symbol('FETCH');
 export const fetchUserRankings = params=>createAction(FETCH_USER_RANKINGS)(
-  String(new URI(`${API_ROOT}students/users_rankings.json`).query(params))
+  String(new URI(`${API_ROOT}students/users_rankings`).query(params))
 );
 
 export const FETCH_BOOKS = Symbol('FETCH');
