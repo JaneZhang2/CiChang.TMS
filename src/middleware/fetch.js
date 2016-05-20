@@ -35,6 +35,10 @@ export default store => next => ({type, payload}) => {
               .toString();
             break;
           case 0:
+            let query = URI.parseQuery(payload);
+
+
+            Data.pageIndex = query.pageIndex;
             return next(action(Data));
           default:
             throw new Error(Message);
