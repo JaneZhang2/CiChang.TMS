@@ -13,7 +13,10 @@ export const fetchUserRankings = params=>createAction(FETCH_USER_RANKINGS)(
 export const FETCH_BOOKS = Symbol('FETCH');
 export const fetchBooks = ()=>createAction(FETCH_BOOKS)(`${API_ROOT}books.json`);
 
+//http://dev.mci.hujiang.com/teacher/v1/students/{userId:int}/mybooks/
+
+
 export const FETCH_STUDENT = Symbol('FETCH');
 export const fetchStudent = params=>createAction(FETCH_STUDENT)(
-  String(new URI(`${API_ROOT}student.json`).query(params))
+  String(new URI(`${API_ROOT}students/${params.studentId}/home`).query(params))
 );

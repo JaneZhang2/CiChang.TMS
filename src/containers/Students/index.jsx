@@ -82,7 +82,6 @@ class Students extends React.Component {
               }
             );
         });
-        0
       }
     });
   }

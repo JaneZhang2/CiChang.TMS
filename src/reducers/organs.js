@@ -23,7 +23,7 @@ const formatter = items=>
     name: item.orgName,
     items: formatter(item.orgItems),
     value: {orgId: item.orgId},
-    parentOrgId: item.parentOrgId
+    parentOrgId: item.orgType == 2 ? 0 : item.parentOrgId
   }));
 
 export const organs = handleActions({
@@ -35,10 +35,7 @@ export const organs = handleActions({
         type: FILTER_ORGANS_TYPE,
         items: formatter(
           _.get(action.payload, 'orgItems')
-        ),
-        value: {
-          orgId: _.get(action.payload, 'orgId')
-        }
+        )
       },
       {
         id: shortid.generate(),

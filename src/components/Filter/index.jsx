@@ -62,8 +62,8 @@ class Filter extends React.Component {
         current.push(
           _.get(_.find(filters, {
               value: {
-                startDate: _.get(query, 'startDate'),
-                endDate: _.get(query, 'endDate')
+                startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
+                endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD'))
               }
             }),
             'id',
@@ -84,9 +84,9 @@ class Filter extends React.Component {
 
       hashHistory.push(
         String(new URI('/').query({
-          ...query,
-          startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
-          endDate: moment(this.state.endDate).format('YYYY-MM-DD')
+          ...query
+          // startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
+          // endDate: moment(this.state.endDate).format('YYYY-MM-DD')
         }))
       );
     }
@@ -119,7 +119,8 @@ class Filter extends React.Component {
 
                   switch (_.get(filter, 'type')) {
                     case FILTER_ORGANS_TYPE:
-                      name = getOrganName(Number(_.get(query, 'orgId', 0)));
+                      name = getOrganName(Number(_.get(query, 'orgId', _.get(filter, 'value.orgId'))));
+                      name = name ? name : '全部';
                       break;
                     case FILTER_SORT_TYPE:
                       name = `${_.get(_.find(filters, {

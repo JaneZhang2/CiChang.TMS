@@ -11,12 +11,12 @@ function http(url, options) {
       throw err;
     }
     return response.json().then(function (res) {
-      if (res.status !== 0) {
-        var err = new Error(res.message || '未知错误');
-        err.status = res.status;
+      if (res.Status !== 0) {
+        var err = new Error(res.Message || '未知错误');
+        err.Status = res.Status;
         throw err;
       }
-      return res.data;
+      return res.Data;
     }, function () {
       var err = new Error('数据解析异常');
       err.status = 'DATA-ERROR';
@@ -30,6 +30,7 @@ function http(url, options) {
 }
 
 http.defaults = {
+  credentials: 'same-origin',
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
