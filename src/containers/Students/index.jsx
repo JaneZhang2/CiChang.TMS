@@ -20,7 +20,9 @@ class Students extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      pageIndex: 0
+    }
   }
 
   componentDidUpdate() {
@@ -31,16 +33,6 @@ class Students extends React.Component {
     let self = this;
     let {query} = this.props;
 
-    this.setState({
-      schoolId: 30,
-      selectedOrganId: _.get(query, 'selectedOrganId', 30),
-      sortType: _.get(query, 'sortType', 'wordsDesc'),
-      startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-      endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
-      pageIndex: 0,
-      pageSize: 50
-    });
-
     this.swiper = new Swiper('.swiper-container', {
       direction: 'vertical',
       scrollbar: '.swiper-scrollbar',
@@ -49,7 +41,6 @@ class Students extends React.Component {
       observer: true,//修改swiper自己或子元素时，自动初始化swiper
       observeParents: true,//修改swiper的父元素时，自动初始化swiper
       onInit: (swiper)=> {
-
         swiper.on('touchEnd', (swiper, event)=> {
           if (!swiper.isEnd) {
             return;
@@ -72,18 +63,41 @@ class Students extends React.Component {
 
           pageIndex += 1;
 
+          setTimeout(()=> {
 
-          self.props.fetchUserRankings({
-              ...self.state,
-              pageIndex: pageIndex
-            })
-            .subscribe(
-              ()=> {
-                swiper.unlockSwipes();
-                swiper.removeSlide(swiper.slides.length - 1);
-                self.setState({pageIndex});
-              }
-            );
+            let query = _.get(self.props, 'location.query');
+            let orgId = 30;
+            let filters = _.get(self.props, 'options.entities.filters');
+
+            self.props.fetchUserRankings({
+                category: _.get(self.props, 'params.category'),
+                schoolId: orgId,
+                selectedOrganId: _.get(query, 'selectedOrganId', orgId),
+                sortType: _.get(query, 'sortType', 'wordsDesc'),
+                startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+                endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+                pageIndex: pageIndex,
+                pageSize: 50
+              })
+              .subscribe(
+                (xx)=> {
+                  console.log('subscribe');
+                  console.log(xx)
+
+                  alert(_.get(xx, 'payload.items.length', 0) > 0)
+
+                  if (_.get(xx, 'payload.items.length', 0) > 0) {
+                    self.setState({
+                      pageIndex: pageIndex
+                    })
+                  }
+
+                  swiper.unlockSwipes();
+                  swiper.removeSlide(swiper.slides.length - 1);
+                }
+              );
+          }, 300)
+
         });
       }
     });
@@ -115,9 +129,6 @@ class Students extends React.Component {
                 <div className="swiper-wrapper">
                   {
                     _.map(_.get(rankings, 'items'), (item, index)=> {
-                      console.log('rankings');
-                      console.log(rankings)
-
                       return (
                         <div key={index}
                              onClick={()=>hashHistory.push(`students/${_.get(item,'userId')}`)}

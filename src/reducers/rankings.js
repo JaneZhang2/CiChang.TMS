@@ -5,16 +5,7 @@ const rankings = handleActions({
   [FETCH_USER_RANKINGS]: (state, action)=> {
 
     let {pageIndex} = action.payload;
-
-    console.log('state'),
-      console.log(state)
-    console.log(pageIndex);
-    console.log(
-      _.slice(
-        _.get(state, 'items', []), 0, pageIndex * 50
-      )
-    )
-
+    
     return {
       items: _.concat(
         _.slice(
