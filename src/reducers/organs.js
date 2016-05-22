@@ -10,10 +10,6 @@ export const FILTER_SORT_TYPE = Symbol();
 export const FILTER_DATE_TYPE = Symbol();
 export const FILTER_DATE_PICKER_TYPE = Symbol();
 
-
-// const schema = new Schema('organs', {idAttribute: 'orgId'});
-// schema.define({orgItems: arrayOf(schema)});
-
 const schema = new Schema('filters');
 schema.define({items: arrayOf(schema)});
 

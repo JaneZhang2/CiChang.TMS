@@ -63,14 +63,15 @@ class Students extends React.Component {
 
           pageIndex += 1;
 
+          let {id} = self.props;
+
           let query = _.get(self.props, 'location.query');
-          let orgId = 30;
           let filters = _.get(self.props, 'options.entities.filters');
 
           self.props.fetchUserRankings({
               category: _.get(self.props, 'params.category'),
-              schoolId: orgId,
-              selectedOrganId: _.get(query, 'selectedOrganId', orgId),
+              schoolId: id,
+              selectedOrganId: _.get(query, 'selectedOrganId', id),
               sortType: _.get(query, 'sortType', 'wordsDesc'),
               startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
               endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
@@ -177,6 +178,7 @@ export default createConnector((props$, state$, dispatch$) => {
     (props, state, ac, fetch)=> ({
       fetch,
       ...props,
+      id: state.id,
       organs: state.organs,
       rankings: state.rankings,
       fetchUserRankings: ac.fetchUserRankings
