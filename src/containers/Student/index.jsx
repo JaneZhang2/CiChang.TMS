@@ -133,7 +133,7 @@ class Student extends React.Component {
             <figcaption>
               <p>{_.get(student, 'studentInfo.studentName')}</p>
               <p>
-                <small>三年级2班</small>
+                <small>{_.get(student, 'studentInfo.ogranName')}</small>
               </p>
             </figcaption>
           </figure>

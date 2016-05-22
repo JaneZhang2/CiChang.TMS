@@ -60,13 +60,9 @@ class Students extends React.Component {
           );
 
           let {pageIndex} = self.state;
-
+          let {id, location} = self.props;
+          let query = _.get(location, 'query');
           pageIndex += 1;
-
-          let {id} = self.props;
-
-          let query = _.get(self.props, 'location.query');
-          let filters = _.get(self.props, 'options.entities.filters');
 
           self.props.fetchUserRankings({
               category: _.get(self.props, 'params.category'),
@@ -81,9 +77,7 @@ class Students extends React.Component {
             .subscribe(
               (data)=> {
                 if (_.get(data, 'payload.items.length', 0) > 0) {
-                  self.setState({
-                    pageIndex: pageIndex
-                  })
+                  self.setState({pageIndex})
                 }
 
                 swiper.unlockSwipes();
@@ -100,15 +94,13 @@ class Students extends React.Component {
   }
 
   render() {
-    let {organs, location, rankings} = this.props;
-
-    console.log(this.props);
+    let {organs, location, rankings, params} = this.props;
 
     return (
       <div className="layout">
         <header>
           <i className="hui-icon-carat-l"></i>
-          <Ranking params={this.props.params}/>
+          <Ranking params={params}/>
           <i className="hui-icon-user-solid"></i>
         </header>
         <section>
@@ -120,20 +112,40 @@ class Students extends React.Component {
               <div className="swiper-container">
                 <div className="swiper-wrapper">
                   {
-                    _.map(_.get(rankings, 'items'), (item, index)=> {
-                      return (
-                        <div key={index}
-                             onClick={()=>hashHistory.push(`students/${_.get(item,'userId')}`)}
-                             className="swiper-slide">
-                    <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
-                      {_.get(item, 'studentName')}</span>
-                    <span>{_.get(item, 'words')}
-                      <small>词</small></span>
-                    <span>{_.get(item, 'days')}
-                      <small>天</small></span>
-                        </div>
-                      )
-                    })
+                    (()=> {
+                      switch (_.get(params, 'category')) {
+                        case 'users':
+                          return _.map(_.get(rankings, 'items'), (item, index)=> {
+                            return (
+                              <div
+                                key={index}
+                                onClick={()=>hashHistory.push(`students/${_.get(item,'userId')}`)}
+                                className="swiper-slide"
+                              >
+                                <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
+                                  {_.get(item, 'studentName')}</span>
+                                <span>{_.get(item, 'words')}
+                                  <small>词</small></span>
+                                <span>{_.get(item, 'days')}
+                                  <small>天</small></span>
+                              </div>
+                            )
+                          });
+                        case 'class':
+                          return _.map(_.get(rankings, 'items'), (item, index)=> {
+                            return (
+                              <div key={index} className="swiper-slide">
+                                <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
+                                  {_.get(item, 'organName')}</span>
+                                <span>{_.get(item, 'words')}
+                                  <small>词</small></span>
+                              </div>
+                            )
+                          });
+                      }
+                    })()
+
+
                   }
                 </div>
                 <div className="swiper-scrollbar"/>
@@ -158,12 +170,12 @@ export default createConnector((props$, state$, dispatch$) => {
       ac.fetchOrgans()
         .flatMap(organs=> {
           let query = _.get(props, 'location.query'),
-            orgId = _.get(organs, 'payload.orgId');
+            id = _.get(organs, 'payload.orgId');
 
           return ac.fetchUserRankings({
             category: _.get(props, 'params.category'),
-            schoolId: orgId,
-            selectedOrganId: _.get(query, 'selectedOrganId', orgId),
+            schoolId: id,
+            selectedOrganId: _.get(query, 'selectedOrganId', id),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
             startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
             endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),

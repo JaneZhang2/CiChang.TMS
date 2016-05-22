@@ -37,13 +37,14 @@ class Books extends React.Component {
           <ul className="list">
             {
               _.map(books, item=> {
-                let {bookId, bookName} = item;
+                let {bookId, bookName, passPercentage} = item;
 
                 return (
                   <li key={bookId} onClick={()=>this.onClick(bookId)}>
                     <div>
                       <h2 className="title">{bookName}</h2>
-                      <p className="description">进度<em>10%</em></p>
+                      <p className="description">进度<em>{passPercentage}%</em>
+                      </p>
                     </div>
                     <i
                       className={`radio ${current==bookId?'checked':''}`}/>

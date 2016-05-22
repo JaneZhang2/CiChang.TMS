@@ -25,11 +25,11 @@ class Filter extends React.Component {
     }
   }
 
-  onClick(index, id) {
+  onClick(index, id, fromState) {
     let {current} = this.state;
     let {options, query} = this.props;
     let filters = _.get(options, 'entities.filters');
-
+    
     current = _.set(current.slice(0, index), index, id);
 
     let metadata = _.get(filters, id);
@@ -80,22 +80,22 @@ class Filter extends React.Component {
         _.assign(query, _.get(filters, `${id}.value`))
       );
 
+      if (fromState === true) {
+        _.assign(query, {
+          startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.state.endDate).format('YYYY-MM-DD'),
+        })
+      }
+
       this.setState({current: []});
 
       hashHistory.push(
-        String(new URI('/').query({
-          startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
-          endDate: moment(this.state.endDate).format('YYYY-MM-DD'),
-          ...query
-        }))
+        String(new URI('/').query(query))
       );
     }
   }
 
   render() {
-    console.log('render')
-    console.log(this.state.current)
-
     let {current} = this.state;
     let {options, query} = this.props;
     let filters = _.get(options, 'entities.filters');
@@ -182,7 +182,7 @@ class Filter extends React.Component {
                           (
                             <button
                               className="range-picker-confirm"
-                              onClick={this.onClick.bind(this,index+1,item)}
+                              onClick={this.onClick.bind(this,index+1,item,true)}
                             >
                               确定
                             </button>
