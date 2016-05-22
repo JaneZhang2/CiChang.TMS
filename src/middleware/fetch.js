@@ -15,7 +15,17 @@ export default store => next => ({type, payload}) => {
         credentials: 'same-origin'
       }
     ))
-      .flatMap(response=>response.json())
+      .flatMap(response=> {
+        if (response.status == '404') {
+          let query = URI.parseQuery(payload);
+          let error = new Error();
+          error.status = response.status;
+          error.pageIndex = query.pageIndex;
+          throw error;
+        }
+
+        return response.json();
+      })
       .map(result=> {
         let {Status, Message, Data} = result;
 

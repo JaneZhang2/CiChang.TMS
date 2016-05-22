@@ -62,8 +62,8 @@ class Filter extends React.Component {
         current.push(
           _.get(_.find(filters, {
               value: {
-                startDate: _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
-                endDate: _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD'))
+                startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+                endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD'))
               }
             }),
             'id',
@@ -93,6 +93,9 @@ class Filter extends React.Component {
   }
 
   render() {
+    console.log('render')
+    console.log(this.state.current)
+
     let {current} = this.state;
     let {options, query} = this.props;
     let filters = _.get(options, 'entities.filters');
@@ -128,8 +131,8 @@ class Filter extends React.Component {
                       }), 'name', '')}`;
                       break;
                     case FILTER_DATE_TYPE:
-                      let startDate = _.get(query, 'startDate', moment().day(-1).format('YYYY-MM-DD')),
-                        endDate = _.get(query, 'endDate', moment().day(-1).format('YYYY-MM-DD')),
+                      let startDate = _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+                        endDate = _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
                         result = _.find(filters, {value: {startDate, endDate}});
 
                       name = _.get(result, 'name',
@@ -192,16 +195,23 @@ class Filter extends React.Component {
                   return (
                     <ul key={id}>
                       {
-                        _.map(items, item =>
-                          (
-                            <li
-                              className={item==_.get(current,index+1)?'selected':''}
-                              key={item}
-                              onClick={this.onClick.bind(this,index+1,item)}
-                            >
-                              {_.get(filters, `${item}.name`)}
-                            </li>
-                          )
+                        _.map(items, item => {
+                            let selected = item == _.get(current, index + 1);
+                            if (!_.get(current, index + 1)) {
+                              selected = _.get(filters, `${_.get(current, index)}.value.orgId`)
+                                == _.get(filters, `${item}.value.orgId`)
+                            }
+
+                            return (
+                              <li
+                                className={selected?'selected':''}
+                                key={item}
+                                onClick={this.onClick.bind(this,index+1,item)}
+                              >
+                                {_.get(filters, `${item}.name`)}
+                              </li>
+                            )
+                          }
                         )
                       }
                     </ul>

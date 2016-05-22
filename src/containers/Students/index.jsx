@@ -72,16 +72,16 @@ class Students extends React.Component {
 
           pageIndex += 1;
 
-          self.setState({pageIndex});
 
           self.props.fetchUserRankings({
-              // type
               ...self.state,
               pageIndex: pageIndex
             })
-            .subscribe(()=> {
+            .subscribe(
+              ()=> {
                 swiper.unlockSwipes();
                 swiper.removeSlide(swiper.slides.length - 1);
+                self.setState({pageIndex});
               }
             );
         });
@@ -115,18 +115,18 @@ class Students extends React.Component {
                 <div className="swiper-wrapper">
                   {
                     _.map(_.get(rankings, 'items'), (item, index)=> {
-
-                      let {userId, studentName, words, days} = item;
+                      console.log('rankings');
+                      console.log(rankings)
 
                       return (
                         <div key={index}
-                             onClick={()=>hashHistory.push(`students/${userId}`)}
+                             onClick={()=>hashHistory.push(`students/${_.get(item,'userId')}`)}
                              className="swiper-slide">
                     <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
-                      {studentName}</span>
-                    <span>{words}
+                      {_.get(item, 'studentName')}</span>
+                    <span>{_.get(item, 'words')}
                       <small>词</small></span>
-                    <span>{days}
+                    <span>{_.get(item, 'days')}
                       <small>天</small></span>
                         </div>
                       )

@@ -6,12 +6,12 @@ const rankings = handleActions({
 
     let {pageIndex} = action.payload;
 
+    console.log('state'),
+      console.log(state)
+    console.log(pageIndex);
     console.log(
-      _.concat(
-        _.slice(
-          _.get(state, 'items', []), 0, (pageIndex - 1) * 50
-        ),
-        action.payload.items
+      _.slice(
+        _.get(state, 'items', []), 0, pageIndex * 50
       )
     )
 
@@ -20,7 +20,7 @@ const rankings = handleActions({
         _.slice(
           _.get(state, 'items', []), 0, pageIndex * 50
         ),
-        action.payload.items
+        _.get(action.payload, 'items', [])
       )
     };
   }
