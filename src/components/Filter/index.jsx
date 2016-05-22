@@ -29,7 +29,7 @@ class Filter extends React.Component {
     let {current} = this.state;
     let {options, query} = this.props;
     let filters = _.get(options, 'entities.filters');
-    
+
     current = _.set(current.slice(0, index), index, id);
 
     let metadata = _.get(filters, id);

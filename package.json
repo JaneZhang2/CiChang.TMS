@@ -57,6 +57,7 @@
   "dependencies": {
     "babel-polyfill": "^6.8.0",
     "echarts": "^3.1.9",
+    "gregorian-calendar-format": "^4.1.2",
     "humps": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
     "lib-flexible": "^0.3.2",
