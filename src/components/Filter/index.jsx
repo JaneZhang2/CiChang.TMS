@@ -84,9 +84,9 @@ class Filter extends React.Component {
 
       hashHistory.push(
         String(new URI('/').query({
+          startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.state.endDate).format('YYYY-MM-DD'),
           ...query
-          // startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
-          // endDate: moment(this.state.endDate).format('YYYY-MM-DD')
         }))
       );
     }
