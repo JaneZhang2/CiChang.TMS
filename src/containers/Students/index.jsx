@@ -63,41 +63,32 @@ class Students extends React.Component {
 
           pageIndex += 1;
 
-          setTimeout(()=> {
+          let query = _.get(self.props, 'location.query');
+          let orgId = 30;
+          let filters = _.get(self.props, 'options.entities.filters');
 
-            let query = _.get(self.props, 'location.query');
-            let orgId = 30;
-            let filters = _.get(self.props, 'options.entities.filters');
-
-            self.props.fetchUserRankings({
-                category: _.get(self.props, 'params.category'),
-                schoolId: orgId,
-                selectedOrganId: _.get(query, 'selectedOrganId', orgId),
-                sortType: _.get(query, 'sortType', 'wordsDesc'),
-                startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-                endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
-                pageIndex: pageIndex,
-                pageSize: 50
-              })
-              .subscribe(
-                (xx)=> {
-                  console.log('subscribe');
-                  console.log(xx)
-
-                  alert(_.get(xx, 'payload.items.length', 0) > 0)
-
-                  if (_.get(xx, 'payload.items.length', 0) > 0) {
-                    self.setState({
-                      pageIndex: pageIndex
-                    })
-                  }
-
-                  swiper.unlockSwipes();
-                  swiper.removeSlide(swiper.slides.length - 1);
+          self.props.fetchUserRankings({
+              category: _.get(self.props, 'params.category'),
+              schoolId: orgId,
+              selectedOrganId: _.get(query, 'selectedOrganId', orgId),
+              sortType: _.get(query, 'sortType', 'wordsDesc'),
+              startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+              endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+              pageIndex: pageIndex,
+              pageSize: 50
+            })
+            .subscribe(
+              (data)=> {
+                if (_.get(data, 'payload.items.length', 0) > 0) {
+                  self.setState({
+                    pageIndex: pageIndex
+                  })
                 }
-              );
-          }, 300)
 
+                swiper.unlockSwipes();
+                swiper.removeSlide(swiper.slides.length - 1);
+              }
+            );
         });
       }
     });

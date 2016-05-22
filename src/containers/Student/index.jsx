@@ -44,6 +44,9 @@ class Student extends React.Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      currentWeek: moment()
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -86,10 +89,12 @@ class Student extends React.Component {
           );
           swiper.lockSwipes();
 
+          let {swipeDirection} = swiper;
+
           self.props.fetchStudent(
             {
               ...self.props.params,
-              currentWeek: moment().format('YYYY-MM-DD')
+              currentWeek: self.state.currentWeek.day(swipeDirection == 'next' ? 7 : -7).format('YYYY-MM-DD')
             }
           ).subscribe(()=> {
               swiper.unlockSwipes();
