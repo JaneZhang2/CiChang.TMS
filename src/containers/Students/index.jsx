@@ -120,7 +120,7 @@ class Students extends React.Component {
                             return (
                               <div
                                 key={index}
-                                onClick={()=>hashHistory.push(`students/${_.get(item,'userId')}`)}
+                                onClick={()=>hashHistory.push(`students/${_.get(item,'userId')}/0`)}
                                 className="swiper-slide"
                               >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
@@ -145,8 +145,6 @@ class Students extends React.Component {
                           });
                       }
                     })()
-
-
                   }
                 </div>
                 <div className="swiper-scrollbar"/>

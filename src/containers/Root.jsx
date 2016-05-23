@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Students from './Students'
 import Student from './Student'
 import Books from './Books'
+import Test from './Test.jsx'
 
 const Root = (props) => {
   let {store, history} = props;
@@ -19,6 +20,7 @@ const Root = (props) => {
           <Route path='books/:studentId' components={Books}/>
           <Route path='students/:studentId' components={Student}/>
           <Route path='students/:studentId/:bookId' components={Student}/>
+          <Route path='test' components={Test}/>
         </Route>
       </Router>
     </Provider>

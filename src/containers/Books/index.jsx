@@ -43,8 +43,12 @@ class Books extends React.Component {
                   <li key={bookId} onClick={()=>this.onClick(bookId)}>
                     <div>
                       <h2 className="title">{bookName}</h2>
-                      <p className="description">进度<em>{passPercentage}%</em>
-                      </p>
+                      {
+                        bookId == 0
+                          ? ''
+                          : <p className="description">
+                          进度<em>{passPercentage}%</em></p>
+                      }
                     </div>
                     <i
                       className={`radio ${current==bookId?'checked':''}`}/>

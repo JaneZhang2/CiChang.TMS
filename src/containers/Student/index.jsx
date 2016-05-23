@@ -91,6 +91,8 @@ class Student extends React.Component {
 
           let {swipeDirection} = swiper;
 
+          // alert(JSON.stringify(self.props.params));
+
           self.props.fetchStudent(
             {
               ...self.props.params,
@@ -184,7 +186,7 @@ export default createConnector((props$, state$, dispatch$) => {
           bookId: 0,
           currentWeek: moment().format('YYYY-MM-DD')
         }).thenDo(student=>student),
-        ac.fetchBooks().thenDo(books=>books)
+        ac.fetchBooks(_.get(props, 'params.studentId')).thenDo(books=>books)
       )
   ).flatMap(obs => obs);
 
