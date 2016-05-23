@@ -75,11 +75,6 @@ export default createConnector((props$, state$, dispatch$) => {
       ac.fetchBooks(_.get(props, 'params.studentId'))
   ).flatMap(obs => obs);
 
-
-  // let fetch$ = dispatch$.flatMap(dispatch=> dispatch(fetchBooks()));
-
-  //http://dev.mci.hujiang.com/teacher/v1/students/{userId:int}/mybooks/
-
   return combineLatest(
     props$, state$, fetch$,
     (props, state, fetch)=> ({

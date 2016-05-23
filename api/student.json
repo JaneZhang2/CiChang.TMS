@@ -1,37 +1,17 @@
 {
-  "message": "OK",
-  "status": 0,
-  "data": {
+  "Message": "OK",
+  "Status": 0,
+  "Data": {
     "studentInfo": {
-      "userId": 20586603,
-      "studentName": "Kevin_1213",
-      "userHeadUrl": "http://i2.hjfile.cn/f200/89/53/6798953.jpg"
+      "userId": 25742381,
+      "studentName": "李同学",
+      "userHeadUrl": "http://i2.hjfile.cn/f200/23/81/25742381.jpg",
+      "ogranName": "37"
     },
     "studyData": {
-      "words": 500,
-      "passPercentage": 30
+      "words": 827,
+      "passPercentage": 20
     },
-    "studyDays": [
-      {
-        "studyDate": "05.07",
-        "studyCount": 10
-      },
-      {
-        "studyDate": "05.08",
-        "studyCount": 1
-      },
-      {
-        "studyDate": "05.09",
-        "studyCount": 11
-      },
-      {
-        "studyDate": "05.09",
-        "studyCount": 3
-      },
-      {
-        "studyDate": "05.09",
-        "studyCount": 20
-      }
-    ]
+    "studyDays": []
   }
 }

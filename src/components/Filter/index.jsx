@@ -27,7 +27,7 @@ class Filter extends React.Component {
 
   onClick(index, id, fromState) {
     let {current} = this.state;
-    let {options, query} = this.props;
+    let {options, query, params} = this.props;
     let filters = _.get(options, 'entities.filters');
 
     current = _.set(current.slice(0, index), index, id);
@@ -83,14 +83,14 @@ class Filter extends React.Component {
       if (fromState === true) {
         _.assign(query, {
           startDate: moment(this.state.startDate).format('YYYY-MM-DD'),
-          endDate: moment(this.state.endDate).format('YYYY-MM-DD'),
+          endDate: moment(this.state.endDate).format('YYYY-MM-DD')
         })
       }
 
-      this.setState({current: []});
-
+      this.setState({current: []})
+      
       hashHistory.push(
-        String(new URI('/').query(query))
+        String(new URI(`/rankings/${params.category}`).query(query))
       );
     }
   }

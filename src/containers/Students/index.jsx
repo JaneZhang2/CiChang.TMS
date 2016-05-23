@@ -108,7 +108,8 @@ class Students extends React.Component {
             (fetch instanceof Error)
               ? <Message title='对不起' content={fetch.message}/>
               : <div className="homepage">
-              <Filter options={organs} query={_.get(location,'query')}/>
+              <Filter params={params} options={organs}
+                      query={_.get(location,'query')}/>
               <div className="swiper-container">
                 <div className="swiper-wrapper">
                   {

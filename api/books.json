@@ -1,14 +1,21 @@
 {
-  "message": "OK",
-  "status": 0,
-  "data": [
+  "Message": "OK",
+  "Status": 0,
+  "Data": [
     {
       "bookId": 10625,
-      "bookName": "学英语绕不过的1000词"
+      "bookName": "学英语绕不过的1000词",
+      "passPercentage": 0
     },
     {
-      "bookId": 10447,
-      "bookName": "六级核心词汇"
+      "bookId": 10719,
+      "bookName": "美语必背口语800句",
+      "passPercentage": 0
+    },
+    {
+      "bookId": 12296,
+      "bookName": "英语六级高频词汇",
+      "passPercentage": 0
     }
   ]
 }

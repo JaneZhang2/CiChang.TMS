@@ -1,99 +1,69 @@
 {
-  "message": "OK",
-  "status": 0,
-  "data": {
+  "Message": "OK",
+  "Status": 0,
+  "Data": {
     "items": [
       {
-        "userId": 20586603,
-        "studentName": "卢凯",
-        "words": 100,
-        "days": 15
+        "userId": 25742381,
+        "studentName": "李同学",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 2494376,
-        "studentName": "王孝远",
-        "words": 50,
-        "days": 10
+        "userId": 33418718,
+        "studentName": "张同学",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 25865154,
-        "studentName": "裴燏",
-        "words": 10,
-        "days": 5
+        "userId": 33418931,
+        "studentName": "王同学",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 20586603,
-        "studentName": "卢凯",
-        "words": 100,
-        "days": 15
+        "userId": 33446513,
+        "studentName": "同学001",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 2494376,
-        "studentName": "王孝远",
-        "words": 50,
-        "days": 10
+        "userId": 33446514,
+        "studentName": "同学002",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 25865154,
-        "studentName": "裴燏",
-        "words": 10,
-        "days": 5
+        "userId": 33446515,
+        "studentName": "同学003",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 20586603,
-        "studentName": "卢凯",
-        "words": 100,
-        "days": 15
+        "userId": 33446516,
+        "studentName": "同学004",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 2494376,
-        "studentName": "王孝远",
-        "words": 50,
-        "days": 10
+        "userId": 33446517,
+        "studentName": "同学005",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 25865154,
-        "studentName": "裴燏",
-        "words": 10,
-        "days": 5
+        "userId": 33446518,
+        "studentName": "同学006",
+        "words": 0,
+        "days": 0
       },
       {
-        "userId": 20586603,
-        "studentName": "卢凯",
-        "words": 100,
-        "days": 15
-      },
-      {
-        "userId": 2494376,
-        "studentName": "王孝远",
-        "words": 50,
-        "days": 10
-      },
-      {
-        "userId": 25865154,
-        "studentName": "裴燏",
-        "words": 10,
-        "days": 5
-      },
-      {
-        "userId": 20586603,
-        "studentName": "卢凯",
-        "words": 100,
-        "days": 15
-      },
-      {
-        "userId": 2494376,
-        "studentName": "王孝远",
-        "words": 50,
-        "days": 10
-      },
-      {
-        "userId": 25865154,
-        "studentName": "裴燏",
-        "words": 10,
-        "days": 5
+        "userId": 33446519,
+        "studentName": "同学007",
+        "words": 0,
+        "days": 0
       }
     ],
-    "totalCount": 3
+    "totalCount": 95
   }
 }

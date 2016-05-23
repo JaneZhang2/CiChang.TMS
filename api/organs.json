@@ -1,33 +1,98 @@
 {
-  "message": "OK",
-  "status": 0,
-  "data": {
-    "orgName": "武宁",
-    "orgId": 1,
+  "Message": "OK",
+  "Status": 0,
+  "Data": {
+    "orgName": "南昌一中",
+    "orgId": 30,
+    "parentOrgId": 0,
     "orgType": 1,
     "orgItems": [
       {
+        "orgName": "全部",
+        "orgId": 30,
+        "parentOrgId": 0,
+        "orgType": 0,
+        "orgItems": []
+      },
+      {
         "orgName": "一年级",
-        "orgId": 2,
+        "orgId": 32,
+        "parentOrgId": 30,
         "orgType": 2,
         "orgItems": [
           {
-            "orgName": "（一）班",
-            "orgId": 3,
-            "orgType": 3
+            "orgName": "全部",
+            "orgId": 32,
+            "parentOrgId": 0,
+            "orgType": 0,
+            "orgItems": []
           },
           {
-            "orgName": "（二）班",
-            "orgId": 4,
-            "orgType": 3
+            "orgName": "（1）班",
+            "orgId": 36,
+            "parentOrgId": 32,
+            "orgType": 3,
+            "orgItems": []
+          },
+          {
+            "orgName": "（2）班",
+            "orgId": 37,
+            "parentOrgId": 32,
+            "orgType": 3,
+            "orgItems": []
           }
         ]
       },
       {
         "orgName": "二年级",
-        "orgId": 5,
+        "orgId": 33,
+        "parentOrgId": 30,
         "orgType": 2,
-        "orgItems": []
+        "orgItems": [
+          {
+            "orgName": "全部",
+            "orgId": 33,
+            "parentOrgId": 0,
+            "orgType": 0,
+            "orgItems": []
+          },
+          {
+            "orgName": "（1）班",
+            "orgId": 38,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
+          },
+          {
+            "orgName": "（2）班",
+            "orgId": 39,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
+          }
+        ]
+      },
+      {
+        "orgName": "三年级",
+        "orgId": 34,
+        "parentOrgId": 30,
+        "orgType": 2,
+        "orgItems": [
+          {
+            "orgName": "全部",
+            "orgId": 34,
+            "parentOrgId": 0,
+            "orgType": 0,
+            "orgItems": []
+          },
+          {
+            "orgName": "（1）班",
+            "orgId": 40,
+            "parentOrgId": 34,
+            "orgType": 3,
+            "orgItems": []
+          }
+        ]
       }
     ]
   }
