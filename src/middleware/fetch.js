@@ -2,7 +2,7 @@ import 'isomorphic-fetch'
 import {createAction} from 'redux-actions'
 import URI from 'urijs'
 import Rx from 'rx'
-import {HJPASSPORT_PATH} from '../config'
+import config from '../config'
 
 const {fromPromise} = Rx.Observable;
 
@@ -31,7 +31,7 @@ export default store => next => ({type, payload}) => {
 
         switch (Status) {
           case -8193:
-            location.href = URI(HJPASSPORT_PATH)
+            location.href = URI(config.HJPASSPORT_PATH)
               .query({
                 url: location.href,
                 source: 'cichang',

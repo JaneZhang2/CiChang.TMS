@@ -17,7 +17,7 @@ import config from '../../config'
 
 const {combineLatest} = Rx.Observable;
 
-class Students extends React.Component {
+class Rankings extends React.Component {
 
   constructor(props) {
     super(props);
@@ -66,7 +66,7 @@ class Students extends React.Component {
           pageIndex += 1;
 
           self.props.fetchUserRankings({
-            category: _.get(self.props, 'params.category'),
+            category: 'class',
             schoolId: id,
             selectedOrganId: _.get(query, 'orgId', id),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
@@ -115,7 +115,7 @@ class Students extends React.Component {
                 <div className="swiper-wrapper">
                   {
                     (()=> {
-                      switch (_.get(params, 'category')) {
+                      switch ('class') {
                         case 'users':
                           return _.map(_.get(rankings, 'items'), (item, index)=> {
                             return (
@@ -173,7 +173,7 @@ export default createConnector((props$, state$, dispatch$) => {
             id = _.get(organs, 'payload.orgId');
 
           return ac.fetchUserRankings({
-            category: _.get(props, 'params.category'),
+            category: 'class',
             schoolId: id,
             selectedOrganId: _.get(query, 'orgId', id),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
@@ -196,4 +196,4 @@ export default createConnector((props$, state$, dispatch$) => {
       fetchUserRankings: ac.fetchUserRankings
     })
   )
-}, Students);
+}, Rankings);

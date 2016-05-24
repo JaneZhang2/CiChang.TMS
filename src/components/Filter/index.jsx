@@ -28,6 +28,12 @@ class Filter extends React.Component {
     }
   }
 
+  toggle() {
+    this.setState({
+      visible: !this.state.visible
+    });
+  }
+
   onClose() {
     this.setState({
       visible: false
@@ -35,12 +41,6 @@ class Filter extends React.Component {
   }
 
   onClick(index, id, fromState) {
-    if (index == 0) {
-      this.setState({
-        visible: true
-      });
-    }
-
     let {current} = this.state;
     let {options, query, params} = this.props;
     let filters = _.get(options, 'entities.filters');
@@ -239,7 +239,10 @@ class Filter extends React.Component {
 
                 return (
                   <li className={selected?'selected':''}
-                      key={id} onClick={this.onClick.bind(this,0,id)}>
+                      key={id} onClick={()=>{
+                        this.toggle();
+                        this.onClick(0,id)
+                      }}>
                     {name}
                     {dialog}
                     <i
