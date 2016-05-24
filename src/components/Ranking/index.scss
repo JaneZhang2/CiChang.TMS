@@ -4,40 +4,36 @@
     padding-left: 77px;
   }
 
-  .ranking-modal {
-    position: absolute;
-    top: 96px;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2000;
-    background: rgba(#333, .3);
-  }
+}
 
-  .arrow {
-    width: 0;
-    height: 0;
-    margin: auto;
-    border: {
-      style: solid;
-      width: 4px 8px;
-      color: transparent transparent #FFF transparent;
-    }
-  }
+.xxxxxxx {
+  top: 96px;
+  z-index: 1600;
 
-  ul {
-    background: #FFF;
-    margin: auto;
-    width: 496px;
-    color: #656565;
-
-    li {
-      line-height: 76px;
-      padding-left: 171px;
-
-      &.active {
-        color: #25B6ED;
-      }
-    }
-  }
+  //.arrow {
+  //  width: 0;
+  //  height: 0;
+  //  margin: auto;
+  //  border: {
+  //    style: solid;
+  //    width: 4px 8px;
+  //    color: transparent transparent #FFF transparent;
+  //  }
+  //}
+  //
+  //ul {
+  //  background: #FFF;
+  //  margin: auto;
+  //  width: 496px;
+  //  color: #656565;
+  //
+  //  li {
+  //    line-height: 76px;
+  //    padding-left: 171px;
+  //
+  //    &.active {
+  //      color: #25B6ED;
+  //    }
+  //  }
+  //}
 }

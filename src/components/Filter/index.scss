@@ -9,10 +9,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  position: fixed;
-  right: 0;
-  left: 0;
-  z-index: 1000;
+  position: relative;
+  //right: 0;
+  //left: 0;
+  z-index: 1500;
   background: #FFF;
 
   li {
@@ -167,6 +167,10 @@
   display: none !important;
 }
 
-.rc-dialog-wrap, .rc-dialog-mask {
-  top: 176px !important;
+//.rc-dialog-wrap, .rc-dialog-mask {
+//  top: 176px !important;
+//}
+
+.rc-dialog-wrap.xxxxxxx2 {
+  top: 176px;
 }

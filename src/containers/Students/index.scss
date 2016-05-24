@@ -13,6 +13,7 @@
     font-size: 36px;
     color: #FFF;
     box-sizing: border-box;
+    z-index: 2000;
   }
 
   > section {
@@ -39,7 +40,7 @@
   overflow-y: auto;
 
   .swiper-container {
-    padding-top: 80px;
+    //padding-top: 80px;
     height: 100%;
     box-sizing: border-box;
   }

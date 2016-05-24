@@ -65,15 +65,15 @@ class Students extends React.Component {
           pageIndex += 1;
 
           self.props.fetchUserRankings({
-              category: _.get(self.props, 'params.category'),
-              schoolId: id,
-              selectedOrganId: _.get(query, 'selectedOrganId', id),
-              sortType: _.get(query, 'sortType', 'wordsDesc'),
-              startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-              endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
-              pageIndex: pageIndex,
-              pageSize: 50
-            })
+            category: _.get(self.props, 'params.category'),
+            schoolId: id,
+            selectedOrganId: _.get(query, 'orgId', id),
+            sortType: _.get(query, 'sortType', 'wordsDesc'),
+            startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+            endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+            pageIndex: pageIndex,
+            pageSize: 50
+          })
             .subscribe(
               (data)=> {
                 if (_.get(data, 'payload.items.length', 0) > 0) {
@@ -174,7 +174,7 @@ export default createConnector((props$, state$, dispatch$) => {
           return ac.fetchUserRankings({
             category: _.get(props, 'params.category'),
             schoolId: id,
-            selectedOrganId: _.get(query, 'selectedOrganId', id),
+            selectedOrganId: _.get(query, 'orgId', id),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
             startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
             endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),

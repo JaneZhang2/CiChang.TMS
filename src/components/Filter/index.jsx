@@ -13,15 +13,12 @@ import {
   FILTER_DATE_PICKER_TYPE
 } from '../../reducers/organs'
 import moment from 'moment'
+import 'rc-dialog/assets/bootstrap.css';
 import Dialog from 'rc-dialog';
 
 const {combineLatest} = Rx.Observable;
 
 class Filter extends React.Component {
-
-  componentDidMount() {
-
-  }
 
   constructor(props) {
     super(props);
@@ -108,7 +105,7 @@ class Filter extends React.Component {
       this.setState({
         current: [],
         visible: false
-      })
+      });
 
       hashHistory.push(
         String(new URI(`/rankings/${params.category}`).query(query))
@@ -165,6 +162,7 @@ class Filter extends React.Component {
                 let dialog;
                 if (this.state.visible) {
                   dialog = <Dialog
+                    wrapClassName="xxxxxxx2"
                     visible={this.state.visible}
                     animation="slide-fade"
                     maskAnimation="fade"

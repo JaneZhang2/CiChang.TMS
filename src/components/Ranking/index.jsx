@@ -1,10 +1,7 @@
 import React from 'react'
-import {createRxComponent, funcSubject} from 'react-rx-component'
-import Rx from 'rx'
-import './index.scss'
 import {hashHistory} from 'react-router'
-
-const {combineLatest} = Rx.Observable;
+import Dialog from 'rc-dialog';
+import './index.scss'
 
 const options = [
   {
@@ -19,59 +16,78 @@ const options = [
 
 class Ranking extends React.Component {
 
+  onClose() {
+    this.setState({
+      visible: false
+    });
+  }
+
+  onClick() {
+    this.setState({
+      visible: true
+    });
+  }
+
   constructor(props) {
-    super(props)
+    super(props);
+    this.state = {
+      visible: false
+    }
   }
 
   render() {
-    let {params, toggle, active} = this.props;
+    let {params} = this.props;
     let category = _.get(params, 'category');
+
+    let dialog;
+    if (this.state.visible) {
+      dialog = <Dialog
+        wrapClassName="xxxxxxx"
+        visible={this.state.visible}
+        animation="slide-fade"
+        maskAnimation="fade"
+        onClose={this.onClose.bind(this)}
+      >
+        <div className="arrow"></div>
+        <ul>
+          {
+            _.map(options, option=> {
+              let {key} = option,
+                selected = category == key;
+
+              return (
+                <li
+                  key={key}
+                  className={selected?'active':''}
+                  onClick={()=>{
+                    this.onClose();
+                    hashHistory.push(`/rankings/${key}`);
+                  }}
+                >
+                  {option.text}
+                  {
+                    selected
+                      ? <i className="hui-icon-checked-small"></i>
+                      : ''
+                  }
+                </li>
+              )
+            })
+          }
+        </ul>
+      </Dialog>
+    }
 
     return (
       <div className="ranking-container">
-        <div onClick={toggle}>
+        <div onClick={this.onClick.bind(this)}>
           {_.get(_.find(options, {key: category}), 'text')}
           <i className="hui-icon-carat-d-small"/>
         </div>
-        {
-          active ? <div className="ranking-modal">
-            <div className="arrow"></div>
-            <ul>
-              {
-                _.map(options, option=> {
-                  let {key} = option,
-                    selected = category == key;
-
-                  return (
-                    <li
-                      key={key}
-                      className={selected?'active':''}
-                      onClick={()=>toggle(hashHistory.push(`/rankings/${key}`))}
-                    >
-                      {option.text}
-                      {
-                        selected
-                          ? <i className="hui-icon-checked-small"></i>
-                          : ''
-                      }
-                    </li>
-                  )
-                })
-              }
-            </ul>
-          </div> : ''
-        }
+        {dialog}
       </div>
     )
   }
 }
 
-export default createRxComponent(props$ => {
-  const toggle$ = funcSubject();
-  const active$ = toggle$.startWith(false).scan(active=>!active);
-
-  return combineLatest(
-    props$, active$,
-    (props, active)=> ({...props, active, toggle: toggle$})
-  )
-}, Ranking);
+export default Ranking;
