@@ -3,7 +3,6 @@
   width: 100%;
   height: 100%;
   z-index: 500;
-  background: rgba(#333, .3);
 }
 
 .filter {
@@ -114,4 +113,60 @@
     border-top: 1px solid #EEE;
     font-size: 32px;
   }
+}
+
+.rc-dialog {
+  margin: 0 !important;
+}
+
+.rc-dialog-content {
+  border: none 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.rc-dialog-body {
+  padding: 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  li {
+    line-height: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 32px;
+    color: #656565;
+
+    &.selected {
+      background: #FFF;
+    }
+  }
+
+  > ul {
+    width: calc(100% / 3);
+    background: #F5F5F5;
+
+    &:last-of-type {
+      width: 100%;
+      background: #FFF;
+
+      > li.selected {
+        color: #25B6ED;
+      }
+    }
+
+    &:nth-of-type(2) {
+      flex: 1;
+    }
+  }
+}
+
+.rc-dialog-close {
+  display: none !important;
+}
+
+.rc-dialog-wrap, .rc-dialog-mask {
+  top: 176px !important;
 }

@@ -31,9 +31,6 @@ export default store => next => ({type, payload}) => {
 
         switch (Status) {
           case -8193:
-            // console.log(payload);
-            // console.log(result)
-
             location.href = URI(HJPASSPORT_PATH)
               .query({
                 url: location.href,

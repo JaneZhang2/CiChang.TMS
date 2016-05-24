@@ -26,11 +26,24 @@ class Filter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: false,
       current: []
     }
   }
 
+  onClose() {
+    this.setState({
+      visible: false
+    });
+  }
+
   onClick(index, id, fromState) {
+    if (index == 0) {
+      this.setState({
+        visible: true
+      });
+    }
+
     let {current} = this.state;
     let {options, query, params} = this.props;
     let filters = _.get(options, 'entities.filters');
@@ -92,7 +105,10 @@ class Filter extends React.Component {
         })
       }
 
-      this.setState({current: []})
+      this.setState({
+        current: [],
+        visible: false
+      })
 
       hashHistory.push(
         String(new URI(`/rankings/${params.category}`).query(query))
@@ -115,116 +131,126 @@ class Filter extends React.Component {
     };
 
     return (
-      <div className={current.length > 0?'filter-container':''}>
-        <div className="filter">
-          <ul>
-            {
-              _.map(_.get(options, 'result'),
-                id => {
-                  let selected = id == _.get(current, 0),
-                    filter = _.get(filters, id),
-                    name;
-
-                  switch (_.get(filter, 'type')) {
-                    case FILTER_ORGANS_TYPE:
-                      name = getOrganName(Number(_.get(query, 'orgId', _.get(filter, 'value.orgId'))));
-                      name = name ? name : '全部';
-                      break;
-                    case FILTER_SORT_TYPE:
-                      name = `${_.get(_.find(filters, {
-                        value: {sortType: _.get(query, 'sortType', 'wordsDesc')}
-                      }), 'name', '')}`;
-                      break;
-                    case FILTER_DATE_TYPE:
-                      let startDate = _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-                        endDate = _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
-                        result = _.find(filters, {value: {startDate, endDate}});
-
-                      name = _.get(result, 'name',
-                        `${startDate.replace(/\d{4}-(\d{2})-(\d{2})/, '$1.$2')}-
-                         ${endDate.replace(/\d{4}-(\d{2})-(\d{2})/, '$1.$2')}`
-                      );
-                      break;
-                  }
-
-                  return (
-                    <li className={selected?'selected':''}
-                        key={id} onClick={this.onClick.bind(this,0,id)}>
-                      {name}
-                      <i
-                        className={`hui-icon-carat-${selected?'u':'d'}-small`}/>
-                    </li>
-                  )
-                })
-            }
-          </ul>
+      <div className="filter">
+        <ul>
           {
-            _.map(current, (id, index)=> {
-              let data = _.get(filters, id);
-              let items = _.get(data, 'items');
+            _.map(_.get(options, 'result'),
+              id => {
+                let selected = id == _.get(current, 0),
+                  filter = _.get(filters, id),
+                  name;
 
-              if (_.isEmpty(items)) {
-                return;
-              }
+                switch (_.get(filter, 'type')) {
+                  case FILTER_ORGANS_TYPE:
+                    name = getOrganName(Number(_.get(query, 'orgId', _.get(filter, 'value.orgId'))));
+                    name = name ? name : '全部';
+                    break;
+                  case FILTER_SORT_TYPE:
+                    name = `${_.get(_.find(filters, {
+                      value: {sortType: _.get(query, 'sortType', 'wordsDesc')}
+                    }), 'name', '')}`;
+                    break;
+                  case FILTER_DATE_TYPE:
+                    let startDate = _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+                      endDate = _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+                      result = _.find(filters, {value: {startDate, endDate}});
 
-              switch (_.get(data, 'type')) {
-                case FILTER_DATE_PICKER_TYPE:
-                  return (
-                    <div className="range-picker-container">
-                      <i className="hui-icon-clock-1"/>
-                      <DatePicker
-                        defaultDate={moment(_.get(query, 'startDate')).format('YYYY.MM.DD')}
-                        onChange={startDate=>this.setState({startDate})}
-                      />
-                      <i className="range-picker-separator"/>
-                      <DatePicker
-                        defaultDate={moment(_.get(query, 'endDate')).format('YYYY.MM.DD')}
-                        onChange={endDate=>this.setState({endDate})}
-                      />
-                      <i className="hui-icon-clock-1"/>
-                      {
-                        _.map(items, item =>
-                          (
-                            <button
-                              className="range-picker-confirm"
-                              onClick={this.onClick.bind(this,index+1,item,true)}
-                            >
-                              确定
-                            </button>
-                          )
-                        )
-                      }
-                    </div>
-                  );
-                default:
-                  return (
-                    <ul key={id}>
-                      {
-                        _.map(items, item => {
-                            let selected = item == _.get(current, index + 1);
-                            if (!_.get(current, index + 1)) {
-                              selected = _.get(filters, `${_.get(current, index)}.value.orgId`)
-                                == _.get(filters, `${item}.value.orgId`)
-                            }
+                    name = _.get(result, 'name',
+                      `${startDate.replace(/\d{4}-(\d{2})-(\d{2})/, '$1.$2')}-
+                         ${endDate.replace(/\d{4}-(\d{2})-(\d{2})/, '$1.$2')}`
+                    );
+                    break;
+                }
 
+                let dialog;
+                if (this.state.visible) {
+                  dialog = <Dialog
+                    visible={this.state.visible}
+                    animation="slide-fade"
+                    maskAnimation="fade"
+                    onClose={this.onClose.bind(this)}
+                  >
+                    {
+                      _.map(current, (id, index)=> {
+                        let data = _.get(filters, id);
+                        let items = _.get(data, 'items');
+
+                        if (_.isEmpty(items)) {
+                          return;
+                        }
+
+                        switch (_.get(data, 'type')) {
+                          case FILTER_DATE_PICKER_TYPE:
                             return (
-                              <li
-                                className={selected?'selected':''}
-                                key={item}
-                                onClick={this.onClick.bind(this,index+1,item)}
-                              >
-                                {_.get(filters, `${item}.name`)}
-                              </li>
+                              <div className="range-picker-container">
+                                <i className="hui-icon-clock-1"/>
+                                <DatePicker
+                                  defaultDate={moment(_.get(query, 'startDate')).format('YYYY.MM.DD')}
+                                  onChange={startDate=>this.setState({startDate})}
+                                />
+                                <i className="range-picker-separator"/>
+                                <DatePicker
+                                  defaultDate={moment(_.get(query, 'endDate')).format('YYYY.MM.DD')}
+                                  onChange={endDate=>this.setState({endDate})}
+                                />
+                                <i className="hui-icon-clock-1"/>
+                                {
+                                  _.map(items, item =>
+                                    (
+                                      <button
+                                        className="range-picker-confirm"
+                                        onClick={this.onClick.bind(this,index+1,item,true)}
+                                      >
+                                        确定
+                                      </button>
+                                    )
+                                  )
+                                }
+                              </div>
+                            );
+                          default:
+                            return (
+                              <ul key={id}>
+                                {
+                                  _.map(items, item => {
+                                      let selected = item == _.get(current, index + 1);
+                                      if (!_.get(current, index + 1)) {
+                                        selected = _.get(filters, `${_.get(current, index)}.value.orgId`)
+                                          == _.get(filters, `${item}.value.orgId`)
+                                      }
+
+                                      return (
+                                        <li
+                                          className={selected?'selected':''}
+                                          key={item}
+                                          onClick={this.onClick.bind(this,index+1,item)}
+                                        >
+                                          {_.get(filters, `${item}.name`)}
+                                        </li>
+                                      )
+                                    }
+                                  )
+                                }
+                              </ul>
                             )
-                          }
-                        )
-                      }
-                    </ul>
-                  )
-              }
-            })
+                        }
+                      })
+                    }
+                  </Dialog>
+                }
+
+                return (
+                  <li className={selected?'selected':''}
+                      key={id} onClick={this.onClick.bind(this,0,id)}>
+                    {name}
+                    {dialog}
+                    <i
+                      className={`hui-icon-carat-${selected?'u':'d'}-small`}/>
+                  </li>
+                )
+              })
           }
-        </div>
+        </ul>
       </div>
     )
   }

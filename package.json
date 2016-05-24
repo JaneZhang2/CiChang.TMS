@@ -7,7 +7,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "start": "npm run debug:dev",
+    "start": "webpack-dev-server --watch-poll --inline --hot",
     "debug": "npm run debug:dev",
     "build": "npm run build:prod",
     "debug:dev": "APP_MODEL=DEBUG APP_ENV=DEV  node server.js",
