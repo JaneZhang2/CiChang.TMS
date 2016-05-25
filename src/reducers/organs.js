@@ -46,6 +46,16 @@ export const organs = handleActions({
             id: shortid.generate(),
             name: '单词最少',
             value: {sortType: 'wordsAsc'}
+          },
+          {
+            id: shortid.generate(),
+            name: '天数最多',
+            value: {sortType: 'daysDesc'}
+          },
+          {
+            id: shortid.generate(),
+            name: '天数最少',
+            value: {sortType: 'daysAsc'}
           }
         ]
       },

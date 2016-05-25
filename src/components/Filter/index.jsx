@@ -13,8 +13,7 @@ import {
   FILTER_DATE_PICKER_TYPE
 } from '../../reducers/organs'
 import moment from 'moment'
-import 'rc-dialog/assets/bootstrap.css';
-import Dialog from 'rc-dialog';
+import mui from '../MUI/js/mui'
 
 const {combineLatest} = Rx.Observable;
 
@@ -23,25 +22,17 @@ class Filter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
       current: []
     }
   }
 
-  toggle() {
-    this.setState({
-      visible: !this.state.visible
-    });
-  }
-
-  onClose() {
-    this.setState({
-      visible: false
-    });
-  }
-
   onClick(index, id, fromState) {
     let {current} = this.state;
+    // if (index == 0 && current.length > 0) {
+    //   alert('xxx')
+    //   this.setState({current: []});
+    // }
+
     let {options, query, params} = this.props;
     let filters = _.get(options, 'entities.filters');
 
@@ -65,6 +56,9 @@ class Filter extends React.Component {
           getId(Number(_.get(query, 'orgId'))).split(','),
           item=>current.push(item)
         );
+
+        current.pop();
+        current.push(_.get(_.find(filters, {id}), 'items.1'));
         break;
       case FILTER_SORT_TYPE:
         current.push(
@@ -103,8 +97,7 @@ class Filter extends React.Component {
       }
 
       this.setState({
-        current: [],
-        visible: false
+        current: []
       });
 
       hashHistory.push(
@@ -159,94 +152,95 @@ class Filter extends React.Component {
                     break;
                 }
 
-                let dialog;
-                if (this.state.visible) {
-                  dialog = <Dialog
-                    wrapClassName="xxxxxxx2"
-                    visible={this.state.visible}
-                    animation="slide-fade"
-                    maskAnimation="fade"
-                    onClose={this.onClose.bind(this)}
-                  >
-                    {
-                      _.map(current, (id, index)=> {
-                        let data = _.get(filters, id);
-                        let items = _.get(data, 'items');
-
-                        if (_.isEmpty(items)) {
-                          return;
-                        }
-
-                        switch (_.get(data, 'type')) {
-                          case FILTER_DATE_PICKER_TYPE:
-                            return (
-                              <div className="range-picker-container">
-                                <i className="hui-icon-clock-1"/>
-                                <DatePicker
-                                  defaultDate={moment(_.get(query, 'startDate')).format('YYYY.MM.DD')}
-                                  onChange={startDate=>this.setState({startDate})}
-                                />
-                                <i className="range-picker-separator"/>
-                                <DatePicker
-                                  defaultDate={moment(_.get(query, 'endDate')).format('YYYY.MM.DD')}
-                                  onChange={endDate=>this.setState({endDate})}
-                                />
-                                <i className="hui-icon-clock-1"/>
-                                {
-                                  _.map(items, item =>
-                                    (
-                                      <button
-                                        className="range-picker-confirm"
-                                        onClick={this.onClick.bind(this,index+1,item,true)}
-                                      >
-                                        确定
-                                      </button>
-                                    )
-                                  )
-                                }
-                              </div>
-                            );
-                          default:
-                            return (
-                              <ul key={id}>
-                                {
-                                  _.map(items, item => {
-                                      let selected = item == _.get(current, index + 1);
-                                      if (!_.get(current, index + 1)) {
-                                        selected = _.get(filters, `${_.get(current, index)}.value.orgId`)
-                                          == _.get(filters, `${item}.value.orgId`)
-                                      }
-
-                                      return (
-                                        <li
-                                          className={selected?'selected':''}
-                                          key={item}
-                                          onClick={this.onClick.bind(this,index+1,item)}
-                                        >
-                                          {_.get(filters, `${item}.name`)}
-                                        </li>
-                                      )
-                                    }
-                                  )
-                                }
-                              </ul>
-                            )
-                        }
-                      })
-                    }
-                  </Dialog>
-                }
-
                 return (
                   <li className={selected?'selected':''}
-                      key={id} onClick={()=>{
-                        this.toggle();
+                      key={id}>
+                    <a
+                      className={`popover-trigger ${selected?'active':''}`}
+                      onClick={()=>{
+                        mui(`#popover_${id}`).popover('toggle');
                         this.onClick(0,id)
-                      }}>
-                    {name}
-                    {dialog}
-                    <i
-                      className={`hui-icon-carat-${selected?'u':'d'}-small`}/>
+                      }}
+                    >
+                      {name}
+                      <i
+                        className={`hui-icon-carat-${selected?'u':'d'}-small`}
+                      />
+                    </a>
+                    <div id={`popover_${id}`} className="mui-popover">
+                      <div className="mui-popover-arrow"></div>
+                      <div className="mui-scroll-wrapper">
+                        <div className="mui-scroll">
+                          {
+                            _.map(current, (id, index)=> {
+                              let data = _.get(filters, id);
+                              let items = _.get(data, 'items');
+
+                              if (_.isEmpty(items)) {
+                                return;
+                              }
+
+                              switch (_.get(data, 'type')) {
+                                case FILTER_DATE_PICKER_TYPE:
+                                  return (
+                                    <div className="range-picker-container">
+                                      <i className="hui-icon-clock-1"/>
+                                      <DatePicker
+                                        defaultDate={moment(_.get(query, 'startDate')).format('YYYY.MM.DD')}
+                                        onChange={startDate=>this.setState({startDate})}
+                                      />
+                                      <i className="range-picker-separator"/>
+                                      <DatePicker
+                                        defaultDate={moment(_.get(query, 'endDate')).format('YYYY.MM.DD')}
+                                        onChange={endDate=>this.setState({endDate})}
+                                      />
+                                      <i className="hui-icon-clock-1"/>
+                                      {
+                                        _.map(items, item =>
+                                          (
+                                            <button
+                                              className="range-picker-confirm"
+                                              onClick={this.onClick.bind(this,index+1,item,true)}
+                                            >
+                                              确定
+                                            </button>
+                                          )
+                                        )
+                                      }
+                                    </div>
+                                  );
+                                default:
+                                  return (
+                                    <ul key={id}>
+                                      {
+                                        _.map(items, item => {
+                                            let selected = item == _.get(current, index + 1);
+                                            if (!_.get(current, index + 1)) {
+                                              selected = _.get(filters, `${_.get(current, index)}.value.orgId`)
+                                                == _.get(filters, `${item}.value.orgId`)
+                                            }
+
+                                            return (
+                                              <li
+                                                className={selected?'selected':''}
+                                                key={item}
+                                                onClick={this.onClick.bind(this,index+1,item)}
+                                              >
+                                                {_.get(filters, `${item}.name`)}
+                                              </li>
+                                            )
+                                          }
+                                        )
+                                      }
+                                    </ul>
+                                  )
+                              }
+                            })
+                          }
+                        </div>
+                      </div>
+
+                    </div>
                   </li>
                 )
               })

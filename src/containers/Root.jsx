@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Students from './Students'
 import Student from './Student'
 import Books from './Books'
+import Test from '../components/MUI'
 
 const Root = (props) => {
   let {store, history} = props;
@@ -15,7 +16,7 @@ const Root = (props) => {
       <Router history={history}>
         <Route path="/" components={App}>
           <IndexRedirect to="rankings/users"/>
-          <Route path='rankings/:category' components={Students}/>
+          <Route path='rankings/:category' components={Test}/>
           <Route path='books/:studentId' components={Books}/>
           <Route path='students/:studentId' components={Student}/>
           <Route path='students/:studentId/:bookId' components={Student}/>

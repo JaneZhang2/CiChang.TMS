@@ -1,7 +1,8 @@
 let config = {};
 
 if (__DEV__) {
-  config.API_ROOT = 'http://local.mci.hujiang.com/teacher/v1/';
+  config.API_ROOT = 'http://dev.mci.hujiang.com/teacher/';
+  //'http://local.mci.hujiang.com/teacher/v1/';
   config.HJPASSPORT_PATH = '//qapass.hujiang.com/m';
   config.MY_ACCOUNT_URL = '//qamy.hujiang.com';
 }

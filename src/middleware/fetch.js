@@ -27,9 +27,9 @@ export default store => next => ({type, payload}) => {
         return response.json();
       })
       .map(result=> {
-        let {Status, Message, Data} = result;
+        let {status, message, data} = result;
 
-        switch (Status) {
+        switch (status) {
           case -8193:
             location.href = URI(config.HJPASSPORT_PATH)
               .query({
@@ -45,10 +45,10 @@ export default store => next => ({type, payload}) => {
             let query = URI.parseQuery(payload);
 
 
-            Data.pageIndex = query.pageIndex;
-            return next(action(Data));
+            data.pageIndex = query.pageIndex;
+            return next(action(data));
           default:
-            throw new Error(Message);
+            throw new Error(message);
         }
       })
       .catch(error=> next(action(Rx.Observable.return(error)))) :

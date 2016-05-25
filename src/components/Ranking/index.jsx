@@ -1,7 +1,7 @@
 import React from 'react'
 import {hashHistory} from 'react-router'
-import Dialog from 'rc-dialog';
 import './index.scss'
+import mui from '../MUI/js/mui'
 
 const options = [
   {
@@ -16,75 +16,54 @@ const options = [
 
 class Ranking extends React.Component {
 
-  onClose() {
-    this.setState({
-      visible: false
-    });
-  }
-
-  onClick() {
-    this.setState({
-      visible: true
-    });
-  }
-
   constructor(props) {
     super(props);
-    this.state = {
-      visible: false
-    }
   }
 
   render() {
     let {params} = this.props;
     let category = _.get(params, 'category');
 
-    let dialog;
-    if (this.state.visible) {
-      dialog = <Dialog
-        wrapClassName="xxxxxxx"
-        visible={this.state.visible}
-        animation="slide-fade"
-        maskAnimation="fade"
-        onClose={this.onClose.bind(this)}
-      >
-        <div className="arrow"></div>
-        <ul>
-          {
-            _.map(options, option=> {
-              let {key} = option,
-                selected = category == key;
-
-              return (
-                <li
-                  key={key}
-                  className={selected?'active':''}
-                  onClick={()=>{
-                    this.onClose();
-                    hashHistory.push(`/rankings/${key}`);
-                  }}
-                >
-                  {option.text}
-                  {
-                    selected
-                      ? <i className="hui-icon-checked-small"></i>
-                      : ''
-                  }
-                </li>
-              )
-            })
-          }
-        </ul>
-      </Dialog>
-    }
-
     return (
       <div className="ranking-container">
-        <div onClick={this.onClick.bind(this)}>
+        <a href="#topPopover" onClick={(e)=>e.preventDefault()}>
           {_.get(_.find(options, {key: category}), 'text')}
           <i className="hui-icon-carat-d-small"/>
+        </a>
+        <div id="topPopover" className="mui-popover">
+          <div className="mui-popover-arrow"></div>
+          <div className="mui-scroll-wrapper">
+            <div className="mui-scroll">
+              <ul className="mui-table-view">
+                {
+                  _.map(options, option=> {
+                    let {key} = option,
+                      selected = category == key;
+
+                    return (
+                      <li
+                        key={key}
+                        className={'mui-table-view-cell '+ selected?'active':''}
+                        onClick={()=>{
+                              mui('#topPopover').popover('toggle');
+                              hashHistory.push(`/rankings/${key}`);
+                            }}
+                      >
+                        {option.text}
+                        {
+                          selected
+                            ? <i className="hui-icon-checked-small"></i>
+                            : ''
+                        }
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+          </div>
+
         </div>
-        {dialog}
       </div>
     )
   }
