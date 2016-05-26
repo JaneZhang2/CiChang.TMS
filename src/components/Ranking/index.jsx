@@ -3,6 +3,7 @@ import {hashHistory} from 'react-router'
 import Dialog from 'rc-dialog';
 import uuid from 'node-uuid'
 import './index.scss'
+import URI from 'urijs'
 
 const options = [
   {
@@ -50,7 +51,7 @@ class Ranking extends React.Component {
 
                 return (
                   <li key={key} className={selected?'active':''}
-                      onClick={()=>closeDialog(hashHistory.push(`/rankings/${key}`))}>
+                      onClick={()=>closeDialog(location.href=new URI(`./#/rankings/${key}`).toString())}>
                     <i className="hui-icon-checked-small"></i>
                     <span>{option.text}</span>
                     <i className="hui-icon-checked-small"></i>

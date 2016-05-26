@@ -35,12 +35,29 @@ class Test extends React.Component {
     this.setState({currentDialogId: currentDialogId ? '' : dialogId});
   }
 
-  // componentWillUnmount() {
-  //   this.xx.destroy();
-  // }
+  componentDidUpdate(props) {
+    let query = _.get(this.props, 'location.query');
+
+    if (_.get(props, 'params.category') !=
+      _.get(this.props, 'params.category')) {
+
+      this.setState({pageIndex: 0});
+
+      this.props.fetchUserRankings({
+        category: _.get(this.props, 'params.category'),
+        schoolId: this.props.id,
+        selectedOrganId: _.get(query, 'orgId', this.props.id),
+        sortType: _.get(query, 'sortType', 'wordsDesc'),
+        startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+        endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+        pageIndex: 0,
+        pageSize: 50
+      }).subscribe(()=> {
+      })
+    }
+  }
 
   componentDidMount() {
-    // alert('xx')
     let self = this;
 
     document.querySelector('.mui-table-view').addEventListener('tap', xx=> {
@@ -71,12 +88,12 @@ class Test extends React.Component {
          * 上拉加载具体业务实现
          */
         function pullupRefresh() {
-          let {id, location} = self.props;
+          let {id, location, params} = self.props;
           let query = _.get(location, 'query');
           let pageIndex = self.state.pageIndex;
 
           self.props.fetchUserRankings({
-            category: 'users',
+            category: _.get(params, 'category'),
             schoolId: id,
             selectedOrganId: _.get(query, 'orgId', id),
             sortType: _.get(query, 'sortType', 'wordsDesc'),
@@ -89,7 +106,9 @@ class Test extends React.Component {
               if (_.get(data, 'payload.items.length', 0) > 0) {
                 self.setState({pageIndex: pageIndex + 1});
               }
-              mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+              mui('#pullrefresh').pullRefresh().endPullupToRefresh(
+                _.get(data, 'payload.items.length', 0) == 0
+              ); //参数为true代表没有更多数据了。
             });
         }
 
@@ -138,23 +157,38 @@ class Test extends React.Component {
             <div className="mui-scroll">
               <ul className="mui-table-view mui-table-view-chevron">
                 {
-                  _.map(_.get(rankings, 'items'), (item, index)=> {
-                    return (
-                      <li
-                        key={index}
-                        data-url={`students/${_.get(item,'userId')}/0`}
-                        onTap={()=>hashHistory.push()}
-                        className="mui-table-view-cell"
-                      >
+                  (()=> {
+                    switch (_.get(params, 'category')) {
+                      case 'users':
+                        return _.map(_.get(rankings, 'items'), (item, index)=> {
+                          return (
+                            <li
+                              key={index}
+                              data-url={`students/${_.get(item,'userId')}/0`}
+                              className="mui-table-view-cell"
+                            >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'studentName')}</span>
                                 <span>{_.get(item, 'words')}
                                   <small>词</small></span>
                                 <span>{_.get(item, 'days')}
                                   <small>天</small></span>
-                      </li>
-                    )
-                  })
+                            </li>
+                          )
+                        });
+                      case 'class':
+                        return _.map(_.get(rankings, 'items'), (item, index)=> {
+                          return (
+                            <li key={index} className="mui-table-view-cell">
+                                <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
+                                  {_.get(item, 'organName')}</span>
+                                <span>{_.get(item, 'words')}
+                                  <small>词</small></span>
+                            </li>
+                          )
+                        });
+                    }
+                  })()
                 }
               </ul>
             </div>
