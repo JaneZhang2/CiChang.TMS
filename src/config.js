@@ -8,7 +8,7 @@ if (__DEV__) {
 }
 
 if (__QA__) {
-  config.API_ROOT = 'http://qa.mci.hujiang.com/teacher/v1/';
+  config.API_ROOT = 'http://qa.mci.hujiang.com/teacher/';
   config.HJPASSPORT_PATH = '//qapass.hujiang.com/m';
   config.MY_ACCOUNT_URL = '//qamy.hujiang.com';
 }
