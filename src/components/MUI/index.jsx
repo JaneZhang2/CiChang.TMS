@@ -105,8 +105,11 @@ class Test extends React.Component {
         if (mui.os.plus) {
           mui.plusReady(function () {
             setTimeout(function () {
-              mui('#pullrefresh').pullRefresh().pullupLoading();
-
+              try {
+                mui('#pullrefresh').pullRefresh().pullupLoading();
+              }
+              catch (e) {
+              }
               mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
                 hashHistory.push(this.dataset.url);
               })
@@ -115,7 +118,11 @@ class Test extends React.Component {
           });
         } else {
           mui.ready(function () {
-            mui('#pullrefresh').pullRefresh().pullupLoading();
+            try {
+              mui('#pullrefresh').pullRefresh().pullupLoading();
+            }
+            catch (e) {
+            }
             mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
               hashHistory.push(this.dataset.url);
             })
