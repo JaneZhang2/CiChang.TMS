@@ -69,6 +69,48 @@
             "parentOrgId": 33,
             "orgType": 3,
             "orgItems": []
+          },
+          {
+            "orgName": "（3）班",
+            "orgId": 50,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
+          },
+          {
+            "orgName": "（4）班",
+            "orgId": 51,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
+          },
+          {
+            "orgName": "（5）班",
+            "orgId": 52,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
+          },
+          {
+            "orgName": "（6）班",
+            "orgId": 53,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
+          },
+          {
+            "orgName": "（7）班",
+            "orgId": 54,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
+          },
+          {
+            "orgName": "（8）班",
+            "orgId": 55,
+            "parentOrgId": 33,
+            "orgType": 3,
+            "orgItems": []
           }
         ]
       },

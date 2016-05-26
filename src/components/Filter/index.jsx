@@ -35,10 +35,13 @@ class Filter extends React.Component {
   }
 
   onClick(index, id, fromState) {
-    let {current} = this.state;
+    let {current, last} = this.state;
     let {options, query, params} = this.props;
     let filters = _.get(options, 'entities.filters');
 
+    if (index == 0) {
+      last = _.set(current.slice(0, index), index, id);
+    }
     current = _.set(current.slice(0, index), index, id);
 
     let metadata = _.get(filters, id);
@@ -57,9 +60,11 @@ class Filter extends React.Component {
       case FILTER_ORGANS_TYPE:
         _.map(
           getId(Number(_.get(query, 'orgId'))).split(','),
-          item=>current.push(item)
+          item=> {
+            last.push(item);
+            current.push(item);
+          }
         );
-
         current[1] = _.get(_.find(filters, {id}), 'items.1');
         break;
       case FILTER_SORT_TYPE:
@@ -68,6 +73,7 @@ class Filter extends React.Component {
             value: {sortType: _.get(query, 'sortType', 'wordsDesc')}
           }), 'id')
         );
+        last = _.clone(current);
         break;
       case FILTER_DATE_TYPE:
         current.push(
@@ -81,10 +87,11 @@ class Filter extends React.Component {
             _.get(_.find(filters, {type: FILTER_DATE_PICKER_TYPE}), 'id')
           )
         );
+        last = _.clone(current);
         break;
     }
 
-    this.setState({current});
+    this.setState({current, last});
 
     if (_.isEmpty(_.get(metadata, 'items'))) {
       _.map(current, id=>
@@ -99,18 +106,23 @@ class Filter extends React.Component {
       }
 
       this.setState({
-        current: []
+        last: current
       });
-      this.onClose();
 
-      hashHistory.push(
-        String(new URI(`/rankings/${params.category}`).query(query))
-      );
+      setTimeout(()=> {
+        this.setState({
+          current: []
+        });
+        this.onClose();
+        hashHistory.push(
+          String(new URI(`/rankings/${params.category}`).query(query))
+        );
+      }, 300);
     }
   }
 
   render() {
-    let {current} = this.state;
+    let {last, current} = this.state;
     let {options, query, currentDialogId} = this.props;
 
     let filters = _.get(options, 'entities.filters');
@@ -130,7 +142,7 @@ class Filter extends React.Component {
           {
             _.map(_.get(options, 'result'),
               id => {
-                let selected = id == _.get(current, 0) && id == currentDialogId,
+                let selected = id == _.get(last, 0) && id == currentDialogId,
                   filter = _.get(filters, id),
                   name;
 
@@ -209,6 +221,10 @@ class Filter extends React.Component {
                               <ul key={id}>
                                 {
                                   _.map(items, item => {
+                                      let lastSelected = item == _.get(last, index + 1);
+                                      if (!_.get(last, index + 1)) {
+                                        lastSelected = item == _.get(filters, `${_.get(last, index)}.items.0`)
+                                      }
                                       let selected = item == _.get(current, index + 1);
                                       if (!_.get(current, index + 1)) {
                                         selected = _.get(filters, `${_.get(current, index)}.value.orgId`)
@@ -217,11 +233,15 @@ class Filter extends React.Component {
 
                                       return (
                                         <li
-                                          className={selected?'selected':''}
+                                          className={`${selected?'selected':''} ${lastSelected?'lastSelected':''}`}
                                           key={item}
                                           onClick={this.onClick.bind(this,index+1,item)}
                                         >
                                           {_.get(filters, `${item}.name`)}
+                                          {
+                                            lastSelected ? <i
+                                              className="hui-icon-checked-small"/> : ''
+                                          }
                                         </li>
                                       )
                                     }

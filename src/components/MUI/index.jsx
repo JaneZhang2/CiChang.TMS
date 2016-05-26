@@ -45,9 +45,9 @@ class Test extends React.Component {
 
       this.setState({pageIndex: 0});
 
-      this.props.fetchOrgans(this.props.params).subscribe(()=> {
-        alert('xxx')
+      mui('#pullrefresh').pullRefresh().refresh(true);
 
+      this.props.fetchOrgans(this.props.params).subscribe(()=> {
       });
       this.props.fetchUserRankings({
         category: _.get(this.props, 'params.category'),
@@ -59,8 +59,6 @@ class Test extends React.Component {
         pageIndex: 0,
         pageSize: 50
       }).subscribe(()=> {
-        alert('xxx')
-
       })
     }
   }
@@ -175,6 +173,10 @@ class Test extends React.Component {
                   <ul className="mui-table-view mui-table-view-chevron">
                     {
                       (()=> {
+                        if (!rankings.loading && _.isEmpty(items)) {
+                          return <Message title="空空如也" description="暂无成员信息"/>
+                        }
+
                         switch (_.get(params, 'category')) {
                           case 'users':
                             return _.map(items, (item, index)=> {
@@ -194,7 +196,7 @@ class Test extends React.Component {
                               )
                             });
                           case 'class':
-                            return _.map(_.get(rankings, 'items'), (item, index)=> {
+                            return _.map(items, (item, index)=> {
                               return (
                                 <li key={index} className="mui-table-view-cell">
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
