@@ -5,6 +5,10 @@ const rankings = handleActions({
   [FETCH_USER_RANKINGS]: (state, action)=> {
     let {payload} = action;
 
+    if (payload.loading) {
+      return _.assign({loading: true}, state);
+    }
+
     if (payload instanceof Error) {
       return payload;
     }

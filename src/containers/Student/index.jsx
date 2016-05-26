@@ -91,8 +91,6 @@ class Student extends React.Component {
 
           let {swipeDirection} = swiper;
 
-          // alert(JSON.stringify(self.props.params));
-
           self.props.fetchStudent(
             {
               ...self.props.params,

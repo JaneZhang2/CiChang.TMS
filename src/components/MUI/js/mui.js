@@ -1895,10 +1895,10 @@ Function.prototype.bind = Function.prototype.bind || function (to) {
     $.ready(function () {
       $.doAction('inits', function (index, init) {
         var isInit = !!(!inits[init.name] || init.repeat);
-        if (isInit) {
+        // if (isInit) {
           init.handle.call($);
           inits[init.name] = true;
-        }
+        // }
       });
     });
     return this;

@@ -42,9 +42,12 @@ class Test extends React.Component {
     if (_.get(props, 'location.key') !=
       _.get(this.props, 'location.key')) {
 
+
       this.setState({pageIndex: 0});
 
       this.props.fetchOrgans(this.props.params).subscribe(()=> {
+        alert('xxx')
+
       });
       this.props.fetchUserRankings({
         category: _.get(this.props, 'params.category'),
@@ -56,6 +59,8 @@ class Test extends React.Component {
         pageIndex: 0,
         pageSize: 50
       }).subscribe(()=> {
+        alert('xxx')
+
       })
     }
   }
@@ -100,6 +105,7 @@ class Test extends React.Component {
               if (_.get(data, 'payload.items.length', 0) > 0) {
                 self.setState({pageIndex: pageIndex + 1});
               }
+              mui('.mui-scroll-wrapper').scroll().refresh()
               mui('#pullrefresh').pullRefresh().endPullupToRefresh(_.get(data, 'payload.items.length', 0) == 0); //参数为true代表没有更多数据了。
             });
         }
@@ -120,11 +126,7 @@ class Test extends React.Component {
           });
         } else {
           mui.ready(function () {
-            try {
-              mui('#pullrefresh').pullRefresh().pullupLoading();
-            }
-            catch (e) {
-            }
+            mui('#pullrefresh').pullRefresh().pullupLoading();
             mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
               hashHistory.push(this.dataset.url);
             })
@@ -136,6 +138,8 @@ class Test extends React.Component {
   render() {
     let {currentDialogId} = this.state;
     let {organs, location, rankings, params, id} = this.props;
+
+    let items = _.get(rankings, 'items');
 
     return (
       <div className="layout">
@@ -173,7 +177,7 @@ class Test extends React.Component {
                       (()=> {
                         switch (_.get(params, 'category')) {
                           case 'users':
-                            return _.map(_.get(rankings, 'items'), (item, index)=> {
+                            return _.map(items, (item, index)=> {
                               return (
                                 <li
                                   key={index}
