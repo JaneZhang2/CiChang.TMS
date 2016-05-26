@@ -3,9 +3,14 @@ import {FETCH_USER_RANKINGS} from '../actions'
 
 const rankings = handleActions({
   [FETCH_USER_RANKINGS]: (state, action)=> {
+    let {payload} = action;
 
-    let {pageIndex} = action.payload;
-    
+    if (payload instanceof Error) {
+      return payload;
+    }
+
+    let {pageIndex} = payload;
+
     return {
       items: _.concat(
         _.slice(

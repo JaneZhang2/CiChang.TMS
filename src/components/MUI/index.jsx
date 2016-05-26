@@ -156,46 +156,50 @@ class Test extends React.Component {
             />
         }
         <section>
-          <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
-            <div className="mui-scroll">
-              <ul className="mui-table-view mui-table-view-chevron">
-                {
-                  (()=> {
-                    switch (_.get(params, 'category')) {
-                      case 'users':
-                        return _.map(_.get(rankings, 'items'), (item, index)=> {
-                          return (
-                            <li
-                              key={index}
-                              data-url={`students/${_.get(item,'userId')}/0`}
-                              className="mui-table-view-cell"
-                            >
+          {
+            rankings instanceof Error ?
+              <Message title="对不起" description={rankings.message}/> :
+              <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
+                <div className="mui-scroll">
+                  <ul className="mui-table-view mui-table-view-chevron">
+                    {
+                      (()=> {
+                        switch (_.get(params, 'category')) {
+                          case 'users':
+                            return _.map(_.get(rankings, 'items'), (item, index)=> {
+                              return (
+                                <li
+                                  key={index}
+                                  data-url={`students/${_.get(item,'userId')}/0`}
+                                  className="mui-table-view-cell"
+                                >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'studentName')}</span>
                                 <span>{_.get(item, 'words')}
                                   <small>词</small></span>
                                 <span>{_.get(item, 'days')}
                                   <small>天</small></span>
-                            </li>
-                          )
-                        });
-                      case 'class':
-                        return _.map(_.get(rankings, 'items'), (item, index)=> {
-                          return (
-                            <li key={index} className="mui-table-view-cell">
+                                </li>
+                              )
+                            });
+                          case 'class':
+                            return _.map(_.get(rankings, 'items'), (item, index)=> {
+                              return (
+                                <li key={index} className="mui-table-view-cell">
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'organName')}</span>
                                 <span>{_.get(item, 'words')}
                                   <small>词</small></span>
-                            </li>
-                          )
-                        });
+                                </li>
+                              )
+                            });
+                        }
+                      })()
                     }
-                  })()
-                }
-              </ul>
-            </div>
-          </div>
+                  </ul>
+                </div>
+              </div>
+          }
         </section>
       </div>
     )
