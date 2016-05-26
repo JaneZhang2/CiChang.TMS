@@ -61,15 +61,6 @@ class Test extends React.Component {
   componentDidMount() {
     let self = this;
 
-    document.querySelector('.mui-table-view').addEventListener('tap', xx=> {
-      for (var i = 0; i < xx.path.length; i++) {
-        if (/mui-table-view-cell/.test(xx.path[i].className)) {
-          hashHistory.push(xx.path[i].dataset.url);
-          break;
-        }
-      }
-    });
-
     this.props.fetchOrgans()
       .subscribe(()=> {
         mui.init({
@@ -115,12 +106,19 @@ class Test extends React.Component {
           mui.plusReady(function () {
             setTimeout(function () {
               mui('#pullrefresh').pullRefresh().pullupLoading();
+
+              mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
+                hashHistory.push(this.dataset.url);
+              })
             }, 1000);
 
           });
         } else {
           mui.ready(function () {
             mui('#pullrefresh').pullRefresh().pullupLoading();
+            mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
+              hashHistory.push(this.dataset.url);
+            })
           });
         }
       });
