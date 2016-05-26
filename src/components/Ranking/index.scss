@@ -1,62 +1,43 @@
-.ranking-container {
+.rc-dialog-wrap.navigation {
+  top: 96px;
+  z-index: 1999;
 
-  > a {
-    padding: 30px 0;
-    line-height: 96px;
-    height: 96px;
-    color: #FFF;
-    text-decoration: none;
-  }
-
-  .hui-icon-checked-small {
-    padding-left: 77px;
-  }
-
-  .mui-table-view-cell > a:not(.mui-btn) {
-    margin: 0;
-  }
-
-  .mui-popover .mui-table-view {
-    background: #FFF;
-
-    li {
-      line-height: 80px;
-      height: 80px;
-      text-align: center;
+  .arrow {
+    width: 0;
+    height: 0;
+    margin: -8px auto auto;
+    border: {
+      style: solid;
+      width: 4px 8px;
+      color: transparent transparent #FFF transparent;
     }
   }
 
-  .mui-popover {
-    background: #FFF;
+  .rc-dialog {
+    margin: 10px 130px;
   }
 
-  .mui-popover-arrow:after {
-    background: #fff;
-  }
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-align: left;
 
-  #topPopover {
-    position: fixed;
-    width: 496px;
-    top: 96px;
-  }
-  #topPopover .mui-popover-arrow {
-    left: auto;
-    right: 6px;
-  }
+    > span {
+      flex: 1;
+    }
 
-  //p {
-  //  text-indent: 22px;
-  //}
-  span.mui-icon {
-    font-size: 14px;
-    color: #007aff;
-    margin-left: -15px;
-    padding-right: 10px;
+    > .hui-icon-checked-small {
+      flex: 1;
+      color: #FFF;
+    }
+
+    &.active {
+      color: #25B6ED;
+
+      > .hui-icon-checked-small:last-of-type {
+        color: #25B6ED;
+      }
+    }
   }
-  .mui-popover {
-    height: 160px;
-  }
-  //.mui-content {
-  //  padding: 10px;
-  //}
 }

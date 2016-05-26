@@ -56,6 +56,13 @@
     font-size: 24px;
     color: rgba(#FFF, .6);
 
+    p{
+      //font-size: 0.18666667rem;
+      //margin-top: 0;
+      //margin-bottom: 0.13333333rem;
+      color: rgba(#FFF, .6);
+    }
+
     em {
       font-size: 42px;
       color: #FFF;
@@ -87,6 +94,7 @@
     }
 
     > .title {
+      line-height: 100px;
       font-weight: normal;
       float: left;
       font-size: 28px;

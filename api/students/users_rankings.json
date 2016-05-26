@@ -1,7 +1,7 @@
 {
-  "Message": "OK",
-  "Status": 0,
-  "Data": {
+  "message": "OK",
+  "status": 0,
+  "data": {
     "items": [
       {
         "userId": 25742381,

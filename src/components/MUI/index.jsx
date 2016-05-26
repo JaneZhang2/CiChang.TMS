@@ -14,18 +14,47 @@ import {hashHistory} from 'react-router'
 class Test extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
+      dialogTemplate: '',
+      currentDialogId: '',
       pageIndex: 0
     }
   }
 
+  closeDialog() {
+    this.setState({currentDialogId: ''});
+  }
+
+  setCurrentDialogId(id) {
+    this.setState({currentDialogId: id});
+  }
+
+  toggleDialog(dialogId) {
+    let {currentDialogId} = this.state;
+    this.setState({currentDialogId: currentDialogId ? '' : dialogId});
+  }
+
+  // componentWillUnmount() {
+  //   this.xx.destroy();
+  // }
+
   componentDidMount() {
+    // alert('xx')
     let self = this;
+
+    document.querySelector('.mui-table-view').addEventListener('tap', xx=> {
+      for (var i = 0; i < xx.path.length; i++) {
+        if (/mui-table-view-cell/.test(xx.path[i].className)) {
+          hashHistory.push(xx.path[i].dataset.url);
+          break;
+        }
+      }
+    });
 
     this.props.fetchOrgans()
       .subscribe(()=> {
-        mui.init({
+        self.xx = mui.init({
           pullRefresh: {
             container: '#pullrefresh',
             down: {
@@ -56,8 +85,10 @@ class Test extends React.Component {
             pageIndex: pageIndex,
             pageSize: 50
           })
-            .subscribe(()=> {
-              self.setState({pageIndex: pageIndex + 1});
+            .subscribe((data)=> {
+              if (_.get(data, 'payload.items.length', 0) > 0) {
+                self.setState({pageIndex: pageIndex + 1});
+              }
               mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
             });
         }
@@ -78,28 +109,41 @@ class Test extends React.Component {
   }
 
   render() {
+    let {currentDialogId} = this.state;
     let {organs, location, rankings, params, id} = this.props;
 
     return (
       <div className="layout">
         <header>
           <i className="hui-icon-carat-l"></i>
-          <Ranking params={params}/>
+          <Ranking
+            params={params}
+            currentDialogId={currentDialogId}
+            closeDialog={this.closeDialog.bind(this)}
+            setCurrentDialogId={this.setCurrentDialogId.bind(this)}
+            toggleDialog={id=>this.toggleDialog(id)}
+          />
           <a className="hui-icon-user-solid" href={config.MY_ACCOUNT_URL}></a>
         </header>
-        <Filter params={params} options={organs} id={id}
-                query={_.get(location,'query')}/>
+        <Filter
+          params={params} options={organs} id={id}
+          query={_.get(location,'query')}
+          currentDialogId={currentDialogId}
+          closeDialog={this.closeDialog.bind(this)}
+          setCurrentDialogId={this.setCurrentDialogId.bind(this)}
+          toggleDialog={id=>this.toggleDialog(id)}
+        />
         <section>
           <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
             <div className="mui-scroll">
-              <ul className="mui-table-view mui-table-view-chevron"
-                  onClick={(e)=>alert()}>
+              <ul className="mui-table-view mui-table-view-chevron">
                 {
                   _.map(_.get(rankings, 'items'), (item, index)=> {
                     return (
                       <li
                         key={index}
-                        onClick={()=>hashHistory.push(`students/${_.get(item,'userId')}/0`)}
+                        data-url={`students/${_.get(item,'userId')}/0`}
+                        onTap={()=>hashHistory.push()}
                         className="mui-table-view-cell"
                       >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>

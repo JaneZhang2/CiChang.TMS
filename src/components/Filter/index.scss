@@ -1,66 +1,40 @@
+.rc-dialog-mask {
+  background: none !important;
+  top: 100% !important;
+}
+
+.rc-dialog-wrap {
+  background: rgba(#030303, .3) !important;
+}
+
+.rc-dialog-close {
+  display: none !important;
+}
+
+.rc-dialog-wrap.filter-dialog {
+  top: 177px;
+  margin: 0;
+
+  .rc-dialog {
+    margin: 0;
+  }
+}
+
 .filter {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   position: relative;
-  z-index: 1500;
+  //z-index: 1500;
   background: #FFF;
-
-  .popover-trigger {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    font-size: 32px;
-    color: #656565;
-
-    &.active {
-      color: #25B6ED;
-    }
-  }
-
-  .mui-popover {
-    top: 80px;
-    left: 0;
-    width: 100%;
-    background: #FFF;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .mui-scroll-wrapper {
-    overflow: visible;
-  }
-
-  .mui-scroll {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
-    > ul {
-      width: calc(100% / 3);
-      background: #F5F5F5;
-
-      &:last-of-type {
-        width: 100%;
-        background: #FFF;
-
-        > li.selected {
-          color: #25B6ED;
-        }
-      }
-
-      &:nth-of-type(2) {
-        flex: 1;
-      }
-    }
-  }
 
   li {
     line-height: 80px;
     height: 80px;
     box-sizing: border-box;
     text-align: center;
+    font-size: 32px;
+    color: #656565;
 
     &.selected {
       background: #FFF;
@@ -85,6 +59,24 @@
           color: #25B6ED;
         }
       }
+    }
+
+    & + ul {
+      width: calc(100% / 3);
+      background: #F5F5F5;
+    }
+
+    &:last-of-type {
+      width: 100%;
+      background: #FFF;
+
+      > li.selected {
+        color: #25B6ED;
+      }
+    }
+
+    &:nth-of-type(3) {
+      flex: 1;
     }
   }
 }
@@ -138,7 +130,50 @@
   }
 }
 
-.rmc-picker-indicator,
-.rmc-picker-popup-item {
-  font-size: 26px !important;
+//.rc-dialog {
+//  margin: 0 !important;
+//}
+
+.rc-dialog-content {
+  border: none 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.rc-dialog-body {
+  padding: 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  li {
+    line-height: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 32px;
+    color: #656565;
+
+    &.selected {
+      background: #FFF;
+    }
+  }
+
+  > ul {
+    width: calc(100% / 3);
+    background: #F5F5F5;
+
+    &:last-of-type {
+      width: 100%;
+      background: #FFF;
+
+      > li.selected {
+        color: #25B6ED;
+      }
+    }
+
+    &:nth-of-type(2) {
+      flex: 1;
+    }
+  }
 }

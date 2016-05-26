@@ -96,7 +96,13 @@ if (process.env.APP_MODEL === 'DEBUG') {
       loaders: [
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract('style', 'css!postcss!px2rem?remUnit=75&remPrecision=8')
+          loader: ExtractTextPlugin.extract('style', 'css!postcss!px2rem?remUnit=75&remPrecision=8'),
+          exclude: [/rmc-picker/]
+        },
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract('style', 'css'),
+          include: [/rmc-picker/]
         },
         {
           test: /\.scss$/,

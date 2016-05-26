@@ -1,7 +1,7 @@
 {
-  "Message": "OK",
-  "Status": 0,
-  "Data": {
+  "message": "OK",
+  "status": 0,
+  "data": {
     "orgName": "南昌一中",
     "orgId": 30,
     "parentOrgId": 0,
