@@ -50,6 +50,16 @@ small {
   padding-left: 10px;
 }
 
+.mui-pull-top-pocket,
+.mui-pull-bottom-pocket {
+  height: 80px;
+  line-height: 80px;
+}
+
+.mui-pull-caption {
+  font-size: 24px;
+}
+
 .mui-table-view-cell {
   display: table;
   width: 100%;

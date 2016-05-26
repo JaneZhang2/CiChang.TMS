@@ -44,6 +44,8 @@ class Test extends React.Component {
 
       this.setState({pageIndex: 0});
 
+      this.props.fetchOrgans(this.props.params).subscribe(()=> {
+      });
       this.props.fetchUserRankings({
         category: _.get(this.props, 'params.category'),
         schoolId: this.props.id,
@@ -61,7 +63,7 @@ class Test extends React.Component {
   componentDidMount() {
     let self = this;
 
-    this.props.fetchOrgans()
+    this.props.fetchOrgans(this.props.params)
       .subscribe(()=> {
         mui.init({
           pullRefresh: {
@@ -98,7 +100,7 @@ class Test extends React.Component {
               if (_.get(data, 'payload.items.length', 0) > 0) {
                 self.setState({pageIndex: pageIndex + 1});
               }
-              mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
+              mui('#pullrefresh').pullRefresh().endPullupToRefresh(_.get(data, 'payload.items.length', 0) == 0); //参数为true代表没有更多数据了。
             });
         }
 

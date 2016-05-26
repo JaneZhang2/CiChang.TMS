@@ -2,8 +2,23 @@ import {createAction} from 'redux-actions'
 import URI from 'urijs'
 import config from '../config'
 
-export const FETCH_ORGANS = Symbol('FETCH');
-export const fetchOrgans = ()=>createAction(FETCH_ORGANS)(`${config.API_ROOT}organs/all`);
+export const FETCH_ORGANS_BY_USERS = Symbol('FETCH');
+export const FETCH_ORGANS_BY_CLASS = Symbol('FETCH');
+export const fetchOrgans = params=> {
+  let {category} = params;
+  let type;
+
+  switch (category) {
+    case 'users':
+      type = FETCH_ORGANS_BY_USERS;
+      break;
+    case 'class':
+      type = FETCH_ORGANS_BY_CLASS;
+      break;
+  }
+
+  return createAction(type)(`${config.API_ROOT}organs/all`);
+};
 
 export const FETCH_USER_RANKINGS = Symbol('FETCH');
 export const fetchUserRankings = params=>createAction(FETCH_USER_RANKINGS)(
