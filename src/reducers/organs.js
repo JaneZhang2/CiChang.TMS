@@ -24,13 +24,18 @@ const formatter = items=>
 
 export const organs = handleActions({
   [FETCH_ORGANS]: (state, action)=> {
+    let {payload} = action;
+
+    if (payload instanceof Error) {
+      return payload;
+    }
 
     let filters = [
       {
         id: shortid.generate(),
         type: FILTER_ORGANS_TYPE,
         items: formatter(
-          _.get(action.payload, 'orgItems')
+          _.get(payload, 'orgItems')
         )
       },
       {

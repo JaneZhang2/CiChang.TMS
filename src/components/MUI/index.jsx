@@ -10,6 +10,7 @@ import Filter from '../Filter'
 import config from '../../config'
 import moment from 'moment'
 import {hashHistory} from 'react-router'
+import Message from '../Message'
 
 class Test extends React.Component {
 
@@ -38,8 +39,8 @@ class Test extends React.Component {
   componentDidUpdate(props) {
     let query = _.get(this.props, 'location.query');
 
-    if (_.get(props, 'params.category') !=
-      _.get(this.props, 'params.category')) {
+    if (_.get(props, 'location.key') !=
+      _.get(this.props, 'location.key')) {
 
       this.setState({pageIndex: 0});
 
@@ -71,7 +72,7 @@ class Test extends React.Component {
 
     this.props.fetchOrgans()
       .subscribe(()=> {
-        self.xx = mui.init({
+        mui.init({
           pullRefresh: {
             container: '#pullrefresh',
             down: {
@@ -106,9 +107,7 @@ class Test extends React.Component {
               if (_.get(data, 'payload.items.length', 0) > 0) {
                 self.setState({pageIndex: pageIndex + 1});
               }
-              mui('#pullrefresh').pullRefresh().endPullupToRefresh(
-                _.get(data, 'payload.items.length', 0) == 0
-              ); //参数为true代表没有更多数据了。
+              mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //参数为true代表没有更多数据了。
             });
         }
 
@@ -144,14 +143,18 @@ class Test extends React.Component {
           />
           <a className="hui-icon-user-solid" href={config.MY_ACCOUNT_URL}></a>
         </header>
-        <Filter
-          params={params} options={organs} id={id}
-          query={_.get(location,'query')}
-          currentDialogId={currentDialogId}
-          closeDialog={this.closeDialog.bind(this)}
-          setCurrentDialogId={this.setCurrentDialogId.bind(this)}
-          toggleDialog={id=>this.toggleDialog(id)}
-        />
+        {
+          organs instanceof Error ?
+            <Message title="对不起" description={organs.message}/> :
+            <Filter
+              params={params} options={organs} id={id}
+              query={_.get(location,'query')}
+              currentDialogId={currentDialogId}
+              closeDialog={this.closeDialog.bind(this)}
+              setCurrentDialogId={this.setCurrentDialogId.bind(this)}
+              toggleDialog={id=>this.toggleDialog(id)}
+            />
+        }
         <section>
           <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
             <div className="mui-scroll">

@@ -16,12 +16,12 @@ export default store => next => ({type, payload}) => {
       }
     ))
       .flatMap(response=> {
-        if (response.status == '404') {
-          let query = URI.parseQuery(payload);
-          let error = new Error();
-          error.status = response.status;
-          error.pageIndex = query.pageIndex;
-          throw error;
+        if (response.status !== 200) {
+          throw _.assign(
+            new Error('数据获取失败'),
+            URI.parseQuery(payload),
+            {status: response.status}
+          );
         }
 
         return response.json();
@@ -42,11 +42,9 @@ export default store => next => ({type, payload}) => {
               .toString();
             break;
           case 0:
-            let query = URI.parseQuery(payload);
-
-
-            data.pageIndex = query.pageIndex;
-            return next(action(data));
+            return next(action(
+              _.assign(data, URI.parseQuery(payload))
+            ));
           default:
             throw new Error(message);
         }
