@@ -198,6 +198,7 @@ class Filter extends React.Component {
                                 />
                                 <i className="range-picker-separator"/>
                                 <DatePicker
+                                  minDate={this.state.startDate||moment(_.get(query, 'startDate')).format('YYYY-MM-DD')}
                                   defaultDate={moment(_.get(query, 'endDate')).format('YYYY.MM.DD')}
                                   onChange={endDate=>this.setState({endDate})}
                                 />
