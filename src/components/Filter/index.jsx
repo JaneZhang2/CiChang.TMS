@@ -27,7 +27,7 @@ class Filter extends React.Component {
   }
 
   toggle(id) {
-    this.props.setCurrentDialogId(id);
+    this.props.toggleDialog(id);
   }
 
   onClose() {

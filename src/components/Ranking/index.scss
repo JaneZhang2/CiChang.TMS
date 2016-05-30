@@ -18,17 +18,8 @@
   }
 
   li {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    text-align: left;
-
-    > span {
-      flex: 1;
-    }
 
     > .hui-icon-checked-small {
-      flex: 1;
       color: #FFF;
     }
 

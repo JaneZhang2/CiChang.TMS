@@ -27,7 +27,7 @@ class Ranking extends React.Component {
 
   render() {
     let {id} = this.state;
-    let {params, currentDialogId, closeDialog, setCurrentDialogId} = this.props;
+    let {params, currentDialogId, closeDialog, toggleDialog} = this.props;
 
     let dialog;
     let dialogActive = id == currentDialogId;
@@ -52,7 +52,6 @@ class Ranking extends React.Component {
                 return (
                   <li key={key} className={selected?'active':''}
                       onClick={()=>closeDialog(location.href=new URI(`./#/rankings/${key}`).toString())}>
-                    <i className="hui-icon-checked-small"></i>
                     <span>{option.text}</span>
                     <i className="hui-icon-checked-small"></i>
                   </li>
@@ -66,7 +65,7 @@ class Ranking extends React.Component {
 
     return (
       <div className="navigation">
-        <div onClick={()=>setCurrentDialogId(id)}>
+        <div onClick={()=>toggleDialog(id)}>
           {_.get(_.find(options, {key: catalog}), 'text')}
           <i className="hui-icon-carat-d-small"/>
         </div>
