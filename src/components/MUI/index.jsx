@@ -169,48 +169,55 @@ class Test extends React.Component {
             rankings instanceof Error ?
               <Message title="对不起" description={rankings.message}/> :
               <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
-                <div className="mui-scroll">
-                  <ul className="mui-table-view mui-table-view-chevron">
-                    {
-                      (()=> {
-                        if (!rankings.loading && _.isEmpty(items)) {
-                          return <Message title="空空如也" description="暂无成员信息"/>
-                        }
+                {
+                  (()=> {
+                    if (!rankings.loading && _.isEmpty(items)) {
+                      return <Message title="空空如也" description="暂无成员信息"/>
+                    }
 
-                        switch (_.get(params, 'category')) {
-                          case 'users':
-                            return _.map(items, (item, index)=> {
-                              return (
-                                <li
-                                  key={index}
-                                  data-url={`students/${_.get(item,'userId')}/0`}
-                                  className="mui-table-view-cell"
-                                >
+                    return (
+                      <div className="mui-scroll">
+                        <ul className="mui-table-view mui-table-view-chevron">
+                          {
+                            (()=> {
+                              switch (_.get(params, 'category')) {
+                                case 'users':
+                                  return _.map(items, (item, index)=> {
+                                    return (
+                                      <li
+                                        key={index}
+                                        data-url={`students/${_.get(item,'userId')}/0`}
+                                        className="mui-table-view-cell"
+                                      >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'studentName')}</span>
                                 <span>{_.get(item, 'words')}
                                   <small>词</small></span>
                                 <span>{_.get(item, 'days')}
                                   <small>天</small></span>
-                                </li>
-                              )
-                            });
-                          case 'class':
-                            return _.map(items, (item, index)=> {
-                              return (
-                                <li key={index} className="mui-table-view-cell">
+                                      </li>
+                                    )
+                                  });
+                                case 'class':
+                                  return _.map(items, (item, index)=> {
+                                    return (
+                                      <li key={index}
+                                          className="mui-table-view-cell">
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'organName')}</span>
                                 <span>{_.get(item, 'words')}
                                   <small>词</small></span>
-                                </li>
-                              )
-                            });
-                        }
-                      })()
-                    }
-                  </ul>
-                </div>
+                                      </li>
+                                    )
+                                  });
+                              }
+                            })()
+                          }
+                        </ul>
+                      </div>
+                    );
+                  })()
+                }
               </div>
           }
         </section>
