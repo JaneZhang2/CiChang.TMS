@@ -15,6 +15,8 @@ import 'rc-dialog/assets/bootstrap.css';
 import Dialog from 'rc-dialog';
 import uuid from 'node-uuid'
 
+const yesterday = moment().hours(-24).format('YYYY-MM-DD');
+
 class Filter extends React.Component {
 
   constructor(props) {
@@ -79,8 +81,8 @@ class Filter extends React.Component {
         current.push(
           _.get(_.find(filters, {
               value: {
-                startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-                endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD'))
+                startDate: _.get(query, 'startDate', yesterday),
+                endDate: _.get(query, 'endDate', yesterday)
               }
             }),
             'id',
@@ -121,6 +123,22 @@ class Filter extends React.Component {
     }
   }
 
+  setStartDate(startDate) {
+    if (moment(startDate).diff(moment(this.state.endDate)) > 0) {
+      this.setState({endDate: startDate})
+    }
+    this.setState({startDate})
+  }
+
+  componentDidMount() {
+    let {query} = this.props;
+
+    this.setState({
+      startDate: _.get(query, 'startDate', yesterday),
+      endDate: _.get(query, 'endDate', yesterday)
+    });
+  }
+
   render() {
     let {last, current} = this.state;
     let {options, query, currentDialogId} = this.props;
@@ -157,8 +175,8 @@ class Filter extends React.Component {
                     }), 'name', '')}`;
                     break;
                   case FILTER_DATE_TYPE:
-                    let startDate = _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-                      endDate = _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+                    let startDate = _.get(query, 'startDate', yesterday),
+                      endDate = _.get(query, 'endDate', yesterday),
                       result = _.find(filters, {value: {startDate, endDate}});
 
                     name = _.get(result, 'name',
@@ -193,13 +211,13 @@ class Filter extends React.Component {
                               <div className="range-picker-container">
                                 <i className="hui-icon-clock-1"/>
                                 <DatePicker
-                                  defaultDate={moment(_.get(query, 'startDate')).format('YYYY.MM.DD')}
-                                  onChange={startDate=>this.setState({startDate})}
+                                  date={this.state.startDate}
+                                  onChange={startDate=>this.setStartDate(startDate)}
                                 />
                                 <i className="range-picker-separator"/>
                                 <DatePicker
-                                  minDate={this.state.startDate||moment(_.get(query, 'startDate')).format('YYYY-MM-DD')}
-                                  defaultDate={moment(_.get(query, 'endDate')).format('YYYY.MM.DD')}
+                                  minDate={this.state.startDate}
+                                  date={this.state.endDate}
                                   onChange={endDate=>this.setState({endDate})}
                                 />
                                 <i className="hui-icon-clock-1"/>
