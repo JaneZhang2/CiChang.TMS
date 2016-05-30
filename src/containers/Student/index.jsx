@@ -121,7 +121,7 @@ class Student extends React.Component {
         <header>
           <i
             className="hui-icon-carat-l"
-            onClick={()=>hashHistory.push('/')}
+            onClick={()=>hashHistory.go(-1)}
           />
         </header>
         <section className="userinfo">

@@ -29,7 +29,7 @@ class Books extends React.Component {
       <div className="books">
         <header>
           <i className="hui-icon-carat-l"
-             onClick={()=>hashHistory.push(`students/${studentId}/${last}`)}/>
+             onClick={()=>hashHistory.go(-1)}/>
           <span>选择词书</span>
           <i className="hui-icon-user-solid"/>
         </header>
