@@ -30,7 +30,8 @@ const option = {
     type: 'value',
     splitLine: {
       show: false
-    }
+    },
+    minInterval: 10
   },
   series: [
     {
