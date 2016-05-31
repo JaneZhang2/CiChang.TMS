@@ -5,17 +5,13 @@ const rankings = handleActions({
   [FETCH_USER_RANKINGS]: (state, action)=> {
     let {payload} = action;
 
-    if (payload.loading) {
-      return _.assign({loading: true}, state);
-    }
-
     if (payload instanceof Error) {
       return payload;
     }
 
     let {pageIndex} = payload;
 
-    return {
+    let result = {
       items: _.concat(
         _.slice(
           _.get(state, 'items', []), 0, pageIndex * 50
@@ -23,6 +19,12 @@ const rankings = handleActions({
         _.get(action.payload, 'items', [])
       )
     };
+
+    if (payload.loading) {
+      _.assign(result, {loading: true});
+    }
+
+    return result;
   }
 }, {
   loading: true

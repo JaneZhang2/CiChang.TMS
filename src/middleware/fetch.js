@@ -11,7 +11,10 @@ export default store => next => ({type, payload}) => {
 
   return String(type) === String(Symbol('FETCH')) ?
     (()=> {
-      next(action({loading: true}));
+      next(action({
+        ...URI.parseQuery(payload),
+        loading: true
+      }));
 
       return fromPromise(fetch(payload,
         {

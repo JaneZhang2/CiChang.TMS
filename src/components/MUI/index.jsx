@@ -111,11 +111,7 @@ class Test extends React.Component {
         if (mui.os.plus) {
           mui.plusReady(function () {
             setTimeout(function () {
-              try {
-                mui('#pullrefresh').pullRefresh().pullupLoading();
-              }
-              catch (e) {
-              }
+              mui('#pullrefresh').pullRefresh().pullupLoading();
               mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
                 hashHistory.push(this.dataset.url);
               })
@@ -173,13 +169,7 @@ class Test extends React.Component {
                 )
               }
 
-              if (rankings.loading) {
-                return (
-                  <Message title="加载中"/>
-                )
-              }
-
-              if (_.isEmpty(items)) {
+              if (!rankings.loading && _.isEmpty(items)) {
                 return <Message title="空空如也" description="暂无成员信息"/>
               }
             })()
