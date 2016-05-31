@@ -42,8 +42,10 @@ class Test extends React.Component {
     if (_.get(props, 'location.key') !=
       _.get(this.props, 'location.key')) {
 
+      console.log(_.get(props, 'location.key'));
 
-      this.setState({pageIndex: 0});
+
+      this.setState({pageIndex: 1});
 
       mui('#pullrefresh').pullRefresh().refresh(true);
 
@@ -59,6 +61,7 @@ class Test extends React.Component {
         pageIndex: 0,
         pageSize: 50
       }).subscribe(()=> {
+        mui('.mui-scroll-wrapper').scroll().refresh();
       })
     }
   }
@@ -103,7 +106,7 @@ class Test extends React.Component {
               if (_.get(data, 'payload.items.length', 0) > 0) {
                 self.setState({pageIndex: pageIndex + 1});
               }
-              mui('.mui-scroll-wrapper').scroll().refresh()
+              mui('.mui-scroll-wrapper').scroll().refresh();
               mui('#pullrefresh').pullRefresh().endPullupToRefresh(_.get(data, 'payload.items.length', 0) == 0); //参数为true代表没有更多数据了。
             });
         }
