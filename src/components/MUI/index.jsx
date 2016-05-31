@@ -171,6 +171,10 @@ class Test extends React.Component {
               <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
                 {
                   (()=> {
+                    if (rankings.loading) {
+                      return <Message title="加载中"/>
+                    }
+
                     if (!rankings.loading && _.isEmpty(items)) {
                       return <Message title="空空如也" description="暂无成员信息"/>
                     }
