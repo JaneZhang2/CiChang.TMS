@@ -116,7 +116,7 @@ class Test extends React.Component {
               }
               catch (e) {
               }
-              mui(".mui-table-view").on('tap', '.mui-table-view-cell.users', function (e) {
+              mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
                 hashHistory.push(this.dataset.url);
               })
             }, 1000);
@@ -125,7 +125,7 @@ class Test extends React.Component {
         } else {
           mui.ready(function () {
             mui('#pullrefresh').pullRefresh().pullupLoading();
-            mui(".mui-table-view").on('tap', '.mui-table-view-cell.users', function (e) {
+            mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
               hashHistory.push(this.dataset.url);
             })
           });
@@ -171,10 +171,6 @@ class Test extends React.Component {
               <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
                 {
                   (()=> {
-                    if (rankings.loading) {
-                      return <Message title="加载中"/>
-                    }
-
                     if (!rankings.loading && _.isEmpty(items)) {
                       return <Message title="空空如也" description="暂无成员信息"/>
                     }
@@ -191,7 +187,7 @@ class Test extends React.Component {
                                       <li
                                         key={index}
                                         data-url={`students/${_.get(item,'userId')}/0`}
-                                        className="mui-table-view-cell users"
+                                        className="mui-table-view-cell"
                                       >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'studentName')}</span>
@@ -206,7 +202,7 @@ class Test extends React.Component {
                                   return _.map(items, (item, index)=> {
                                     return (
                                       <li key={index}
-                                          className="mui-table-view-cell class">
+                                          className="mui-table-view-cell">
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'organName')}</span>
                                 <span>{_.get(item, 'words')}
