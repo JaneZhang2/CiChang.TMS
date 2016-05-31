@@ -24,6 +24,8 @@ const rankings = handleActions({
       )
     };
   }
-}, {});
+}, {
+  loading: true
+});
 
 export default rankings

@@ -166,60 +166,71 @@ class Test extends React.Component {
         }
         <section>
           {
-            rankings instanceof Error ?
-              <Message title="对不起" description={rankings.message}/> :
-              <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
-                {
-                  (()=> {
-                    if (!rankings.loading && _.isEmpty(items)) {
-                      return <Message title="空空如也" description="暂无成员信息"/>
-                    }
+            (()=> {
+              if (rankings instanceof Error) {
+                return (
+                  <Message title="对不起" description={rankings.message}/>
+                )
+              }
 
-                    return (
-                      <div className="mui-scroll">
-                        <ul className="mui-table-view mui-table-view-chevron">
-                          {
-                            (()=> {
-                              switch (_.get(params, 'category')) {
-                                case 'users':
-                                  return _.map(items, (item, index)=> {
-                                    return (
-                                      <li
-                                        key={index}
-                                        data-url={`students/${_.get(item,'userId')}/0`}
-                                        className="mui-table-view-cell"
-                                      >
+              if (rankings.loading) {
+                return (
+                  <Message title="加载中"/>
+                )
+              }
+
+              if (_.isEmpty(items)) {
+                return <Message title="空空如也" description="暂无成员信息"/>
+              }
+            })()
+          }
+          <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
+            {
+              (()=> {
+                return (
+                  <div className="mui-scroll">
+                    <ul className="mui-table-view mui-table-view-chevron">
+                      {
+                        (()=> {
+                          switch (_.get(params, 'category')) {
+                            case 'users':
+                              return _.map(items, (item, index)=> {
+                                return (
+                                  <li
+                                    key={index}
+                                    data-url={`students/${_.get(item,'userId')}/0`}
+                                    className="mui-table-view-cell"
+                                  >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'studentName')}</span>
                                 <span>{_.get(item, 'words')}
                                   <small>词</small></span>
                                 <span>{_.get(item, 'days')}
                                   <small>天</small></span>
-                                      </li>
-                                    )
-                                  });
-                                case 'class':
-                                  return _.map(items, (item, index)=> {
-                                    return (
-                                      <li key={index}
-                                          className="mui-table-view-cell">
+                                  </li>
+                                )
+                              });
+                            case 'class':
+                              return _.map(items, (item, index)=> {
+                                return (
+                                  <li key={index}
+                                      className="mui-table-view-cell">
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'organName')}</span>
                                 <span>{_.get(item, 'words')}
                                   <small>词</small></span>
-                                      </li>
-                                    )
-                                  });
-                              }
-                            })()
+                                  </li>
+                                )
+                              });
                           }
-                        </ul>
-                      </div>
-                    );
-                  })()
-                }
-              </div>
-          }
+                        })()
+                      }
+                    </ul>
+                  </div>
+                );
+              })()
+            }
+          </div>
         </section>
       </div>
     )
