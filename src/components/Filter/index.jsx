@@ -112,9 +112,6 @@ class Filter extends React.Component {
       });
 
       setTimeout(()=> {
-        this.setState({
-          current: []
-        });
         this.onClose();
         hashHistory.push(
           String(new URI(`/rankings/${params.category}`).query(query))
