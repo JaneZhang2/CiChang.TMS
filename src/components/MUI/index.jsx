@@ -116,7 +116,7 @@ class Test extends React.Component {
               }
               catch (e) {
               }
-              mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
+              mui(".mui-table-view").on('tap', '.mui-table-view-cell.users', function (e) {
                 hashHistory.push(this.dataset.url);
               })
             }, 1000);
@@ -125,7 +125,7 @@ class Test extends React.Component {
         } else {
           mui.ready(function () {
             mui('#pullrefresh').pullRefresh().pullupLoading();
-            mui(".mui-table-view").on('tap', '.mui-table-view-cell', function (e) {
+            mui(".mui-table-view").on('tap', '.mui-table-view-cell.users', function (e) {
               hashHistory.push(this.dataset.url);
             })
           });
@@ -187,7 +187,7 @@ class Test extends React.Component {
                                       <li
                                         key={index}
                                         data-url={`students/${_.get(item,'userId')}/0`}
-                                        className="mui-table-view-cell"
+                                        className="mui-table-view-cell users"
                                       >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'studentName')}</span>
@@ -202,7 +202,7 @@ class Test extends React.Component {
                                   return _.map(items, (item, index)=> {
                                     return (
                                       <li key={index}
-                                          className="mui-table-view-cell">
+                                          className="mui-table-view-cell class">
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
                                   {_.get(item, 'organName')}</span>
                                 <span>{_.get(item, 'words')}
