@@ -58,9 +58,11 @@ class Student extends React.Component {
       _.set(config, 'xAxis.data', _.map(items, item=>_.get(item, 'studyDate')));
       _.set(config, 'series.0.data', _.map(items, item=>_.get(item, 'studyCount')));
 
+      let element = this.swiper.slides[this.swiper.activeIndex];
 
-      echarts.init(this.swiper.slides[this.swiper.activeIndex])
-        .setOption(config);
+      if (element) {
+        echarts.init(element).setOption(config);
+      }
     }
   }
 
