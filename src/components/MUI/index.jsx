@@ -42,9 +42,6 @@ class Test extends React.Component {
     if (_.get(props, 'location.key') !=
       _.get(this.props, 'location.key')) {
 
-      console.log(_.get(props, 'location.key'));
-
-
       this.setState({pageIndex: 1});
 
       mui('#pullrefresh').pullRefresh().refresh(true);
