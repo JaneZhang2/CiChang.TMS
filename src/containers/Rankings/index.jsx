@@ -1,18 +1,18 @@
 import React from 'react';
-import './css/mui.css'
-import './index.scss'
-import mui from './js/mui'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import {fetchOrgans, fetchUserRankings} from '../../actions'
-import Ranking from '../Ranking'
-import Filter from '../Filter'
-import config from '../../config'
 import moment from 'moment'
 import {hashHistory} from 'react-router'
-import Message from '../Message'
+import '../../vendors/mui/css/mui.css'
+import mui from '../../vendors/mui/js/mui'
+import './index.scss'
+import {fetchOrgans, fetchUserRankings} from '../../actions'
+import Ranking from '../../components/Ranking'
+import Filter from '../../components/Filter'
+import Message from '../../components/Message'
+import config from '../../config'
 
-class Test extends React.Component {
+class Rankings extends React.Component {
 
   constructor(props) {
     super(props);
@@ -237,4 +237,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({fetchOrgans, fetchUserRankings}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Test);
+export default connect(mapStateToProps, mapDispatchToProps)(Rankings);
