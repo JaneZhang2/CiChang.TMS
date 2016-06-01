@@ -1,17 +1,16 @@
 import React from 'react'
-import {createConnector} from 'redux-rx/react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
 import {hashHistory} from 'react-router'
 import _ from 'lodash'
 import './index.scss'
 import {fetchStudent, fetchBooks} from '../../actions'
-import {bindActionCreators} from 'redux-rx'
 import moment from 'moment'
 import echarts from 'echarts'
 import Swiper from 'swiper'
 import 'isomorphic-fetch'
 import URI from 'urijs'
-
-const {combineLatest} = Rx.Observable;
+import Rx from 'rx'
 
 const option = {
   tooltip: {
@@ -44,7 +43,7 @@ const option = {
 class Student extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       currentWeek: moment()
     }
@@ -68,14 +67,24 @@ class Student extends React.Component {
 
   componentDidMount() {
     let self = this;
-
-
+    
     this.swiper = new Swiper('.swiper-container', {
       loop: true,
       loopedSlides: 1,
       observer: true,//修改swiper自己或子元素时，自动初始化swiper
       observeParents: true,//修改swiper的父元素时，自动初始化swiper
       onInit: (swiper)=> {
+        Rx.Observable.when(
+          self.props.fetchStudent({
+            ...self.props.params,
+            bookId: 0,
+            currentWeek: moment().format('YYYY-MM-DD')
+          }).thenDo(student=>student),
+          self.props.fetchBooks(_.get(self.props, 'params.studentId')).thenDo(books=>books)
+        )
+          .subscribe(()=> {
+
+          });
 
         swiper.on('slideChangeEnd', (swiper)=> {
           swiper.removeAllSlides();
@@ -172,34 +181,15 @@ class Student extends React.Component {
   }
 }
 
-export default createConnector((props$, state$, dispatch$) => {
-  const actionCreators$ = bindActionCreators({
-    fetchStudent,
-    fetchBooks
-  }, dispatch$);
+function mapStateToProps(state) {
+  return {
+    student: state.student,
+    books: state.books
+  };
+}
 
-  const fetch$ = props$.withLatestFrom(
-    actionCreators$,
-    (props, ac)=>
-      Rx.Observable.when(
-        ac.fetchStudent({
-          ...props.params,
-          bookId: 0,
-          currentWeek: moment().format('YYYY-MM-DD')
-        }).thenDo(student=>student),
-        ac.fetchBooks(_.get(props, 'params.studentId')).thenDo(books=>books)
-      )
-  ).flatMap(obs => obs);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({fetchStudent, fetchBooks}, dispatch)
+}
 
-  return combineLatest(
-    props$, state$, fetch$, actionCreators$,
-    (props, state, fetch, ac)=> ({
-      fetch,
-      ...props,
-      student: state.student,
-      books: state.books,
-      fetchBooks: ac.fetchBooks,
-      fetchStudent: ac.fetchStudent
-    })
-  )
-}, Student);
+export default connect(mapStateToProps, mapDispatchToProps)(Student);

@@ -1,11 +1,9 @@
 import React from 'react'
-import {createConnector} from 'redux-rx/react'
-import {bindActionCreators} from 'redux-rx';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
 import {hashHistory} from 'react-router'
 import './index.scss'
 import {fetchBooks} from '../../actions'
-
-const {combineLatest} = Rx.Observable;
 
 class Books extends React.Component {
 
@@ -17,6 +15,13 @@ class Books extends React.Component {
     this.setState({
       current: id
     })
+  }
+
+  componentDidMount() {
+    this.props.fetchBooks(_.get(this.props, 'params.studentId'))
+      .subscribe(()=> {
+
+      });
   }
 
   render() {
@@ -67,24 +72,15 @@ class Books extends React.Component {
   }
 }
 
-export default createConnector((props$, state$, dispatch$) => {
-  const actionCreators$ = bindActionCreators({
-    fetchBooks
-  }, dispatch$);
+function mapStateToProps(state) {
+  return {
+    student: state.student,
+    books: state.books
+  };
+}
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({fetchBooks}, dispatch)
+}
 
-  const fetch$ = props$.withLatestFrom(
-    actionCreators$,
-    (props, ac)=>
-      ac.fetchBooks(_.get(props, 'params.studentId'))
-  ).flatMap(obs => obs);
-
-  return combineLatest(
-    props$, state$, fetch$,
-    (props, state, fetch)=> ({
-      fetch,
-      ...props,
-      books: state.books
-    })
-  )
-}, Books);
+export default connect(mapStateToProps, mapDispatchToProps)(Books);
