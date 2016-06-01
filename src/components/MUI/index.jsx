@@ -37,17 +37,17 @@ class Test extends React.Component {
   }
 
   componentDidUpdate(props) {
+    let self = this;
     let query = _.get(this.props, 'location.query');
 
     if (_.get(props, 'location.key') !=
       _.get(this.props, 'location.key')) {
 
-      this.setState({pageIndex: 1});
+      this.props.fetchOrgans(this.props.params)
+        .subscribe(()=> {
 
-      mui('#pullrefresh').pullRefresh().refresh(true);
+        });
 
-      this.props.fetchOrgans(this.props.params).subscribe(()=> {
-      });
       this.props.fetchUserRankings({
         category: _.get(this.props, 'params.category'),
         schoolId: this.props.id,
@@ -58,7 +58,9 @@ class Test extends React.Component {
         pageIndex: 0,
         pageSize: 50
       }).subscribe(()=> {
+        mui('#pullrefresh').pullRefresh().refresh(true);
         mui('.mui-scroll-wrapper').scroll().refresh();
+        self.setState({pageIndex: 1});
       })
     }
   }
@@ -76,37 +78,33 @@ class Test extends React.Component {
             },
             up: {
               contentrefresh: '正在加载...',
-              callback: pullupRefresh
+              callback: ()=> {//上拉加载具体业务实现
+                let {pageIndex} = self.state;
+                let {id, location, params} = self.props;
+                let query = _.get(location, 'query');
+
+                self.props.fetchUserRankings({
+                  category: _.get(params, 'category'),
+                  schoolId: id,
+                  selectedOrganId: _.get(query, 'orgId', id),
+                  sortType: _.get(query, 'sortType', 'wordsDesc'),
+                  startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+                  endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+                  pageIndex: pageIndex,
+                  pageSize: 50
+                })
+                  .subscribe((data)=> {
+                    let length = _.get(data, 'payload.items.length', 0);
+                    if (length > 0) {
+                      self.setState({pageIndex: pageIndex + 1});
+                    }
+                    mui('.mui-scroll-wrapper').scroll().refresh();
+                    mui('#pullrefresh').pullRefresh().endPullupToRefresh(length == 0); //参数为true代表没有更多数据了。
+                  });
+              }
             }
           }
         });
-
-        /**
-         * 上拉加载具体业务实现
-         */
-        function pullupRefresh() {
-          let {id, location, params} = self.props;
-          let query = _.get(location, 'query');
-          let pageIndex = self.state.pageIndex;
-
-          self.props.fetchUserRankings({
-            category: _.get(params, 'category'),
-            schoolId: id,
-            selectedOrganId: _.get(query, 'orgId', id),
-            sortType: _.get(query, 'sortType', 'wordsDesc'),
-            startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-            endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
-            pageIndex: pageIndex,
-            pageSize: 50
-          })
-            .subscribe((data)=> {
-              if (_.get(data, 'payload.items.length', 0) > 0) {
-                self.setState({pageIndex: pageIndex + 1});
-              }
-              mui('.mui-scroll-wrapper').scroll().refresh();
-              mui('#pullrefresh').pullRefresh().endPullupToRefresh(_.get(data, 'payload.items.length', 0) == 0); //参数为true代表没有更多数据了。
-            });
-        }
 
         if (mui.os.plus) {
           mui.plusReady(function () {
@@ -172,7 +170,7 @@ class Test extends React.Component {
               if (!rankings.loading && _.isEmpty(items)) {
                 return <Message title="空空如也" description="暂无成员信息"/>
               }
-            })()
+            })
           }
           <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
             {
