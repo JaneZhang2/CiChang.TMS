@@ -18,10 +18,7 @@ class Books extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchBooks(_.get(this.props, 'params.studentId'))
-      .subscribe(()=> {
-
-      });
+    this.props.fetchBooks(_.get(this.props, 'params.studentId'));
   }
 
   render() {

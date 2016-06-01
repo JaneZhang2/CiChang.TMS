@@ -1,5 +1,7 @@
 import React from 'react';
 import './css/mui.css'
+import 'swiper/dist/css/swiper.min.css'
+import 'spinkit/scss/spinkit.scss'
 import './index.scss'
 import mui from './js/mui'
 import {connect} from 'react-redux'
@@ -43,10 +45,7 @@ class Test extends React.Component {
     if (_.get(props, 'location.key') !=
       _.get(this.props, 'location.key')) {
 
-      this.props.fetchOrgans(this.props.params)
-        .subscribe(()=> {
-
-        });
+      this.props.fetchOrgans(this.props.params);
 
       this.props.fetchUserRankings({
         category: _.get(this.props, 'params.category'),
@@ -57,7 +56,7 @@ class Test extends React.Component {
         endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
         pageIndex: 0,
         pageSize: 50
-      }).subscribe(()=> {
+      }).then(()=> {
         mui('#pullrefresh').pullRefresh().refresh(true);
         mui('.mui-scroll-wrapper').scroll().refresh();
         self.setState({pageIndex: 1});
@@ -69,7 +68,7 @@ class Test extends React.Component {
     let self = this;
 
     this.props.fetchOrgans(this.props.params)
-      .subscribe(()=> {
+      .then(()=> {
         mui.init({
           pullRefresh: {
             container: '#pullrefresh',
@@ -93,7 +92,7 @@ class Test extends React.Component {
                   pageIndex: pageIndex,
                   pageSize: 50
                 })
-                  .subscribe((data)=> {
+                  .then((data)=> {
                     let length = _.get(data, 'payload.items.length', 0);
                     if (length > 0) {
                       self.setState({pageIndex: pageIndex + 1});

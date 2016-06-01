@@ -3,7 +3,6 @@ import {Router, Route, IndexRedirect} from 'react-router'
 import {Provider} from 'react-redux'
 
 import App from './App.jsx'
-import Students from './Students'
 import Student from './Student'
 import Books from './Books'
 import Test from '../components/MUI'

@@ -1,10 +1,7 @@
 import 'isomorphic-fetch'
 import {createAction} from 'redux-actions'
 import URI from 'urijs'
-import Rx from 'rx'
 import config from '../config'
-
-const {fromPromise} = Rx.Observable;
 
 export default store => next => ({type, payload}) => {
   let action = createAction(type);
@@ -16,12 +13,12 @@ export default store => next => ({type, payload}) => {
         loading: true
       }));
 
-      return fromPromise(fetch(payload,
+      return fetch(payload,
         {
           credentials: 'same-origin'
         }
-      ))
-        .flatMap(response=> {
+      )
+        .then(response=> {
           if (response.status !== 200) {
             throw _.assign(
               new Error('数据获取失败'),
@@ -32,7 +29,7 @@ export default store => next => ({type, payload}) => {
 
           return response.json();
         })
-        .map(result=> {
+        .then(result=> {
           let {status, message, data} = result;
 
           switch (status) {
@@ -55,7 +52,7 @@ export default store => next => ({type, payload}) => {
               throw new Error(message);
           }
         })
-        .catch(error=> next(action(Rx.Observable.return(error))))
+        .catch(error=> next(action(error)));
     })() :
     next(action);
 }

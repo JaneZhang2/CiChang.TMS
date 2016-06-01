@@ -10,7 +10,6 @@ import echarts from 'echarts'
 import Swiper from 'swiper'
 import 'isomorphic-fetch'
 import URI from 'urijs'
-import Rx from 'rx'
 
 const option = {
   tooltip: {
@@ -67,24 +66,19 @@ class Student extends React.Component {
 
   componentDidMount() {
     let self = this;
-    
+
     this.swiper = new Swiper('.swiper-container', {
       loop: true,
       loopedSlides: 1,
       observer: true,//修改swiper自己或子元素时，自动初始化swiper
       observeParents: true,//修改swiper的父元素时，自动初始化swiper
       onInit: (swiper)=> {
-        Rx.Observable.when(
-          self.props.fetchStudent({
-            ...self.props.params,
-            bookId: 0,
-            currentWeek: moment().format('YYYY-MM-DD')
-          }).thenDo(student=>student),
-          self.props.fetchBooks(_.get(self.props, 'params.studentId')).thenDo(books=>books)
-        )
-          .subscribe(()=> {
-
-          });
+        self.props.fetchStudent({
+          ...self.props.params,
+          bookId: 0,
+          currentWeek: moment().format('YYYY-MM-DD')
+        });
+        self.props.fetchBooks(_.get(self.props, 'params.studentId'));
 
         swiper.on('slideChangeEnd', (swiper)=> {
           swiper.removeAllSlides();
@@ -108,7 +102,7 @@ class Student extends React.Component {
               ...self.props.params,
               currentWeek: self.state.currentWeek.day(swipeDirection == 'next' ? 7 : -7).format('YYYY-MM-DD')
             }
-          ).subscribe(()=> {
+          ).then(()=> {
               swiper.unlockSwipes();
             }
           );
