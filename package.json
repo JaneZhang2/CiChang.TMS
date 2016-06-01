@@ -8,16 +8,11 @@
   },
   "scripts": {
     "start": "webpack-dev-server --watch-poll --inline --hot",
-    "debug": "npm run debug:dev",
     "build": "npm run build:prod",
-    "debug:dev": "APP_MODEL=DEBUG APP_ENV=DEV  node server.js",
-    "debug:qa": "APP_MODEL=DEBUG APP_ENV=QA   node server.js",
-    "debug:yz": "APP_MODEL=DEBUG APP_ENV=YZ   node server.js",
-    "debug:prod": "APP_MODEL=DEBUG APP_ENV=PROD node server.js",
-    "build:dev": "APP_MODEL=BUILD APP_ENV=DEV  webpack --config webpack.config.js",
-    "build:qa": "APP_MODEL=BUILD APP_ENV=QA   webpack --config webpack.config.js",
-    "build:yz": "APP_MODEL=BUILD APP_ENV=YZ   webpack --config webpack.config.js",
-    "build:prod": "APP_MODEL=BUILD APP_ENV=PROD webpack --config webpack.config.js"
+    "build:dev": "APP_MODEL=BUILD APP_ENV=DEV  webpack --config webpack.config.js && cp -rf src/vendors dist/",
+    "build:qa": "APP_MODEL=BUILD APP_ENV=QA   webpack --config webpack.config.js && cp -rf src/vendors dist/",
+    "build:yz": "APP_MODEL=BUILD APP_ENV=YZ   webpack --config webpack.config.js && cp -rf src/vendors dist/",
+    "build:prod": "APP_MODEL=BUILD APP_ENV=PROD webpack --config webpack.config.js && cp -rf src/vendors dist/"
   },
   "repository": {
     "type": "git",
@@ -61,14 +56,10 @@
     "humps": "^1.1.0",
     "iscroll": "^5.2.0",
     "isomorphic-fetch": "^2.2.1",
-    "lib-flexible": "^0.3.2",
     "moment": "^2.13.0",
     "node-uuid": "^1.4.7",
     "normalizr": "^2.0.2",
     "rc-dialog": "^6.0.3",
-    "rc-dropdown": "^1.4.8",
-    "rc-menu": "^4.12.1",
-    "rc-select": "^6.3.1",
     "react": "^15.0.2",
     "react-custom-scrollbars": "^4.0.0-beta.1",
     "react-dom": "^15.0.2",
@@ -88,7 +79,6 @@
     "rx": "^4.1.0",
     "shortid": "^2.2.6",
     "swiper": "^3.3.1",
-    "uid": "0.0.2",
     "urijs": "^1.18.0"
   }
 }
