@@ -3,12 +3,19 @@ import _ from 'lodash'
 import {FETCH_BOOKS} from '../actions'
 
 export default handleActions({
-  [FETCH_BOOKS]: (state, action)=>
-    _.concat(
+  [FETCH_BOOKS]: (state, action)=> {
+    let {payload} = action;
+
+    if (payload instanceof Error) {
+      return payload;
+    }
+
+    return _.concat(
       [{
         "bookId": 0,
         "bookName": "全部词书"
       }],
       action.payload
-    )
+    );
+  }
 }, {});

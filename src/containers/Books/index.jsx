@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {hashHistory} from 'react-router'
 import './index.scss'
 import {fetchBooks} from '../../actions'
+import Message from '../../components/Message'
 
 class Books extends React.Component {
 
@@ -35,6 +36,15 @@ class Books extends React.Component {
           <span>选择词书</span>
           <i className="hui-icon-user-solid"/>
         </header>
+        {
+          (()=> {
+            if (books instanceof Error) {
+              return (
+                <Message title="对不起" description={books.message}/>
+              )
+            }
+          })()
+        }
         <section>
           <ul className="list">
             {

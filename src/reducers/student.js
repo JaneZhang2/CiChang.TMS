@@ -3,6 +3,12 @@ import {FETCH_STUDENT} from '../actions'
 
 export default handleActions({
   [FETCH_STUDENT]: (state, action)=> {
+    let {payload} = action;
+
+    if (payload instanceof Error) {
+      return payload;
+    }
+
     let studyDays = _.get(action.payload, 'studyDays');
 
     _.map(studyDays, item=> {

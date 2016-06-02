@@ -10,6 +10,7 @@ import echarts from 'echarts'
 import Swiper from 'swiper'
 import 'isomorphic-fetch'
 import URI from 'urijs'
+import Message from '../../components/Message'
 
 const option = {
   tooltip: {
@@ -76,7 +77,7 @@ class Student extends React.Component {
         self.props.fetchStudent({
           ...self.props.params,
           bookId: 0,
-          currentWeek: moment().format('YYYY-MM-DD')
+          currentWeek: self.state.currentWeek.format('YYYY-MM-DD')
         });
         self.props.fetchBooks(_.get(self.props, 'params.studentId'));
 
@@ -100,7 +101,7 @@ class Student extends React.Component {
           self.props.fetchStudent(
             {
               ...self.props.params,
-              currentWeek: self.state.currentWeek.day(swipeDirection == 'next' ? 7 : -7).format('YYYY-MM-DD')
+              currentWeek: self.state.currentWeek.hours(swipeDirection == 'next' ? 7 * 24 : -7 * 24).format('YYYY-MM-DD')
             }
           ).then(()=> {
               swiper.unlockSwipes();
@@ -130,6 +131,15 @@ class Student extends React.Component {
             onClick={()=>hashHistory.go(-1)}
           />
         </header>
+        {
+          (()=> {
+            if (student instanceof Error) {
+              return (
+                <Message title="对不起" description={student.message}/>
+              )
+            }
+          })()
+        }
         <section className="userinfo">
           <figure>
             <img

@@ -167,7 +167,7 @@ class Rankings extends React.Component {
               if (!rankings.loading && _.isEmpty(items)) {
                 return <Message title="空空如也" description="暂无成员信息"/>
               }
-            })
+            })()
           }
           <div id="pullrefresh" className="mui-content mui-scroll-wrapper">
             {
