@@ -56,7 +56,6 @@ class Rankings extends React.Component {
         pageSize: 50
       }).then(()=> {
         mui('#pullrefresh').pullRefresh().refresh(true);
-        mui('.mui-scroll-wrapper').scroll().refresh();
         self.setState({pageIndex: 1});
       })
     }
@@ -95,7 +94,9 @@ class Rankings extends React.Component {
                     if (length > 0) {
                       self.setState({pageIndex: pageIndex + 1});
                     }
-                    mui('.mui-scroll-wrapper').scroll().refresh();
+                    if (pageIndex == 0) {
+                      mui('#pullrefresh').pullRefresh().scrollTo(0, 0);
+                    }
                     mui('#pullrefresh').pullRefresh().endPullupToRefresh(length == 0); //参数为true代表没有更多数据了。
                   });
               }

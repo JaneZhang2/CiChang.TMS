@@ -64,13 +64,6 @@ small {
   padding: 0;
 }
 
-.mui-scrollbar {
-  display: none;
-  &:last-of-type {
-    display: block;
-  }
-}
-
 .mui-table-view-cell {
   display: flex;
   width: 100%;

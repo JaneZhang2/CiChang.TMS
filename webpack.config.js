@@ -1,9 +1,9 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const TARGET = process.env.npm_lifecycle_event;
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const pkg = require('./package.json');
 const rucksack = require('rucksack-css');
 
@@ -115,7 +115,6 @@ if (/^build:.*$/.test(TARGET)) {
       alias: {
         'app.config': `${PATHS.src}/configs/app.build.config`,
         'babel-polyfill': 'babel-polyfill/dist/polyfill.min.js',
-        // echarts: 'echarts/dist/echarts.min.js',
         moment: 'moment/min/moment-with-locales.min.js',
         normalizr: 'normalizr/dist/normalizr.min.js'
       }
