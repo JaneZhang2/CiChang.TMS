@@ -53,8 +53,6 @@
     "babel-polyfill": "^6.8.0",
     "echarts": "^3.1.9",
     "gregorian-calendar-format": "^4.1.2",
-    "humps": "^1.1.0",
-    "iscroll": "^5.2.0",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.13.0",
     "node-uuid": "^1.4.7",
@@ -69,7 +67,6 @@
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.0.1",
     "rmc-date-picker": "^2.2.0",
-    "shortid": "^2.2.6",
     "swiper": "^3.3.1",
     "urijs": "^1.18.0"
   }

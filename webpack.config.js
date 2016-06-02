@@ -114,11 +114,14 @@ if (/^build:.*$/.test(TARGET)) {
     resolve: {
       alias: {
         'app.config': `${PATHS.src}/configs/app.build.config`,
-        moment: "moment/min/moment-with-locales.min.js"
+        'babel-polyfill': 'babel-polyfill/dist/polyfill.min.js',
+        echarts: 'echarts/dist/echarts.simple.js',
+        moment: 'moment/min/moment-with-locales.min.js',
+        normalizr: 'normalizr/dist/normalizr.min.js'
       }
     },
     module: {
-      noParse: [/moment-with-locales/, /mui/],
+      noParse: [/babel-polyfill/, /echarts/, /moment-with-locales/, /mui/, /normalizr/],
       loaders: [
         {
           test: /\.css$/,

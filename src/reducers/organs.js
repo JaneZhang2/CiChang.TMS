@@ -1,6 +1,6 @@
 import {handleActions} from 'redux-actions'
 import {normalize, Schema, arrayOf} from 'normalizr'
-import shortid from 'shortid'
+import uuid from 'node-uuid'
 import {FETCH_ORGANS_BY_USERS, FETCH_ORGANS_BY_CLASS} from '../actions'
 import moment from 'moment'
 import _ from 'lodash'
@@ -15,7 +15,7 @@ schema.define({items: arrayOf(schema)});
 
 const formatter = (items, limit)=>
   _.map(items, item=> ({
-    id: shortid.generate(),
+    id: uuid.v4(),
     name: item.orgName,
     items: item.orgType == limit ? [] : formatter(item.orgItems, limit),
     value: {orgId: item.orgId},
@@ -32,34 +32,34 @@ export const organs = handleActions({
 
     let filters = [
       {
-        id: shortid.generate(),
+        id: uuid.v4(),
         type: FILTER_ORGANS_TYPE,
         items: formatter(
           _.get(payload, 'orgItems'), 3
         )
       },
       {
-        id: shortid.generate(),
+        id: uuid.v4(),
         type: FILTER_SORT_TYPE,
         items: [
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '单词最多',
             value: {sortType: 'wordsDesc'}
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '单词最少',
             value: {sortType: 'wordsAsc'}
           }
         ]
       },
       {
-        id: shortid.generate(),
+        id: uuid.v4(),
         type: FILTER_DATE_TYPE,
         items: [
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '昨日',
             value: {
               startDate: moment().hours(-24).format('YYYY-MM-DD'),
@@ -67,7 +67,7 @@ export const organs = handleActions({
             }
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '今日',
             value: {
               startDate: moment().format('YYYY-MM-DD'),
@@ -75,12 +75,12 @@ export const organs = handleActions({
             }
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             type: FILTER_DATE_PICKER_TYPE,
             name: '自选',
             items: [
               {
-                id: shortid.generate()
+                id: uuid.v4()
               }
             ]
           }
@@ -99,44 +99,44 @@ export const organs = handleActions({
 
     let filters = [
       {
-        id: shortid.generate(),
+        id: uuid.v4(),
         type: FILTER_ORGANS_TYPE,
         items: formatter(
           _.get(payload, 'orgItems'), 2
         )
       },
       {
-        id: shortid.generate(),
+        id: uuid.v4(),
         type: FILTER_SORT_TYPE,
         items: [
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '单词最多',
             value: {sortType: 'wordsDesc'}
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '单词最少',
             value: {sortType: 'wordsAsc'}
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '天数最多',
             value: {sortType: 'daysDesc'}
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '天数最少',
             value: {sortType: 'daysAsc'}
           }
         ]
       },
       {
-        id: shortid.generate(),
+        id: uuid.v4(),
         type: FILTER_DATE_TYPE,
         items: [
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '昨日',
             value: {
               startDate: moment().hours(-24).format('YYYY-MM-DD'),
@@ -144,7 +144,7 @@ export const organs = handleActions({
             }
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             name: '今日',
             value: {
               startDate: moment().format('YYYY-MM-DD'),
@@ -152,12 +152,12 @@ export const organs = handleActions({
             }
           },
           {
-            id: shortid.generate(),
+            id: uuid.v4(),
             type: FILTER_DATE_PICKER_TYPE,
             name: '自选',
             items: [
               {
-                id: shortid.generate()
+                id: uuid.v4()
               }
             ]
           }
