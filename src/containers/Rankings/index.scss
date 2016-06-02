@@ -77,11 +77,10 @@ small {
   height: 80px;
   padding: 0;
   line-height: 80px;
-  border-bottom: 3px solid #EEE;
   box-sizing: border-box;
 
-  &:last-of-type {
-    border: none;
+  &:after {
+    left: 0;
   }
 
   > span {

@@ -1,9 +1,7 @@
 import React from 'react';
-import '../../vendors/mui/css/mui.css'
 import 'swiper/dist/css/swiper.min.css'
 import 'spinkit/scss/spinkit.scss'
 import './index.scss'
-import mui from '../../vendors/mui/js/mui'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import {fetchOrgans, fetchUserRankings} from '../../actions'

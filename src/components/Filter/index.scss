@@ -88,6 +88,7 @@
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  border-top: 3px solid #EEE;
   border-bottom: 3px solid #EEE;
 
   button {
@@ -125,14 +126,14 @@
     width: 100%;
     height: 80px;
     color: #25B6ED;
-    border-top: 1px solid #EEE;
+    border-top: 3px solid #EEE;
     font-size: 32px;
+
+    &:active {
+      background: none;
+    }
   }
 }
-
-//.rc-dialog {
-//  margin: 0 !important;
-//}
 
 .rc-dialog-content {
   border: none 0 !important;

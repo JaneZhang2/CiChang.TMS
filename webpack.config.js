@@ -92,7 +92,13 @@ if (process.env.APP_MODEL === 'DEBUG') {
     output: {
       filename: '[name]-[hash].js'
     },
+    resolve: {
+      alias: {
+        moment: "moment/min/moment-with-locales.min.js"
+      }
+    },
     module: {
+      noParse: [/moment-with-locales/, /mui/],
       loaders: [
         {
           test: /\.css$/,
@@ -113,12 +119,12 @@ if (process.env.APP_MODEL === 'DEBUG') {
     plugins: [
       new CleanPlugin([PATHS.build]),
       new webpack.optimize.OccurenceOrderPlugin(),
-      // new webpack.optimize.UglifyJsPlugin({
-      //   sourceMap: false,
-      //   compressor: {
-      //     warnings: false
-      //   }
-      // }),
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: false,
+        compressor: {
+          warnings: false
+        }
+      }),
       new HtmlWebpackPlugin({
         template: './src/index.html'
       }),

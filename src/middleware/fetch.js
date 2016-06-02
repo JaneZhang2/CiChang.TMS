@@ -5,7 +5,7 @@ import config from '../config'
 
 export default store => next => ({type, payload}) => {
   let action = createAction(type);
-  
+
   return /FETCH/.test(String(type)) ?
     (()=> {
       next(action({
@@ -52,11 +52,7 @@ export default store => next => ({type, payload}) => {
               throw new Error(message);
           }
         })
-        .catch(error=> {
-          alert(error);
-
-          next(action(error))
-        });
+        .catch(error=> next(action(error)));
     })() :
     next(action);
 }
