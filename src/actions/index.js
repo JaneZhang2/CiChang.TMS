@@ -1,6 +1,6 @@
 import {createAction} from 'redux-actions'
 import URI from 'urijs'
-import config from '../config'
+import config from 'app.config'
 
 export const FETCH_ORGANS_BY_USERS = Symbol('FETCH');
 export const FETCH_ORGANS_BY_CLASS = Symbol('FETCH');

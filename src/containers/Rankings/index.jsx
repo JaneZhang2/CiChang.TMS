@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {fetchOrgans, fetchUserRankings} from '../../actions'
 import Ranking from '../../components/Ranking'
 import Filter from '../../components/Filter'
-import config from '../../config'
+import config from 'app.config'
 import moment from 'moment'
 import {hashHistory} from 'react-router'
 import Message from '../../components/Message'

@@ -9,10 +9,10 @@
   "scripts": {
     "start": "webpack-dev-server --watch-poll --inline --hot",
     "build": "webpack",
-    "build:dev": "APP_MODEL=BUILD APP_ENV=DEV  webpack --config webpack.config.js && cp -rf src/vendors dist/",
-    "build:qa": "APP_MODEL=BUILD APP_ENV=QA   webpack --config webpack.config.js && cp -rf src/vendors dist/",
-    "build:yz": "APP_MODEL=BUILD APP_ENV=YZ   webpack --config webpack.config.js && cp -rf src/vendors dist/",
-    "build:prod": "APP_MODEL=BUILD APP_ENV=PROD webpack --config webpack.config.js && cp -rf src/vendors dist/"
+    "build:dev": "APP_MODEL=BUILD APP_ENV=DEV  webpack --config webpack.config.js && cp -rf vendors dist/",
+    "build:qa": "APP_MODEL=BUILD APP_ENV=QA   webpack --config webpack.config.js && cp -rf vendors dist/",
+    "build:yz": "APP_MODEL=BUILD APP_ENV=YZ   webpack --config webpack.config.js && cp -rf vendors dist/",
+    "build:prod": "APP_MODEL=BUILD APP_ENV=PROD webpack --config webpack.config.js && cp -rf vendors dist/"
   },
   "repository": {
     "type": "git",

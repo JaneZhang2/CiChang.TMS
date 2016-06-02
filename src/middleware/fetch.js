@@ -1,7 +1,7 @@
 import 'isomorphic-fetch'
 import {createAction} from 'redux-actions'
 import URI from 'urijs'
-import config from '../config'
+import config from 'app.config'
 
 export default store => next => ({type, payload}) => {
   let action = createAction(type);
