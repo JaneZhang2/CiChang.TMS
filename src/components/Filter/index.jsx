@@ -67,7 +67,9 @@ class Filter extends React.Component {
             current.push(item);
           }
         );
-        current[1] = _.get(_.find(filters, {id}), 'items.1');
+        if (!_.get(current, '1')) {
+          current[1] = _.get(_.find(filters, {id}), 'items.1');
+        }
         break;
       case FILTER_SORT_TYPE:
         current.push(

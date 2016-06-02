@@ -5,8 +5,8 @@ import config from '../config'
 
 export default store => next => ({type, payload}) => {
   let action = createAction(type);
-
-  return String(type) === String(Symbol('FETCH')) ?
+  
+  return /FETCH/.test(String(type)) ?
     (()=> {
       next(action({
         ...URI.parseQuery(payload),
@@ -52,7 +52,11 @@ export default store => next => ({type, payload}) => {
               throw new Error(message);
           }
         })
-        .catch(error=> next(action(error)));
+        .catch(error=> {
+          alert(error);
+
+          next(action(error))
+        });
     })() :
     next(action);
 }
