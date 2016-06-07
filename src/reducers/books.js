@@ -10,12 +10,15 @@ export default handleActions({
       return payload;
     }
 
-    return _.concat(
-      [{
-        "bookId": 0,
-        "bookName": "全部词书"
-      }],
-      action.payload
-    );
+    let result = [{
+      "bookId": 0,
+      "bookName": "全部词书"
+    }];
+
+    if (_.isArray(payload)) {
+      result = _.concat(result, payload);
+    }
+
+    return result;
   }
-}, {});
+}, []);
