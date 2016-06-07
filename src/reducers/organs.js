@@ -51,6 +51,16 @@ export const organs = handleActions({
             id: uuid.v4(),
             name: '单词最少',
             value: {sortType: 'wordsAsc'}
+          },
+          {
+            id: uuid.v4(),
+            name: '天数最多',
+            value: {sortType: 'daysDesc'}
+          },
+          {
+            id: uuid.v4(),
+            name: '天数最少',
+            value: {sortType: 'daysAsc'}
           }
         ]
       },
@@ -118,16 +128,6 @@ export const organs = handleActions({
             id: uuid.v4(),
             name: '单词最少',
             value: {sortType: 'wordsAsc'}
-          },
-          {
-            id: uuid.v4(),
-            name: '天数最多',
-            value: {sortType: 'daysDesc'}
-          },
-          {
-            id: uuid.v4(),
-            name: '天数最少',
-            value: {sortType: 'daysAsc'}
           }
         ]
       },
