@@ -76,7 +76,7 @@ class Student extends React.Component {
       onInit: (swiper)=> {
         self.props.fetchStudent({
           ...self.props.params,
-          bookId: 0,
+          bookId: Number(_.get(self.props.params, 'bookId', 0)),
           currentWeek: self.state.currentWeek.format('YYYY-MM-DD')
         });
         self.props.fetchBooks(_.get(self.props, 'params.studentId'));
@@ -117,18 +117,19 @@ class Student extends React.Component {
   }
 
   render() {
-    let {student, books, params} = this.props;
+    let {student, books, params, location} = this.props;
 
     let current = _.find(books, {bookId: Number(_.get(params, 'bookId', 0))});
     let bookId = _.get(current, 'bookId'),
-      bookName = _.get(current, 'bookName');
+      bookName = _.get(current, 'bookName'),
+      from = _.get(location, 'query.from');
 
     return (
       <div className="student">
         <header>
           <i
             className="hui-icon-carat-l"
-            onClick={()=>hashHistory.go(-1)}
+            onClick={()=>hashHistory.go(from=='books'?-3:-1)}
           />
         </header>
         {

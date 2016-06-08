@@ -70,7 +70,7 @@ class Books extends React.Component {
             }
           </ul>
           <button className="btn-primary"
-                  onClick={()=>hashHistory.push(`students/${studentId}/${current}`)}>
+                  onClick={()=>hashHistory.push(`students/${studentId}/${current}?from=books`)}>
             完成
           </button>
         </section>

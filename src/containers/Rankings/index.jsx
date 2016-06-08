@@ -184,7 +184,7 @@ class Rankings extends React.Component {
                                 return (
                                   <li
                                     key={index}
-                                    data-url={`students/${_.get(item,'userId')}/0`}
+                                    data-url={`students/${_.get(item,'userId')}/0?from=rankings`}
                                     className="mui-table-view-cell"
                                   >
                                 <span><small>{String(index + 1).replace(/(^\d$)/, '0$1')}</small>
