@@ -12,6 +12,7 @@
 }
 
 .rc-dialog-wrap.filter-dialog {
+  position: absolute;
   top: 177px;
   margin: 0;
 
@@ -175,10 +176,6 @@
     &:last-of-type {
       width: 100%;
       background: #FFF;
-
-      //> li.selected {
-      //  color: #25B6ED;
-      //}
     }
 
     &:nth-of-type(2) {
