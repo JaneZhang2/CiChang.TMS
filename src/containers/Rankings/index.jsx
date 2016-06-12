@@ -43,21 +43,26 @@ class Rankings extends React.Component {
     if (_.get(props, 'location.key') !=
       _.get(this.props, 'location.key')) {
 
-      this.props.fetchOrgans(this.props.params);
+      this.props.fetchOrgans(this.props.params)
+        .then(()=> {
+          if (!self.props.id) {
+            return;
+          }
 
-      this.props.fetchUserRankings({
-        category: _.get(this.props, 'params.category'),
-        schoolId: this.props.id,
-        selectedOrganId: _.get(query, 'orgId', this.props.id),
-        sortType: _.get(query, 'sortType', 'wordsDesc'),
-        startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
-        endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
-        pageIndex: 0,
-        pageSize: 50
-      }).then(()=> {
-        mui('#pullrefresh').pullRefresh().refresh(true);
-        self.setState({pageIndex: 1});
-      })
+          self.props.fetchUserRankings({
+            category: _.get(self.props, 'params.category'),
+            schoolId: self.props.id,
+            selectedOrganId: _.get(query, 'orgId', self.props.id),
+            sortType: _.get(query, 'sortType', 'wordsDesc'),
+            startDate: _.get(query, 'startDate', moment().hours(-24).format('YYYY-MM-DD')),
+            endDate: _.get(query, 'endDate', moment().hours(-24).format('YYYY-MM-DD')),
+            pageIndex: 0,
+            pageSize: 50
+          }).then(()=> {
+            mui('#pullrefresh').pullRefresh().refresh(true);
+            self.setState({pageIndex: 1});
+          })
+        });
     }
   }
 
@@ -78,6 +83,10 @@ class Rankings extends React.Component {
                 let {pageIndex} = self.state;
                 let {id, location, params} = self.props;
                 let query = _.get(location, 'query');
+
+                if (!id) {
+                  return;
+                }
 
                 self.props.fetchUserRankings({
                   category: _.get(params, 'category'),
