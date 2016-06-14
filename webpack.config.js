@@ -105,6 +105,7 @@ if (TARGET === 'start' || !TARGET) {
 if (/^build:.*$/.test(TARGET)) {
   module.exports = merge(common, {
     entry: {
+      config: `${PATHS.src}/config`,
       vendor: Object.keys(pkg.dependencies)
     },
     output: {
@@ -145,10 +146,12 @@ if (/^build:.*$/.test(TARGET)) {
         sourceMap: false,
         compressor: {
           warnings: false
-        }
+        },
+        exclude: [/config/]
       }),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
+      new webpack.optimize.CommonsChunkPlugin('config', 'config.js', Infinity),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: '"production"'
